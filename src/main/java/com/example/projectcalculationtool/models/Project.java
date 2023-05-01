@@ -3,12 +3,24 @@ package com.example.projectcalculationtool.models;
 import java.time.LocalDate;
 
 public class Project {
-     private String name;
-     private LocalDate deadline;
-     private  int duration;
-     private boolean completed;
-     private int projectID;
-     private int ManagerID;
+    private String name;
+    private LocalDate deadline;
+    private int duration;
+    private boolean completed;
+    private int projectID;
+    private int ManagerID;
+
+    public Project() {
+    }
+
+    public Project(String name, LocalDate deadline, int duration, boolean completed, int projectID, int managerID) {
+        this.name = name;
+        this.deadline = deadline;
+        this.duration = duration;
+        this.completed = completed;
+        this.projectID = projectID;
+        ManagerID = managerID;
+    }
 
     public String getName() {
         return name;
@@ -34,9 +46,7 @@ public class Project {
         return ManagerID;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
