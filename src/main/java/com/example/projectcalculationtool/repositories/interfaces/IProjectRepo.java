@@ -1,11 +1,11 @@
 package com.example.projectcalculationtool.repositories.interfaces;
 
+import com.example.projectcalculationtool.models.Project;
+
 public interface IProjectRepo {
 
-    void createProject();
-    void readProject();
-    void updateProject();
-    void deleteProject();
+    void createProject(Project project);
+
 
 
 }
