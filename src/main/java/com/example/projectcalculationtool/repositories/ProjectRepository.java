@@ -26,7 +26,7 @@ public class ProjectRepository implements IProjectRepo {
             preparedStatement.setString(1, project.getName());
             preparedStatement.setDate(2, Date.valueOf(project.getDeadline()));
             preparedStatement.setInt(3, project.getDuration());
-            preparedStatement.setBoolean(4, project.isCompleted());
+            preparedStatement.setBoolean(4, false);
             preparedStatement.setInt(5, project.getManagerID());
 
 
