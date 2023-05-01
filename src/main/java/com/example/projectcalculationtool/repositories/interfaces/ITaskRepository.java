@@ -1,6 +1,8 @@
 package com.example.projectcalculationtool.repositories.interfaces;
 
-public interface ITaskInterface {
+import com.example.projectcalculationtool.models.Task;
 
-    void createTask();
+public interface ITaskRepository {
+
+    void createTask(Task task);
 }
