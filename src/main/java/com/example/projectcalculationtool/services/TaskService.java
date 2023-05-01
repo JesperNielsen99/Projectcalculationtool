@@ -2,7 +2,9 @@ package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TaskService {
     ITaskRepository iTaskRepository;
 
