@@ -12,7 +12,7 @@ public class TaskService {
         this.iTaskRepository = iTaskRepository;
     }
 
-    public void createTask(Task task){
+    public void createTask(Task task) {
         iTaskRepository.createTask(task);
     }
 }

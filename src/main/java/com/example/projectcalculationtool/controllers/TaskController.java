@@ -11,19 +11,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class TaskController {
     private TaskService taskService;
+
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
     @GetMapping()
-    public String createTask(Model model){ //TODO needs an subprojectID or Session
+    public String createTask(Model model) { //TODO needs an subprojectID or Session
         Task task = new Task();
         model.addAttribute("task", task);
         return "createTaskForm";
     }
 
     @PostMapping()
-    public String addTask(@ModelAttribute Task task){
+    public String addTask(@ModelAttribute Task task) {
         taskService.createTask(task);
         return "redirect:/createTaskFrom"; //TODO needs a 'mainPage' as landing page + an ID
     }
