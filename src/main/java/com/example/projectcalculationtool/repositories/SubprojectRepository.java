@@ -26,7 +26,7 @@ public class SubprojectRepository implements ISubprojectRepository {
             preparedStatement.setInt(3, subproject.getPriority());
             preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
             preparedStatement.setInt(1, subproject.getDuration());
-            preparedStatement.setBoolean(1, subproject.getCompleted());
+            preparedStatement.setBoolean(1, false);
             preparedStatement.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
