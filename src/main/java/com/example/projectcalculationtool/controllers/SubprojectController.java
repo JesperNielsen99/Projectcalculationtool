@@ -20,13 +20,13 @@ public class SubprojectController {
     public String createSubproject(Model model){
         Subproject subproject = new Subproject();
         model.addAttribute("subproject", subproject);
-        return "redirect:/createSubprojectForm";
+        return "createSubprojectForm";
     }
 
     @PostMapping("/createSubproject")
     public String createSubproject(@ModelAttribute Subproject subproject){
         subprojectService.createSubproject(subproject);
-        return "redirect:/createSubprojectForm"; // TODO: 01-05-2023 change redirect to project
+        return "redirect:/createSubproject"; // TODO: 01-05-2023 change redirect to project
     }
 
 
