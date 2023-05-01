@@ -33,7 +33,7 @@ public class ProjectController {
     @PostMapping("/createProject")
     public String addProject(@ModelAttribute Project project){
         projectService.createProject(project);
-        return "redirect:/create"; //TODO change redirect to homepage
+        return "redirect:/createProject"; //TODO change redirect to homepage
 
     }
 

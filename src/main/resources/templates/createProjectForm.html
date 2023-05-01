@@ -6,14 +6,14 @@
 </head>
 <body>
 
-<form action="#" th:method="post" th:object="${project}">
+<form action="@{createProject}" th:method="post" th:object="${project}">
     <div>
-        <label for="name">Project name:</label>
+        <label>Project name:</label>
         <input type="text" id="name" th:field="*{name}">
     </div>
 
     <div>
-        <label for="deadline">Deadline:</label>
+        <label>Deadline:</label>
         <input type="date" id="deadline" th:field="*{deadline}">
     </div>
 
