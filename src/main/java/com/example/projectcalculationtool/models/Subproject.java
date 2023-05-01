@@ -7,16 +7,16 @@ public class Subproject {
     private int projectID;
     private String name;
     private int priority;
-    private LocalDate deadLine;
+    private LocalDate deadline;
     private int duration;
     private Boolean completed;
 
-    public Subproject(int subprojectID, int projectID, String name, int priority, LocalDate deadLine, int duration, Boolean completed) {
+    public Subproject(int subprojectID, int projectID, String name, int priority, LocalDate deadline, int duration, Boolean completed) {
         this.subprojectID = subprojectID;
         this.projectID = projectID;
         this.name = name;
         this.priority = priority;
-        this.deadLine = deadLine;
+        this.deadline = deadline;
         this.duration = duration;
         this.completed = completed;
     }
@@ -56,12 +56,12 @@ public class Subproject {
         this.priority = priority;
     }
 
-    public LocalDate getDeadLine() {
-        return deadLine;
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
-    public void setDeadLine(LocalDate deadLine) {
-        this.deadLine = deadLine;
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
     }
 
     public int getDuration() {
