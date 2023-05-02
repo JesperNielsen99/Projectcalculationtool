@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.controllers;
 
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,5 +31,12 @@ public class UserController {
     public String signUpSubmit(@ModelAttribute("user") User user) {
         service.createUser(user);
         return "redirect:/login";
+    }
+
+    @GetMapping("/profile")
+    public String profile (Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user",user);
+        return "profile";
     }
 }
