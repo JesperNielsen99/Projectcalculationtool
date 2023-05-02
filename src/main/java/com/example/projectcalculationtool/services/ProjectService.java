@@ -1,15 +1,15 @@
 package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.repositories.interfaces.IProjectRepo;
+import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectService {
 
-    IProjectRepo iProjectRepo;
+    IProjectRepository iProjectRepo;
 
-    public ProjectService(IProjectRepo iProjectRepo) {
+    public ProjectService(IProjectRepository iProjectRepo) {
         this.iProjectRepo = iProjectRepo;
     }
 
