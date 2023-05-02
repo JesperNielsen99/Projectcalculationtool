@@ -13,13 +13,12 @@ import java.sql.SQLException;
 @Repository
 public class ProjectRepository implements IProjectRepo {
 
-
     @Override
     public void createProject(Project project) {
         try{
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "INSERT INTO project (project_manager_id, project_name, project_duration, project_deadline,  project_completed) VALUES (?,?,?,?,?);";
+            String SQL = "INSERT INTO project (project_manager_id, project_name, project_duration, project_deadline, project_completed) VALUES (?,?,?,?,?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
@@ -31,7 +30,6 @@ public class ProjectRepository implements IProjectRepo {
 
             preparedStatement.executeUpdate();
 
-            connection.close();
 
         } catch (SQLException e){
             throw new RuntimeException(e);
