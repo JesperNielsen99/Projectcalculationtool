@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Project;
+import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class ProjectService {
         iProjectRepository.createProject(project);
     }
 
-    public List<Project> getProjects(){
-        return iProjectRepository.getProject();
+    public List<Project> getProjects(User user){ //session managerID
+        return iProjectRepository.getProject(user);
     }
 
 }

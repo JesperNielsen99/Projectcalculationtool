@@ -15,7 +15,7 @@ public class Project {
 
     public Project(int projectID, int managerID, String name, int duration, LocalDate deadline, boolean completed) {
         this.projectID = projectID;
-        ManagerID = managerID;
+        this.ManagerID = managerID;
         this.name = name;
         this.duration = duration;
         this.deadline = deadline;
