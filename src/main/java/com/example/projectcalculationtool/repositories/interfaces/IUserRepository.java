@@ -9,4 +9,6 @@ public interface IUserRepository {
     void createUser(User user);
     List<Role> getRoles();
     String getRole(int roleID);
+
+    User getUser(String password, String email);
 }

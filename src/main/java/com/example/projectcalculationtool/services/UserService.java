@@ -26,4 +26,8 @@ public class UserService {
     public String getRole(int roleID) {
         return repository.getRole(roleID);
     }
+
+    public User getUser(String password, String email) {
+        return repository.getUser(password, email);
+    }
 }
