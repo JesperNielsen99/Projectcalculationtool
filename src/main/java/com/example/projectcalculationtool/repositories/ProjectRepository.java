@@ -19,18 +19,19 @@ public class ProjectRepository implements IProjectRepo {
         try{
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "INSERT INTO project (project_name, project_deadline, project_duration, project_completed, project_manager_id) VALUES (?,?,?,?,?);";
+            String SQL = "INSERT INTO project (project_manager_id, project_name, project_duration, project_deadline,  project_completed) VALUES (?,?,?,?,?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setString(1, project.getName());
-            preparedStatement.setDate(2, Date.valueOf(project.getDeadline()));
+            preparedStatement.setInt(1, project.getManagerID());
+            preparedStatement.setString(2,project.getName());
             preparedStatement.setInt(3, project.getDuration());
-            preparedStatement.setBoolean(4, false);
-            preparedStatement.setInt(5, project.getManagerID());
-
+            preparedStatement.setDate(4, Date.valueOf(project.getDeadline()));
+            preparedStatement.setBoolean(5, project.isCompleted());
 
             preparedStatement.executeUpdate();
+
+            connection.close();
 
         } catch (SQLException e){
             throw new RuntimeException(e);
