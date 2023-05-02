@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class ProjectRepository implements IProjectRepository {
@@ -34,6 +35,11 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Project> getProject() {
+        return null;
     }
 
 

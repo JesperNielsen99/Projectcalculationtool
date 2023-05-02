@@ -4,6 +4,8 @@ import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectService {
 
@@ -15,6 +17,10 @@ public class ProjectService {
 
     public void createProject(Project project){
         iProjectRepository.createProject(project);
+    }
+
+    public List<Project> getProjects(){
+        return iProjectRepository.getProject();
     }
 
 }
