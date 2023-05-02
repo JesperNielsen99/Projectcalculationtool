@@ -28,6 +28,4 @@ public class SubprojectController {
         subprojectService.createSubproject(subproject);
         return "redirect:/createSubproject"; // TODO: 01-05-2023 change redirect to project
     }
-
-
 }
