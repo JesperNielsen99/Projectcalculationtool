@@ -15,8 +15,8 @@ INSERT INTO project (project_manager_id, project_name, project_duration, project
     (2, 'sheite', 8, current_date(), 1);
 
 INSERT INTO subproject (project_id, subproject_name, subproject_priority, subproject_duration, subproject_deadline, subproject_completed) VALUES
-	(1, 'create', 2, 10, 2023-6-10, 0),
-	(1, 'test', 1, 7, 2023-30-10, 0),
+	(1, 'create', 2, 10, '2023-06-10', 0),
+	(1, 'test', 1, 7, '2023-10-30', 0),
 	(2, 'init', 10000, 6, current_date(), 2);
 
 INSERT INTO task (subproject_id, task_name, task_description, task_priority, task_duration, task_deadline, task_completed) VALUES
