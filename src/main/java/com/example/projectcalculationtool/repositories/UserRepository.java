@@ -21,8 +21,6 @@ public class UserRepository implements IUserRepository {
     @Override
     public void createUser(User user) {
         try {
-            System.out.println(user);
-            System.out.println(user);
             SQL = "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, user.getFirstName());
@@ -44,11 +42,25 @@ public class UserRepository implements IUserRepository {
             resultSet = statement.executeQuery(SQL);
             List<Role> roles = new ArrayList<>();
             while (resultSet.next()) {
-                System.out.println(resultSet.getInt("role_id"));
-                System.out.println(resultSet.getString("role_name"));
                 roles.add(new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
             }
             return roles;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String getRole(int roleID) {
+        try {
+            SQL = "SELECT role_name FROM role WHERE role_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, roleID);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("role_name");
+            }
+            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

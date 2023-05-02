@@ -19,11 +19,8 @@ public class UserController {
 
     @GetMapping("/signup")
     public String signUpForm(Model model){
-        System.out.println("test");
         model.addAttribute("user", new User());
-        System.out.println("test1");
         model.addAttribute("roles", service.getRoles());
-        System.out.println("test2");
         return "sign-up";
     }
 
@@ -37,6 +34,7 @@ public class UserController {
     public String profile (Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
         model.addAttribute("user",user);
+        model.addAttribute("role", service.getRole(user.getRoleID()));
         return "profile";
     }
 }

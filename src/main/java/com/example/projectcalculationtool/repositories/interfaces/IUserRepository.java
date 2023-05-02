@@ -8,4 +8,5 @@ import java.util.List;
 public interface IUserRepository {
     void createUser(User user);
     List<Role> getRoles();
+    String getRole(int roleID);
 }
