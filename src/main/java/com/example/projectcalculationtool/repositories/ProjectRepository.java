@@ -19,7 +19,7 @@ public class ProjectRepository implements IProjectRepo {
         try{
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "INSERT INTO x (x) VALUES (?,?,?,?,?);";
+            String SQL = "INSERT INTO project (project_name, project_deadline, project_duration, project_completed, project_manager_id) VALUES (?,?,?,?,?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
