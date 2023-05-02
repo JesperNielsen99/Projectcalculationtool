@@ -31,8 +31,6 @@ public class SubprojectRepository implements ISubprojectRepository {
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
