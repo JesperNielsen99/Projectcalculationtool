@@ -9,6 +9,6 @@ public interface IProjectRepository {
 
     void createProject(Project project);
 
-    List<Project> getProject(User user);
+    List<Project> getProject(int ID);
 
 }

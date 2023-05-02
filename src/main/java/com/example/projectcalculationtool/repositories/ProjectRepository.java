@@ -38,16 +38,16 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public List<Project> getProject(User user) {
+    public List<Project> getProject(int ID) {
         List<Project> projectList = new ArrayList<>();
 
         try {
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "SELECT * FROM projects WHERE manager_id = ?;";
+            String SQL = "SELECT * FROM project WHERE project_manager_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setInt(1,user.getUserID()); // change to session
+            preparedStatement.setInt(1,ID); // change to session
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {

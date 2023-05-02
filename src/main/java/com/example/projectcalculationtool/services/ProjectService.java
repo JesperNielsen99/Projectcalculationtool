@@ -20,8 +20,8 @@ public class ProjectService {
         iProjectRepository.createProject(project);
     }
 
-    public List<Project> getProjects(User user){ //session managerID
-        return iProjectRepository.getProject(user);
+    public List<Project> getProjects(int ID){ //session managerID
+        return iProjectRepository.getProject(ID);
     }
 
 }
