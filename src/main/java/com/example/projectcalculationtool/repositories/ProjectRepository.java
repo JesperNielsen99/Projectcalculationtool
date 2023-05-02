@@ -35,8 +35,5 @@ public class ProjectRepository implements IProjectRepo {
         } catch (SQLException e){
             throw new RuntimeException(e);
         }
-
-
-
     }
 }
