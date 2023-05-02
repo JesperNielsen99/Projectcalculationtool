@@ -2,7 +2,6 @@ package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepo;
-import com.example.projectcalculationtool.repositories.interfaces.IUserRepo;
 import org.springframework.stereotype.Service;
 
 @Service
