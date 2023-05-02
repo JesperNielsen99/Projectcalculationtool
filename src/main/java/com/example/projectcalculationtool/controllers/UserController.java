@@ -16,14 +16,18 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping("/sign-up")
+    @GetMapping("/signup")
     public String signUpForm(Model model){
+        System.out.println("test");
         model.addAttribute("user", new User());
+        System.out.println("test1");
+        model.addAttribute("roles", service.getRoles());
+        System.out.println("test2");
         return "sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String signUpSubmit(@ModelAttribute User user) {
+    public String signUpSubmit(@ModelAttribute("user") User user) {
         service.createUser(user);
         return "redirect:/login";
     }

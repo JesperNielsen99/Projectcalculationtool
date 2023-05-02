@@ -1,30 +1,54 @@
 package com.example.projectcalculationtool.repositories;
 
+import com.example.projectcalculationtool.models.Role;
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.IUserRepository;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("User_DB")
 public class UserRepository implements IUserRepository {
     String SQL = null;
     Connection connection = DB_Connector.getConnection();
     PreparedStatement preparedStatement = null;
+    Statement statement = null;
     ResultSet resultSet = null;
 
     @Override
     public void createUser(User user) {
         try {
-            SQL = "INSERT INTO user (user_first_name, user_last_name, user_mail, user_password, user_role) VALUES (?, ?, ?, ?, ?)";
+            System.out.println(user);
+            System.out.println(user);
+            SQL = "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setInt(5, user.getRole());
+            preparedStatement.setInt(5, user.getRoleID());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        try {
+            SQL = "SELECT * FROM role";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            List<Role> roles = new ArrayList<>();
+            while (resultSet.next()) {
+                System.out.println(resultSet.getInt("role_id"));
+                System.out.println(resultSet.getString("role_name"));
+                roles.add(new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
+            }
+            return roles;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
