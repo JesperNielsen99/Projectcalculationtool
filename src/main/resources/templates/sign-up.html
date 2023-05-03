@@ -11,7 +11,7 @@
 <form th:action="@{/sign-up}" th:object="${user}" th:method="post">
     <div>
         <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" th:field="*{firstName}" required>
+        <input type="text" id="firstName" th:field="*{firstName}" required autofocus>
     </div>
 
     <div>
@@ -37,12 +37,12 @@
     </div>
 
     <div>
-        <button type="submit">Create user</button>
+        <button type="submit">Sign-up</button>
     </div>
 </form>
 
-<a th:href="@{/login}">
-    <button class="createuser">Gå tilbage til login</button>
+<a th:href="@{/sign-in}">
+    <button class="sign-in">Back to sign-in</button>
 </a>
 
 </body>
