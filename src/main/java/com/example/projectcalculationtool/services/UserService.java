@@ -30,4 +30,13 @@ public class UserService {
     public User getUser(String password, String email) {
         return repository.getUser(password, email);
     }
+
+    public void deleteUser(int userID) {
+        repository.deleteUser(userID);
+    }
+
+
+    public void updateUser(User user) {
+        repository.updateUser(user);
+    }
 }
