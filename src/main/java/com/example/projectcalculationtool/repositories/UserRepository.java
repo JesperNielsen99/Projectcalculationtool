@@ -67,18 +67,19 @@ public class UserRepository implements IUserRepository {
         }
     }
 
-    /*
+
     @Override
-    public User updateUser(User user) {
+    public void updateUser(User user) {
         try {
-            SQL = "UPDATE user SET UserName = ?, Email = ?, Password = ? WHERE UserID = ?";
+            SQL = "UPDATE user SET user_first_name = ?, user_last_name = ?, user_password = ?, " +
+                    "user_role_id = ? WHERE user_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setInt(4, user.getUserID());
+            preparedStatement.setInt(4, user.getRoleID());
+            preparedStatement.setInt(5, user.getUserID());
             preparedStatement.executeUpdate();
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -86,31 +87,16 @@ public class UserRepository implements IUserRepository {
 
 
     @Override
-    public User DeleteUser(User user) {
+    public void deleteUser(int userID) {
         try {
-            SQL = "SELECT WishlistID FROM wishlist WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int wishlistID = resultSet.getInt("WishlistID");
-                SQL = "DELETE FROM wishlist_wish WHERE wishlistID = ?";
-                preparedStatement.setInt(1, wishlistID);
-                preparedStatement.executeUpdate();
-            }
-            SQL = "DELETE FROM wishlist WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.executeUpdate();
-            SQL = "DELETE FROM user WHERE UserID = ?";
+            SQL = "DELETE FROM user WHERE user_id = ?";
             preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, user.getUserID());
+            preparedStatement.setInt(1, userID);
             preparedStatement.executeUpdate();
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    } */
+    }
 
     public User getUser(String email, String password) {
         try {
