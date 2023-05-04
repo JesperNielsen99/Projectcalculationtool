@@ -35,3 +35,4 @@ SELECT * FROM user;
 SELECT * FROM project;
 SELECT * FROM subproject;
 SELECT * FROM task;
+SELECT * FROM role;

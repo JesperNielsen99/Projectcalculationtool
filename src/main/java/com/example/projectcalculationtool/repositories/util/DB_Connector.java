@@ -1,6 +1,6 @@
 package com.example.projectcalculationtool.repositories.util;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -15,7 +15,8 @@ public class DB_Connector {
 
     private static Connection connection;
 
-    @Value("${spring.datasource.url}")
+    @Value("${" + "${spring.profiles.active}" + ".spring.datasource.url}")
+    //@Value("dev."+"${spring.datasource.url}")
     public void setUrl(String url) {
         URL = url;
     }
