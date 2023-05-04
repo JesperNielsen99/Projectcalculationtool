@@ -4,6 +4,8 @@ import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
     private ITaskRepository taskRepository;
@@ -14,5 +16,9 @@ public class TaskService {
 
     public void createTask(Task task) {
         taskRepository.createTask(task);
+    }
+
+    public List<Task> getTasks(int subprojectID){
+        return taskRepository.getTasks(subprojectID);
     }
 }
