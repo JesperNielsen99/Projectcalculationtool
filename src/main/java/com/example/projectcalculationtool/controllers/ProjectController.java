@@ -20,7 +20,6 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-
     @GetMapping("/projectsPage")
     public String showProjects(Model model){
         int ID = 1;

@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.controllers;
 
+import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.services.SubprojectService;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class SubprojectController {
@@ -28,6 +32,15 @@ public class SubprojectController {
         subprojectService.createSubproject(subproject);
         return "redirect:/createSubproject"; // TODO: 01-05-2023 change redirect to project
     }
+
+    @GetMapping("/subprojects")
+    public String showProjects(@RequestParam() int projectID, Model model){
+        List<Subproject> projects = subprojectService.getSubprojects(projectID);
+        model.addAttribute("projectList", projects);
+        return "subprojects";
+    }
+
+
 
 
 }
