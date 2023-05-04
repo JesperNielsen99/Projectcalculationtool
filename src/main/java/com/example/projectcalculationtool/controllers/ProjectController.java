@@ -14,14 +14,25 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
-
     private ProjectService projectService;
 
     public ProjectController(ProjectService projectService){
         this.projectService = projectService;
     }
 
-    @GetMapping ("/createProject")
+
+    @GetMapping("/projectsPage")
+    public String showProjects(Model model){
+        int ID = 1;
+        List<Project> projects = projectService.getProjects(ID);
+        model.addAttribute("projectList", projects);
+        return "projectPage";
+    }
+
+
+    /* ------------------------------------ Create project ----------------------------------------- */
+
+    @GetMapping ("/projectsPage/createProject")
     public String createProject(Model model){ //TODO Establish how we get managerID
 
         Project project = new Project();
@@ -31,18 +42,10 @@ public class ProjectController {
         return "createProjectForm"; //TODO Make sure to get managerID trasnfered to form
     }
 
-
-    @PostMapping("/createProject")
+    @PostMapping("/projectsPage/createProject")
     public String addProject(@ModelAttribute Project project){
-        Project p = project;
-        projectService.createProject(p);
-        return "redirect:/createProject"; //TODO change redirect to homepage
-
+        projectService.createProject(project);
+        return "redirect:/projectsPage"; //TODO change redirect to homepage
     }
-
-
-
-
-
 
 }

@@ -9,18 +9,15 @@ import java.sql.*;
 
 @Repository()
 public class SubprojectRepository implements ISubprojectRepository {
-    String sql = null;
-    Connection connection = DB_Connector.getConnection();
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
 
     @Override
     public void createSubproject(Subproject subproject){
         try{
-            sql = "INSERT INTO subproject\n" +
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "INSERT INTO subproject\n" +
                     "(project_id, subproject_name, subproject_priority, subproject_deadline, subproject_duration, subproject_completed\n)"+
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subproject.getProjectID());
             preparedStatement.setString(2, subproject.getName());
             preparedStatement.setInt(3, subproject.getPriority());

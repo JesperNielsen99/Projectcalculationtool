@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TaskService {
-    ITaskRepository iTaskRepository;
+    private ITaskRepository taskRepository;
 
-    public TaskService(ITaskRepository iTaskRepository) {
-        this.iTaskRepository = iTaskRepository;
+    public TaskService(ITaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     public void createTask(Task task) {
-        iTaskRepository.createTask(task);
+        taskRepository.createTask(task);
     }
 }
