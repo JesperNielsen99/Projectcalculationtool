@@ -1,21 +1,20 @@
 package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.repositories.interfaces.IProjectRepo;
-import com.example.projectcalculationtool.repositories.interfaces.IUserRepo;
+import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectService {
 
-    IProjectRepo iProjectRepo;
+    IProjectRepository iProjectRepository;
 
-    public ProjectService(IProjectRepo iProjectRepo) {
-        this.iProjectRepo = iProjectRepo;
+    public ProjectService(IProjectRepository iProjectRepository) {
+        this.iProjectRepository = iProjectRepository;
     }
 
     public void createProject(Project project){
-        iProjectRepo.createProject(project);
+        iProjectRepository.createProject(project);
     }
 
 }

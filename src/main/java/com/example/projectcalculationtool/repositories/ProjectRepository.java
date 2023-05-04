@@ -1,7 +1,7 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.repositories.interfaces.IProjectRepo;
+import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Repository
-public class ProjectRepository implements IProjectRepo {
+public class ProjectRepository implements IProjectRepository {
 
 
     @Override
@@ -36,6 +36,8 @@ public class ProjectRepository implements IProjectRepo {
             throw new RuntimeException(e);
         }
     }
+
+
 }
 
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/main.css}" rel="stylesheet">
+  <title>User profile</title>
+</head>
+<body>
+
+<h1>User profile</h1>
+
+<p>First Name: <span th:text="${user.getFirstName()}"></span></p>
+<p>Last Name: <span th:text="${user.getLastName()}"></span></p>
+<p>Email: <span th:text="${user.getEmail()}"></span></p>
+<p>Password: <span th:text="${user.getPassword()}"></span></p>
+<p>Role: <span th:text="${role}"></span></p>
+
+<button type="button" onclick="history.back()">Back</button>
+
+<a th:href="@{/delete}">
+  <button class="deleteUser">Delete profile</button>
+</a>
+
+<a th:href="@{/update}">
+  <button class="deleteUser">Update profile</button>
+</a>
+
+<a th:href="@{/sign-out}">
+  <button class="logout">Sign-out</button>
+</a>
+</body>
+</html>
