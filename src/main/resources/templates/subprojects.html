@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sub projects</title>
+</head>
+<body>
+<div>
+    <a th:href="@{/createSubproject}">
+        <button>Add subproject</button>
+    </a>
+</div>
+
+<div>
+    <h1>Subproject list:</h1>
+    <tr th:each="subproject : ${subprojectList}">
+        <label>Name: </label>
+        <td th:text="${subproject.getName()}"/>
+        <label>Deadline: </label>
+        <td th:text="${subproject.getDeadline()}"/>
+        <label>Duration: </label>
+        <td th:text="${subproject.getDuration()}"/>
+        <label>Completed: </label>
+        <td th:text="${subproject.isCompleted()}"/>
+        <td>
+            <form method="get" th:action="@{/tasks}">
+                <input type="hidden" name="subprojectId" th:value="${subproject.subprojectID}" />
+                <button type="submit">See Tasks</button>
+            </form>
+        </td>
+        <br>
+    </tr>
+</div>
+</body>
+</html>

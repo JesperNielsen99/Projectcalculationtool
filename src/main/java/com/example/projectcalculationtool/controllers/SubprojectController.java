@@ -34,9 +34,9 @@ public class SubprojectController {
     }
 
     @GetMapping("/subprojects")
-    public String showProjects(@RequestParam() int projectID, Model model){
-        List<Subproject> projects = subprojectService.getSubprojects(projectID);
-        model.addAttribute("projectList", projects);
+    public String getSubprojects(@RequestParam() int projectID, Model model){
+        List<Subproject> subprojects = subprojectService.getSubprojects(projectID);
+        model.addAttribute("subprojectList", subprojects);
         return "subprojects";
     }
 
