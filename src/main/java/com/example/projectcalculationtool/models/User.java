@@ -10,18 +10,6 @@ public class User {
 
     public User() {}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID=" + userID +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roleID=" + roleID +
-                '}';
-    }
-
     public User(int userID, String firstName, String lastName, String email, String password, int roleID) {
         this.userID = userID;
         this.firstName = firstName;

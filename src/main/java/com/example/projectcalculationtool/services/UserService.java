@@ -22,4 +22,21 @@ public class UserService {
     public List<Role> getRoles() {
         return repository.getRoles();
     }
+
+    public String getRole(int roleID) {
+        return repository.getRole(roleID);
+    }
+
+    public User getUser(String password, String email) {
+        return repository.getUser(password, email);
+    }
+
+    public void deleteUser(int userID) {
+        repository.deleteUser(userID);
+    }
+
+
+    public void updateUser(User user) {
+        repository.updateUser(user);
+    }
 }

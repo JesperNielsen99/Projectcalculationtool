@@ -21,8 +21,6 @@ public class UserRepository implements IUserRepository {
     @Override
     public void createUser(User user) {
         try {
-            System.out.println(user);
-            System.out.println(user);
             SQL = "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, user.getFirstName());
@@ -44,8 +42,6 @@ public class UserRepository implements IUserRepository {
             resultSet = statement.executeQuery(SQL);
             List<Role> roles = new ArrayList<>();
             while (resultSet.next()) {
-                System.out.println(resultSet.getInt("role_id"));
-                System.out.println(resultSet.getString("role_name"));
                 roles.add(new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
             }
             return roles;
@@ -54,18 +50,18 @@ public class UserRepository implements IUserRepository {
         }
     }
 
-    /*
     @Override
-    public User updateUser(User user) {
+    public String getRole(int roleID) {
         try {
-            SQL = "UPDATE user SET UserName = ?, Email = ?, Password = ? WHERE UserID = ?";
+            SQL = "SELECT role_name FROM role WHERE role_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setInt(4, user.getUserID());
-            preparedStatement.executeUpdate();
-            return user;
+            preparedStatement.setInt(1, roleID);
+            resultSet = preparedStatement.executeQuery();
+            String role = "";
+            if (resultSet.next()) {
+                role = resultSet.getString("role_name");
+            }
+            return role;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -73,27 +69,30 @@ public class UserRepository implements IUserRepository {
 
 
     @Override
-    public User DeleteUser(User user) {
+    public void updateUser(User user) {
         try {
-            SQL = "SELECT WishlistID FROM wishlist WHERE UserID = ?";
+            SQL = "UPDATE user SET user_first_name = ?, user_last_name = ?, user_password = ?, " +
+                    "user_role_id = ? WHERE user_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int wishlistID = resultSet.getInt("WishlistID");
-                SQL = "DELETE FROM wishlist_wish WHERE wishlistID = ?";
-                preparedStatement.setInt(1, wishlistID);
-                preparedStatement.executeUpdate();
-            }
-            SQL = "DELETE FROM wishlist WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(4, user.getRoleID());
+            preparedStatement.setInt(5, user.getUserID());
             preparedStatement.executeUpdate();
-            SQL = "DELETE FROM user WHERE UserID = ?";
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
+    public void deleteUser(int userID) {
+        try {
+            SQL = "DELETE FROM user WHERE user_id = ?";
             preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, user.getUserID());
+            preparedStatement.setInt(1, userID);
             preparedStatement.executeUpdate();
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -101,18 +100,25 @@ public class UserRepository implements IUserRepository {
 
     public User getUser(String email, String password) {
         try {
-            SQL = "SELECT * FROM user WHERE Email = ? AND Password = ?";
+            SQL = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
             PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
             preparedStatementUserID.setString(1, email);
             preparedStatementUserID.setString(2, password);
             resultSet = preparedStatementUserID.executeQuery();
             User user = null;
             if (resultSet.next()) {
-                user = new User( resultSet.getInt("UserID"), resultSet.getString("UserName"), resultSet.getString("Email"), resultSet.getString("Password"));
+                user = new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("user_first_name"),
+                        resultSet.getString("user_last_name"),
+                        resultSet.getString("user_email"),
+                        resultSet.getString("user_password"),
+                        resultSet.getInt("user_role_id")
+                        );
             }
             return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 }
