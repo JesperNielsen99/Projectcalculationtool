@@ -9,7 +9,6 @@ import java.sql.*;
 
 @Repository()
 public class SubprojectRepository implements ISubprojectRepository {
-
     @Override
     public void createSubproject(Subproject subproject){
         try{
