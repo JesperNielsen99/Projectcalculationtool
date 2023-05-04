@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SubprojectService {
-    private final ISubprojectRepository subprojectRepository;
+    private ISubprojectRepository subprojectRepository;
 
     public SubprojectService(ISubprojectRepository subprojectRepository) {
         this.subprojectRepository = subprojectRepository;
