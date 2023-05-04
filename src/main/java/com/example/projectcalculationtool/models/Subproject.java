@@ -7,17 +7,17 @@ public class Subproject {
     private int projectID;
     private String name;
     private int priority;
-    private LocalDate deadline;
     private int duration;
+    private LocalDate deadline;
     private Boolean completed;
 
-    public Subproject(int subprojectID, int projectID, String name, int priority, LocalDate deadline, int duration, Boolean completed) {
+    public Subproject(int subprojectID, int projectID, String name, int priority, int duration, LocalDate deadline, Boolean completed) {
         this.subprojectID = subprojectID;
         this.projectID = projectID;
         this.name = name;
         this.priority = priority;
-        this.deadline = deadline;
         this.duration = duration;
+        this.deadline = deadline;
         this.completed = completed;
     }
 
