@@ -3,40 +3,25 @@ package com.example.projectcalculationtool.models;
 import java.time.LocalDate;
 
 public class Project {
-    private String name;
-    private LocalDate deadline;
-    private int duration;
-    private boolean completed;
     private int projectID;
     private int ManagerID;
+    private String name;
+    private int duration;
+    private LocalDate deadline;
+    private boolean completed;
 
     public Project() {
     }
 
-    public Project(String name, LocalDate deadline, int duration, boolean completed, int projectID, int managerID) {
-        this.name = name;
-        this.deadline = deadline;
-        this.duration = duration;
-        this.completed = completed;
+    public Project(int projectID, int managerID, String name, int duration, LocalDate deadline, boolean completed) {
         this.projectID = projectID;
-        ManagerID = managerID;
+        this.ManagerID = managerID;
+        this.name = name;
+        this.duration = duration;
+        this.deadline = deadline;
+        this.completed = completed;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
 
     public int getProjectID() {
         return projectID;
@@ -46,18 +31,20 @@ public class Project {
         return ManagerID;
     }
 
-    public void setName(String name) { this.name = name; }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
+    public String getName() {
+        return name;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public boolean isCompleted() {
+        return completed;
     }
 
     public void setProjectID(int projectID) {
@@ -66,5 +53,21 @@ public class Project {
 
     public void setManagerID(int managerID) {
         ManagerID = managerID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

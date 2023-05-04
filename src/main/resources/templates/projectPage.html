@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+</head>
+<body>
+    <div>
+        <a th:href="@{/projectsPage/createProject}">
+            <button>Add project</button>
+        </a>
+    </div>
+
+    <div>
+        <h1>Project list:</h1>
+        <tr th:each="project : ${projectList}">
+            <label>Name: </label>
+            <td th:text="${project.getName()}"/>
+            <label>Deadline: </label>
+            <td th:text="${project.getDeadline()}"/>
+            <label>Duration: </label>
+            <td th:text="${project.getDuration()}"/>
+            <label>Completed: </label>
+            <td th:text="${project.isCompleted()}"/>
+            <div>
+                <a href="#">
+                    <button>See Overview</button>
+                </a>
+            </div>
+            <br>
+
+        </tr>
+    </div>
+</body>
+</html>

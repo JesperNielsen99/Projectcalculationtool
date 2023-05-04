@@ -9,34 +9,34 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private IUserRepository repository;
+    private IUserRepository userRepository;
 
-    public UserService(IUserRepository repository) {
-        this.repository = repository;
+    public UserService(IUserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public void createUser(User user) {
-        repository.createUser(user);
+        userRepository.createUser(user);
     }
 
     public List<Role> getRoles() {
-        return repository.getRoles();
+        return userRepository.getRoles();
     }
 
     public String getRole(int roleID) {
-        return repository.getRole(roleID);
+        return userRepository.getRole(roleID);
     }
 
     public User getUser(String password, String email) {
-        return repository.getUser(password, email);
+        return userRepository.getUser(password, email);
     }
 
     public void deleteUser(int userID) {
-        repository.deleteUser(userID);
+        userRepository.deleteUser(userID);
     }
 
 
     public void updateUser(User user) {
-        repository.updateUser(user);
+        userRepository.updateUser(user);
     }
 }
