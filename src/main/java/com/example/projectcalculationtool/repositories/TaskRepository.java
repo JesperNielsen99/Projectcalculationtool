@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class TaskRepository implements ITaskRepository {
@@ -31,5 +32,10 @@ public class TaskRepository implements ITaskRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Task> getTasks(int subprojectID) {
+        return null;
     }
 }
