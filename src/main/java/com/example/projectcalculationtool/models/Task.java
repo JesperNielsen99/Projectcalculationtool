@@ -6,20 +6,22 @@ public class Task {
     private int taskID;
     private int subprojectID;
     private String name;
+    private String description;
     private int priority;
-    private LocalDate deadline;
     private int duration;
+    private LocalDate deadline;
     private Boolean completed;
 
     public Task(){}
 
-    public Task(int taskID, int subprojectID, String name, int priority, LocalDate deadline, int duration, Boolean completed) {
+    public Task(int taskID, int subprojectID, String name, String description, int priority, int duration, LocalDate deadline, Boolean completed) {
         this.taskID = taskID;
         this.subprojectID = subprojectID;
         this.name = name;
+        this.description = description;
         this.priority = priority;
-        this.deadline = deadline;
         this.duration = duration;
+        this.deadline = deadline;
         this.completed = completed;
     }
 
@@ -47,6 +49,14 @@ public class Task {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getPriority() {
         return priority;
     }
@@ -55,20 +65,20 @@ public class Task {
         this.priority = priority;
     }
 
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
-
     public int getDuration() {
         return duration;
     }
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
     }
 
     public Boolean getCompleted() {
