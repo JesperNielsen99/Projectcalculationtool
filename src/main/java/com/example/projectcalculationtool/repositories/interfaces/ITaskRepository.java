@@ -10,7 +10,7 @@ public interface ITaskRepository {
 
     List<Task> getTasks(int subprojectID);
 
-    Task getTask();
+    Task getTask(int taskID);
 
     void updateTask(Task task);
 }
