@@ -38,7 +38,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public List<Project> getProject(int ID) {
+    public List<Project> getProjects(int managerID) {
         List<Project> projectList = new ArrayList<>();
 
         try {
@@ -47,7 +47,7 @@ public class ProjectRepository implements IProjectRepository {
             String SQL = "SELECT * FROM project WHERE project_manager_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setInt(1,ID);
+            preparedStatement.setInt(1,managerID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
