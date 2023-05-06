@@ -17,14 +17,16 @@ public class TaskRepository implements ITaskRepository {
     public void createTask(Task task) {
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "INSERT INTO x (x,x,x,x,x) VALUES (?,?,?,?,?);";
+            String SQL = "INSERT INTO task (subproject_id, task_name, task_description, task_priority, task_duration, task_deadline, task_completed) VALUES (?,?,?,?,?,?,?);";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
-            preparedStatement.setString(1, task.getName());
-            preparedStatement.setDate(2, Date.valueOf(task.getDeadline()));
-            preparedStatement.setInt(3, task.getDuration());
-            preparedStatement.setBoolean(4, task.getCompleted());
-            preparedStatement.setInt(5, task.getSubprojectID());
+            preparedStatement.setInt(1,task.getSubprojectID());
+            preparedStatement.setString(2, task.getName());
+            preparedStatement.setString(3, task.getDescription());
+            preparedStatement.setInt(4,task.getPriority());
+            preparedStatement.setInt(5,task.getDuration());
+            preparedStatement.setDate(6, Date.valueOf(task.getDeadline()));
+            preparedStatement.setBoolean(7, task.getCompleted());
 
             preparedStatement.executeUpdate();
 
