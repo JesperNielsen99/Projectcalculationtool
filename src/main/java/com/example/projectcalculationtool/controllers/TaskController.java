@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TaskController {
@@ -27,5 +28,17 @@ public class TaskController {
     public String addTask(@ModelAttribute Task task) {
         taskService.createTask(task);
         return "redirect:/createTaskFrom"; //TODO needs a 'mainPage' as landing page + an ID
+    }
+
+    @GetMapping()
+    public String updateTask(@RequestParam int taskID,Model model){
+
+        return null;
+    }
+
+    @PostMapping()
+    public String updateTask(@ModelAttribute Task task){
+        taskService.updateTask(task);
+        return null;
     }
 }
