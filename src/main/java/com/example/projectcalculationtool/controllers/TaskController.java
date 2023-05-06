@@ -31,10 +31,10 @@ public class TaskController {
     }
 
     @GetMapping()
-    public String updateTask(@RequestParam int taskID,Model model){
+    public String updateTask(@RequestParam int taskID, Model model){
         Task task = taskService.getTask(taskID);
         model.addAttribute("task", task);
-        return null;
+        return "updateTask";
     }
 
     @PostMapping()
