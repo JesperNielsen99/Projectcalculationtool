@@ -30,14 +30,14 @@ public class TaskController {
         return "redirect:/createTaskFrom"; //TODO needs a 'mainPage' as landing page + an ID
     }
 
-    @GetMapping()
+    @GetMapping("/updateTask")
     public String updateTask(@RequestParam int taskID, Model model){
         Task task = taskService.getTask(taskID);
         model.addAttribute("task", task);
         return "updateTask";
     }
 
-    @PostMapping()
+    @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task){
         taskService.updateTask(task);
         return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
