@@ -21,4 +21,8 @@ public class TaskService {
     public List<Task> getTasks(int subprojectID){
         return taskRepository.getTasks(subprojectID);
     }
+
+    public void updateTask(Task task) {
+        taskRepository.updateTask(task);
+    }
 }
