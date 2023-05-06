@@ -5,10 +5,20 @@
     <title>Create Task</title>
 </head>
 <body>
-<form action="@{createTask}" th:method="post" th:object="${task}">
+<form th:action="@{/addTask}" th:method="post" th:object="${task}">
+
     <div>
-        <label>Name </label>
+        <input type="hidden" id="subprojectID" th:field="*{subprojectID}">
+    </div>
+
+    <div>
+        <label>Name</label>
         <input type="text" id="name" th:field="*{name}">
+    </div>
+
+    <div>
+        <label>Name</label>
+        <textarea name="description" id="taskDescription" cols="30" rows="10" th:field="*{description}"></textarea>
     </div>
 
     <div>
