@@ -10,11 +10,11 @@ public class Task {
     private int priority;
     private int duration;
     private LocalDate deadline;
-    private Boolean completed;
+    private Boolean isCompleted;
 
     public Task(){}
 
-    public Task(int taskID, int subprojectID, String name, String description, int priority, int duration, LocalDate deadline, Boolean completed) {
+    public Task(int taskID, int subprojectID, String name, String description, int priority, int duration, LocalDate deadline, Boolean isCompleted) {
         this.taskID = taskID;
         this.subprojectID = subprojectID;
         this.name = name;
@@ -22,7 +22,7 @@ public class Task {
         this.priority = priority;
         this.duration = duration;
         this.deadline = deadline;
-        this.completed = completed;
+        this.isCompleted = isCompleted;
     }
 
     public int getTaskID() {
@@ -81,11 +81,11 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public Boolean getCompleted() {
-        return completed;
+    public Boolean getIsCompleted() {
+        return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

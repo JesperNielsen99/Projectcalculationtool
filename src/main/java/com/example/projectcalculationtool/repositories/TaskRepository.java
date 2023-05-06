@@ -26,7 +26,7 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setInt(4,task.getPriority());
             preparedStatement.setInt(5,task.getDuration());
             preparedStatement.setDate(6, Date.valueOf(task.getDeadline()));
-            preparedStatement.setBoolean(7, task.getCompleted());
+            preparedStatement.setBoolean(7, task.getIsCompleted());
 
             preparedStatement.executeUpdate();
 
