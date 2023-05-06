@@ -9,4 +9,6 @@ public interface ITaskRepository {
     void createTask(Task task);
 
     List<Task> getTasks(int subprojectID);
+
+    void updateTask(Task task);
 }
