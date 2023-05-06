@@ -68,7 +68,25 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public void updateTask(Task task) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String SQL = "UPDATE task SET task_name=?, task_description=?, task_priority=?, task_duration=?, task_deadline=?, task_completed=? WHERE task_id=?;";
 
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            preparedStatement.setString(1,task.getName());
+            preparedStatement.setString(2,task.getDescription());
+            preparedStatement.setInt(3,task.getPriority());
+            preparedStatement.setInt(4,task.getPriority());
+            preparedStatement.setDate(5,Date.valueOf(task.getDeadline()));
+            preparedStatement.setBoolean(6,task.getIsCompleted());
+
+            preparedStatement.setInt(7,task.getTaskID());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
