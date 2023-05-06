@@ -63,6 +63,11 @@ public class TaskRepository implements ITaskRepository {
             throw new RuntimeException(e);
         }
 
+        return tasks;
+    }
+
+    @Override
+    public Task getTask() {
         return null;
     }
 
