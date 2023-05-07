@@ -4,10 +4,7 @@ import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TaskController {
@@ -17,14 +14,14 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping()
+    @GetMapping("/createTask")
     public String createTask(Model model) { //TODO needs an subprojectID or Session
         Task task = new Task();
         model.addAttribute("task", task);
         return "createTaskForm";
     }
 
-    @PostMapping()
+    @PostMapping("/createTask")
     public String addTask(@ModelAttribute Task task) {
         taskService.createTask(task);
         return "redirect:/createTaskFrom"; //TODO needs a 'mainPage' as landing page + an ID
@@ -40,6 +37,12 @@ public class TaskController {
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task){
         taskService.updateTask(task);
+        return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
+    }
+
+    @GetMapping("/deleteTask")
+    public String deleteTask(@RequestParam int taskID){
+        taskService.deleteTask(taskID);
         return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
     }
 }
