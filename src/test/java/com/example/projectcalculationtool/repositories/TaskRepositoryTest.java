@@ -16,8 +16,6 @@ class TaskRepositoryTest {
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
     private DB_Connector db_connector;
     private TaskTestDB testDB;
     private Task task1;

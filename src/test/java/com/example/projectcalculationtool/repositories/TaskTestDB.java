@@ -1,11 +1,12 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+@SpringBootTest
 public class TaskTestDB {
 
     public void taskTestDB(){
