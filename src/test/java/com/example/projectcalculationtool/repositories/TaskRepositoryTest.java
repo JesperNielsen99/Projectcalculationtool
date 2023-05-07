@@ -77,6 +77,11 @@ class TaskRepositoryTest {
 
     @Test
     void getTask() {
+        taskRepository.createTask(task1);
+
+        Task taskFound = taskRepository.getTask(3);
+
+        Assertions.assertEquals(task1.getName(),taskFound.getName());
     }
 
     @Test
