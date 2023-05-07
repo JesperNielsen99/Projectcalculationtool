@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
     private DB_Connector db_connector;
+    private TaskTestDB testDB;
     private Task task1;
     private Task task2;
 
@@ -24,12 +26,14 @@ class TaskRepositoryTest {
     @BeforeEach
     void setUp(){
         db_connector = new DB_Connector();
-        db_connector.setUrl("jdbc:mysql://localhost:3306/projectcalculationtool_db");
+        db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
+        testDB = new TaskTestDB();
+        testDB.taskTestDB();
 
-        task1 = new Task(3,1,"T-Task1", "T-Description1", 1,1, LocalDate.now(),false);
-        task2 = new Task(4,1,"T-Task2", "T-Description2", 1,1, LocalDate.now(),false);
+        task1 = new Task(1,1,"T-Task1", "T-Description1", 1,1, LocalDate.now(),false);
+        task2 = new Task(2,1,"T-Task2", "T-Description2", 1,1, LocalDate.now(),false);
     }
 
     @Test
@@ -48,7 +52,7 @@ class TaskRepositoryTest {
 
         List<Task> tasks = taskRepository.getTasks(1);
 
-        Assertions.assertEquals(3,tasks.size());
+        Assertions.assertEquals(2,tasks.size());
     }
 
     @Test
@@ -58,7 +62,7 @@ class TaskRepositoryTest {
 
         List<Task> tasks = taskRepository.getTasks(1);
 
-        Assertions.assertEquals(tasks.get(1).getName(),task1.getName());
+        Assertions.assertEquals(tasks.get(0).getName(),task1.getName());
     }
 
     @Test
@@ -68,14 +72,14 @@ class TaskRepositoryTest {
 
         List<Task> tasks = taskRepository.getTasks(1);
 
-        Assertions.assertEquals(tasks.get(2).getName(),task2.getName());
+        Assertions.assertEquals(tasks.get(1).getName(),task2.getName());
     }
 
     @Test
     void getTask() {
         taskRepository.createTask(task1);
 
-        Task taskFound = taskRepository.getTask(3);
+        Task taskFound = taskRepository.getTask(1);
 
         Assertions.assertEquals(task1.getName(),taskFound.getName());
     }
@@ -87,7 +91,7 @@ class TaskRepositoryTest {
         task1.setName("T-Task3");
         taskRepository.updateTask(task1);
 
-        Task taskFound = taskRepository.getTask(3);
+        Task taskFound = taskRepository.getTask(1);
         Assertions.assertEquals(task1.getName(),taskFound.getName());
     }
 
@@ -98,7 +102,7 @@ class TaskRepositoryTest {
         task1.setDescription("T-Description3");
         taskRepository.updateTask(task1);
 
-        Task taskFound = taskRepository.getTask(3);
+        Task taskFound = taskRepository.getTask(1);
         Assertions.assertEquals(task1.getDescription(),taskFound.getDescription());
     }
 
@@ -109,7 +113,7 @@ class TaskRepositoryTest {
         task1.setIsCompleted(true);
         taskRepository.updateTask(task1);
 
-        Task taskFound = taskRepository.getTask(3);
+        Task taskFound = taskRepository.getTask(1);
         Assertions.assertEquals(task1.getIsCompleted(),taskFound.getIsCompleted());
     }
 
@@ -122,4 +126,5 @@ class TaskRepositoryTest {
         Task taskFound = taskRepository.getTask(task1.getTaskID());
         Assertions.assertNull(taskFound);
     }
+
 }
