@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,8 +29,9 @@ class TaskRepositoryTest {
         db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
+        Connection conn = DB_Connector.getConnection();
         testDB = new TaskTestDB();
-        testDB.taskTestDB();
+        testDB.taskTestDB(conn);
 
         task1 = new Task(1,1,"T-Task1", "T-Description1", 1,1, LocalDate.now(),false);
         task2 = new Task(2,1,"T-Task2", "T-Description2", 1,1, LocalDate.now(),false);
