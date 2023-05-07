@@ -18,7 +18,7 @@ public class TaskTestDB {
 
             statement.addBatch("SET foreign_key_checks = 0;");
 
-            statement.addBatch("DROP TABLE task");
+            statement.addBatch("DROP TABLE IF EXISTS task");
 
             statement.addBatch("CREATE TABLE task (\n" +
                     "\ttask_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
