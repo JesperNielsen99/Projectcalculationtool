@@ -2,18 +2,14 @@ package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TaskRepositoryTest {
@@ -85,7 +81,36 @@ class TaskRepositoryTest {
     }
 
     @Test
-    void updateTask() {
+    void updateTaskName() {
+        taskRepository.createTask(task1);
+
+        task1.setName("T-Task3");
+        taskRepository.updateTask(task1);
+
+        Task taskFound = taskRepository.getTask(3);
+        Assertions.assertEquals(task1.getName(),taskFound.getName());
+    }
+
+    @Test
+    void updateTaskDescription() {
+        taskRepository.createTask(task1);
+
+        task1.setDescription("T-Description3");
+        taskRepository.updateTask(task1);
+
+        Task taskFound = taskRepository.getTask(3);
+        Assertions.assertEquals(task1.getDescription(),taskFound.getDescription());
+    }
+
+    @Test
+    void updateTaskIsCompletedTrue() {
+        taskRepository.createTask(task1);
+
+        task1.setIsCompleted(true);
+        taskRepository.updateTask(task1);
+
+        Task taskFound = taskRepository.getTask(3);
+        Assertions.assertEquals(task1.getIsCompleted(),taskFound.getIsCompleted());
     }
 
     @Test
@@ -97,10 +122,4 @@ class TaskRepositoryTest {
         Task taskFound = taskRepository.getTask(task1.getTaskID());
         Assertions.assertNull(taskFound);
     }
-
-/*    @AfterEach
-    void after(){
-        taskRepository.deleteTask(task1.getTaskID());
-        taskRepository.deleteTask(task2.getTaskID());
-    }*/
 }
