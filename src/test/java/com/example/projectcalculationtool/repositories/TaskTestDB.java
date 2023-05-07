@@ -1,11 +1,13 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Component
 public class TaskTestDB {
 
     public void taskTestDB(){
