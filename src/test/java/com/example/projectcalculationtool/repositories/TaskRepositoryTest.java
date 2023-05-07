@@ -2,7 +2,6 @@ package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ class TaskRepositoryTest {
 
     @Autowired
     private TaskRepository taskRepository;
-    private DB_Connector db_connector;
+    private DB_Connector db_connector = new DB_Connector();
     private TaskTestDB testDB;
     private Task task1;
     private Task task2;
@@ -25,7 +24,6 @@ class TaskRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        db_connector = new DB_Connector();
         db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
