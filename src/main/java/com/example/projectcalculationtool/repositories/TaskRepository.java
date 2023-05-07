@@ -124,7 +124,17 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public void deleteTask(int taskID) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String SQL = "DElETE FROM task WHERE task_id=?;";
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            preparedStatement.setInt(1, taskID);
 
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
