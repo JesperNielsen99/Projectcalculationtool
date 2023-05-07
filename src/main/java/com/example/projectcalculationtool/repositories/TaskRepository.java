@@ -122,4 +122,9 @@ public class TaskRepository implements ITaskRepository {
         }
     }
 
+    @Override
+    public void deleteTask(int taskID) {
+
+    }
+
 }

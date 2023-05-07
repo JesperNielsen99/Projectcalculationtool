@@ -13,4 +13,6 @@ public interface ITaskRepository {
     Task getTask(int taskID);
 
     void updateTask(Task task);
+
+    void deleteTask(int taskID);
 }
