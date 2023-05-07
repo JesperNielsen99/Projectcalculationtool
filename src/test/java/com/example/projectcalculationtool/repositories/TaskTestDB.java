@@ -6,13 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-@SpringBootTest
+
 public class TaskTestDB {
 
-    public void taskTestDB(){
+    public void taskTestDB(Connection conn){
         try{
-            Connection conn = DB_Connector.getConnection();
-
             Statement statement = conn.createStatement();
 
             conn.setAutoCommit(false);
