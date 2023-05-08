@@ -61,6 +61,36 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Subproject getSubproject(int subprojectID) {
+        Subproject subproject = null;
+        try {
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "SELETC * FROM subproject WHERE subproject_id= ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subprojectID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                subproject = new Subproject(
+                        resultSet.getInt("subproject_id"),
+                        resultSet.getInt("project_id"),
+                        resultSet.getString("subproject_name"),
+                        resultSet.getInt("subproject_priority"),
+                        resultSet.getInt("subproject_duration"),
+                        LocalDate.parse(resultSet.getString("subproject_deadline")),
+                        resultSet.getBoolean("subproject_completed")
+                );
+            }
+            return subproject;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public  void updateSubproject(Subproject subproject){
         try {

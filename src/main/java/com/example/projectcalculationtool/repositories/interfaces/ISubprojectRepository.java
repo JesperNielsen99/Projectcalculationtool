@@ -10,5 +10,7 @@ public interface ISubprojectRepository {
 
     List<Subproject> getSubprojects(int projectID);
 
+    Subproject getSubproject(int subprojectID);
+
     void updateSubproject(Subproject subproject);
 }

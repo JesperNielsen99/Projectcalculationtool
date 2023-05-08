@@ -22,4 +22,11 @@ public class SubprojectService {
         return subprojectRepository.getSubprojects(projectID);
     }
 
+    public Subproject getSubproject(int subprojectID){
+        return subprojectRepository.getSubproject(subprojectID);
+    }
+    public  void updateSubproject(Subproject subproject){
+        subprojectRepository.updateSubproject(subproject);
+    }
+
 }

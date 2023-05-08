@@ -1,6 +1,6 @@
 package com.example.projectcalculationtool.controllers;
 
-import com.example.projectcalculationtool.models.Project;
+
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.services.SubprojectService;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class SubprojectController {
     @PostMapping("/createSubproject")
     public String createSubproject(@ModelAttribute Subproject subproject){
         subprojectService.createSubproject(subproject);
-        return "redirect:/createSubproject"; // TODO: 01-05-2023 change redirect to project
+        return "redirect:/createSubproject";
     }
 
     @GetMapping("/subprojects")
@@ -38,6 +38,19 @@ public class SubprojectController {
         List<Subproject> subprojects = subprojectService.getSubprojects(projectID);
         model.addAttribute("subprojectList", subprojects);
         return "subprojects";
+    }
+
+    @GetMapping("/updateSubproject")
+    public String updateSubproject(@RequestParam int subprojectID, Model model){
+        Subproject subproject = subprojectService.getSubproject(subprojectID);
+        model.addAttribute("subproject", subproject);
+        return "updateSubproject";
+    }
+
+    @PostMapping("/updateSubproject")
+    public String updateSubproject(@ModelAttribute Subproject subproject){
+        subprojectService.updateSubproject(subproject);
+        return "redirect:/subprojects?projectID=" + subproject.getProjectID();
     }
 
 
