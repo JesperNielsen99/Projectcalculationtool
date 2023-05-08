@@ -26,17 +26,17 @@ class UserRepositoryTest {
 
     @Test
     void getRoles() {
-        /*int expected = 2;
+        int expected = 2;
         List<Role> roles = repository.getRoles();
         int actual = roles.size();
-        assert(expected == actual);*/
+        assert(expected == actual);
     }
 
     @Test
     void getRole() {
-        /*String expected = "Admin";
+        String expected = "Admin";
         String actual = repository.getRole(1);
-        assert(expected.equals(actual));*/
+        assert(expected.equals(actual));
     }
 
     @Test
