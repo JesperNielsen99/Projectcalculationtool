@@ -23,6 +23,8 @@ class TaskRepositoryTest {
     @Autowired
     private DB_Connector db_connector;
 
+    private TaskTestDB testDB;
+
     private Task task1;
     private Task task2;
 
@@ -32,43 +34,12 @@ class TaskRepositoryTest {
         db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
-        taskTestDB();
+
+        testDB = new TaskTestDB();
+        testDB.taskTestDB();
 
         task1 = new Task(1,1,"T-Task1", "T-Description1", 1,1, LocalDate.now(),false);
         task2 = new Task(2,1,"T-Task2", "T-Description2", 1,1, LocalDate.now(),false);
-    }
-
-    public void taskTestDB(){
-        try{
-            Connection con = DB_Connector.getConnection();
-
-            Statement statement = con.createStatement();
-
-            con.setAutoCommit(false);
-
-            statement.addBatch("SET foreign_key_checks = 0;");
-
-            statement.addBatch("DROP TABLE IF EXISTS task");
-
-            statement.addBatch("CREATE TABLE task (\n" +
-                    "\ttask_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
-                    "    subproject_id INT NOT NULL,\n" +
-                    "    task_name VARCHAR(255) NOT NULL,\n" +
-                    "    task_description VARCHAR(255) NOT NULL,\n" +
-                    "    task_priority INT NOT NULL,\n" +
-                    "    task_duration INT NOT NULL,\n" +
-                    "    task_deadline DATE NOT NULL,\n" +
-                    "    task_completed TINYINT NOT NULL,\n" +
-                    "    PRIMARY KEY (task_id),\n" +
-                    "    FOREIGN KEY (subproject_id) REFERENCES subproject (subproject_id) ON DELETE CASCADE ON UPDATE CASCADE\n" +
-                    ");");
-
-            statement.executeBatch();
-            con.commit();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Test
