@@ -23,4 +23,7 @@ public class ProjectService {
         return projectRepository.getProjects(ID);
     }
 
+    public void updateProject(Project project) {
+        projectRepository.updateProject(project);
+    }
 }
