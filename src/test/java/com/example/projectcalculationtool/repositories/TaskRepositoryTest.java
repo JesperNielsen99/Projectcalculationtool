@@ -40,11 +40,11 @@ class TaskRepositoryTest {
 
     public void taskTestDB(){
         try{
-            Connection conn = DB_Connector.getConnection();
+            Connection con = DB_Connector.getConnection();
 
-            Statement statement = conn.createStatement();
+            Statement statement = con.createStatement();
 
-            conn.setAutoCommit(false);
+            con.setAutoCommit(false);
 
             statement.addBatch("SET foreign_key_checks = 0;");
 
@@ -64,7 +64,7 @@ class TaskRepositoryTest {
                     ");");
 
             statement.executeBatch();
-            conn.commit();
+            con.commit();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
