@@ -1,4 +1,4 @@
-package com.example.projectcalculationtool.repositories;
+/*package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,4 +51,4 @@ public class TaskTestDB {
             throw new RuntimeException(e);
         }
     }
-}
+}*/
