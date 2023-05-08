@@ -27,8 +27,8 @@ class TaskRepositoryTest {
     @BeforeEach
 
     void setUp() {
-        //testDB = new TaskTestDB();
-        //testDB.taskTestDB();
+        testDB = new TaskTestDB();
+        testDB.taskTestDB();
 
         task1 = new Task(1, 1, "T-Task1", "T-Description1", 1, 1, LocalDate.now(), false);
         task2 = new Task(2, 1, "T-Task2", "T-Description2", 1, 1, LocalDate.now(), false);
