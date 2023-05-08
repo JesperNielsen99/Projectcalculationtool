@@ -1,10 +1,6 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Connection;
@@ -23,7 +19,6 @@ public class TaskTestDB {
             conn.setAutoCommit(false);
 
             statement.addBatch("SET foreign_key_checks = 0;");
-
             statement.addBatch("DROP TABLE IF EXISTS task");
 
             statement.addBatch("CREATE TABLE task (\n" +
