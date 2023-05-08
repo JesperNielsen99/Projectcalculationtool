@@ -1,4 +1,3 @@
-/*
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
@@ -11,18 +10,15 @@ import java.sql.Statement;
 
 
 public class TaskTestDB {
-    private DB_Connector db_connector;
-    Connection conn;
 
     @BeforeEach
     void setUp(){
-        db_connector = new DB_Connector();
+        DB_Connector db_connector = new DB_Connector();
         db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
-        conn = DB_Connector.getConnection();
     }
-
+    @Test
     public void taskTestDB(){
         try{
             Connection conn = DB_Connector.getConnection();
@@ -56,4 +52,3 @@ public class TaskTestDB {
         }
     }
 }
-*/
