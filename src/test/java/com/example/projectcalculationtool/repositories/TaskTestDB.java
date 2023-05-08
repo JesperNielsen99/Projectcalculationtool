@@ -17,18 +17,18 @@ import java.sql.Statement;
 public class TaskTestDB {
     @Autowired
     private DB_Connector db_connector;
+    private Connection conn;
     @BeforeEach
     void setUp(){
         db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
+        conn = DB_Connector.getConnection();
     }
 
     @Test
     public void taskTestDB(){
         try{
-            Connection conn = DB_Connector.getConnection();
-
             Statement statement = conn.createStatement();
 
             conn.setAutoCommit(false);
