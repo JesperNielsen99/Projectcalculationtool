@@ -15,13 +15,13 @@
     <h1>Subproject list:</h1>
     <tr th:each="subproject : ${subprojectList}">
         <label>Name: </label>
-        <td th:text="${subproject.getName()}"/>
+        <td th:text="${subproject.name}"/>
         <label>Deadline: </label>
-        <td th:text="${subproject.getDeadline()}"/>
+        <td th:text="${subproject.deadline}"/>
         <label>Duration: </label>
-        <td th:text="${subproject.getDuration()}"/>
+        <td th:text="${subproject.duration}"/>
         <label>Completed: </label>
-        <td th:text="${subproject.isCompleted()}"/>
+        <td th:text="${subproject.completed}"/>
         <td>
             <form method="get" th:action="@{/tasks}">
                 <input type="hidden" name="subprojectId" th:value="${subproject.subprojectID}" />
