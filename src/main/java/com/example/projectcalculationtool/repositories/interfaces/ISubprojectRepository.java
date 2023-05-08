@@ -9,4 +9,6 @@ public interface ISubprojectRepository {
     void createSubproject(Subproject subproject);
 
     List<Subproject> getSubprojects(int projectID);
+
+    void updateSubproject(Subproject subproject);
 }

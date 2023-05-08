@@ -31,7 +31,6 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public List<Subproject> getSubprojects(int projectID) {
         List<Subproject> subprojectList = new ArrayList<>();
@@ -62,8 +61,31 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public  void updateSubproject(Subproject subproject){
+        try {
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "UPDATE subproject \n" +
+                    "SET subproject_name = ?,\n" +
+                    "subproject_priority = ?, \n" +
+                    "subproject_duration = ?, \n" +
+                    "subproject_deadline = ?, \n" +
+                    "subproject_completed = ? \n" +
+                    "WHERE subproject_id = ?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
+            preparedStatement.setString(1, subproject.getName());
+            preparedStatement.setInt(2, subproject.getPriority());
+            preparedStatement.setInt(3, subproject.getDuration());
+            preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
+            preparedStatement.setBoolean(5, subproject.getCompleted());
+            preparedStatement.setInt(6, subproject.getSubprojectID());
+            preparedStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
