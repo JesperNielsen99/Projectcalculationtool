@@ -4,6 +4,7 @@ package com.example.projectcalculationtool.controllers;
 import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.services.ProjectService;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,10 +50,18 @@ public class ProjectController {
         return "redirect:/projectsPage"; //TODO change redirect to homepage
     }
 
+    @GetMapping("/updateProject")
+    public String updateTask(Model model){
+        pro
+
+        return "redirect:/projectOverview";
+    }
+
     @PostMapping("/updateProject")
     public String updateTask(@ModelAttribute Project project){
         projectService.updateProject(project);
-        return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
+        return "redirect:/projectOverview";
     }
+
 
 }

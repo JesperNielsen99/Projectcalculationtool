@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Update project</title>
 </head>
 <body>
 
 <form th:action="@{/updateProject}" th:method="post" th:object="${project}">
 
   <div>
-    <input type="hidden" id="subprojectID" th:field="*{subprojectID}">
+    <input type="hidden" id="projectID" th:field="*{pro}">
   </div>
 
   <div>

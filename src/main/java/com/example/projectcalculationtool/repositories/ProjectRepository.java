@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -66,6 +65,40 @@ public class ProjectRepository implements IProjectRepository {
         }
 
         return projectList;
+    }
+
+    @Override
+    public Project getProject(int projectID) {
+        Project project = null;
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String SQL = "SELETC * FROM project WHERE project_id= ?";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            preparedStatement.setInt(1, projectID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                project = new Project(
+                        resultSet.getInt("project_id"),
+                        resultSet.getInt("project_manager_id"),
+                        resultSet.getString("project_name"),
+                        resultSet.getInt("project_duration"),
+                        LocalDate.parse(resultSet.getString("project_deadline")),
+                        resultSet.getBoolean("task_completed")
+                );
+            }
+            return project;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateProject(Project project) {
+
     }
 
 }
