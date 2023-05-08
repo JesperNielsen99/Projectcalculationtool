@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:action="@{/projectsPage/createProject}" th:method="post" th:object="${project}">
+<form th:action="@{/project/create}" th:method="post" th:object="${project}">
 
     <div>
         <input type=hidden id="managerID" th:field="*{managerID}">
