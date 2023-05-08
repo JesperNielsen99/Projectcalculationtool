@@ -21,8 +21,6 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
-    @Autowired
-    private DB_Connector db_connector;
     private TaskTestDB testDB;
 
     private Task task1;
@@ -31,10 +29,6 @@ class TaskRepositoryTest {
 
     @BeforeEach
     void setUp() {
-
-        db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
-        db_connector.setUser("root");
-        db_connector.setPass("Jw-180490");
         testDB = new TaskTestDB();
         testDB.taskTestDB();
 

@@ -11,19 +11,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-@SpringBootTest
 @ActiveProfiles("test")
 public class TaskTestDB {
 
-    @BeforeEach
-    void setUp(){
-        DB_Connector db_connector = new DB_Connector();
-        db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
-        db_connector.setUser("root");
-        db_connector.setPass("Jw-180490");
-    }
-
-    @Test
     public void taskTestDB(){
         try{
             Connection conn = DB_Connector.getConnection();
