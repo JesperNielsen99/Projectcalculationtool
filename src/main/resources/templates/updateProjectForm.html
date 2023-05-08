@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:action="@{/projectsPage/updateProject}" th:method="post" th:object="${project}">
+<form th:action="@{/project/update}" th:method="post" th:object="${project}">
 
   <div>
     <input type="hidden" id="projectID" th:field="*{projectID}">
@@ -18,7 +18,7 @@
 
   <div>
     <label>Project Name</label>
-    <input type="text" id="name" th:field="*{name}">
+    <input type="text" id="name" th:field="*{name}" autofocus>
   </div>
 
   <div>
@@ -33,7 +33,7 @@
 
   <div>
     <label>Completed</label>
-    <input type="checkbox" id="completed" th:field="*{completed}" th:checked="${project.completed} ? 'checked' : ''">
+    <input type="checkbox" id="completed" th:field="*{completed}" th:checked="${project.completed} ? 'checked' : ''" >
   </div>
 
   <div>

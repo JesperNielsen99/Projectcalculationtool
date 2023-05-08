@@ -22,7 +22,7 @@
         <td th:text="${project.getDuration()}"/>
         <label>Completed: </label>
         <td th:text="${project.isCompleted()}"/>
-        <a th:href="@{/projectsPage/updateProject (projectID=${project.getProjectID()})}">
+        <a th:href="@{/project/update (projectID=${project.getProjectID()})}">
             <button>Edit</button>
         </a>
         <a href="#">
