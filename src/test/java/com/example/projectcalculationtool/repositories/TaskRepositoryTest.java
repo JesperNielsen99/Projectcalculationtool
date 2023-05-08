@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,13 +16,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class TaskRepositoryTest {
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
-    private DB_Connector db_connector;
 
     private TaskTestDB testDB;
 
@@ -31,10 +30,6 @@ class TaskRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
-        db_connector.setUser("root");
-        db_connector.setPass("Jw-180490");
-
         testDB = new TaskTestDB();
         testDB.taskTestDB();
 
