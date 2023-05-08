@@ -11,4 +11,7 @@ public interface IProjectRepository {
 
     List<Project> getProjects(int managerID);
 
+    void updateProject(Project project);
+
+    Project getProject(int projectID);
 }
