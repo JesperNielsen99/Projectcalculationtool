@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Project;
+import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -98,7 +99,26 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public void updateProject(Project project) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String SQL = "UPDATE project SET project_id=?, project_manager_id=?, project_name=?, project_duration=?, project_deadline=?, project_completed=? WHERE project_id=?;";
 
+
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+
+            preparedStatement.setInt(1,project.getProjectID());
+            preparedStatement.setInt(2, project.getManagerID());
+            preparedStatement.setString(3,project.getName());
+            preparedStatement.setInt(4, project.getDuration());
+            preparedStatement.setDate(5, Date.valueOf(project.getDeadline()));
+            preparedStatement.setBoolean(6, project.isCompleted());
+
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

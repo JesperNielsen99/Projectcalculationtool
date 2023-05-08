@@ -26,4 +26,8 @@ public class ProjectService {
     public void updateProject(Project project) {
         projectRepository.updateProject(project);
     }
+
+    public Project getProject(int projectID) {
+        return projectRepository.getProject(projectID);
+    }
 }

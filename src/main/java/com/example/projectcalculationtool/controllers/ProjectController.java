@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,17 +51,17 @@ public class ProjectController {
         return "redirect:/projectsPage"; //TODO change redirect to homepage
     }
 
-    @GetMapping("/updateProject")
-    public String updateTask(Model model){
-        pro
-
-        return "redirect:/projectOverview";
+    @PostMapping("/updateProjectt")
+    public String updateProjectSubmit(@ModelAttribute Project project){
+        projectService.updateProject(project);
+        return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
     }
 
-    @PostMapping("/updateProject")
-    public String updateTask(@ModelAttribute Project project){
-        projectService.updateProject(project);
-        return "redirect:/projectOverview";
+    @GetMapping("/updateProject")
+    public String updateProjectForm(@RequestParam int projectID, Model model){
+        Project project = projectService.getProject(projectID);
+        model.addAttribute("project", project);
+        return "updateProjectForm";
     }
 
 
