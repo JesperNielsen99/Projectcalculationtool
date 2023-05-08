@@ -38,7 +38,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public List<Project> getProject(int ID) {
+    public List<Project> getProjects(int managerID) {
         List<Project> projectList = new ArrayList<>();
 
         try {
@@ -47,18 +47,18 @@ public class ProjectRepository implements IProjectRepository {
             String SQL = "SELECT * FROM project WHERE project_manager_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setInt(1,ID); // change to session
+            preparedStatement.setInt(1,managerID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
-                int projectID = resultSet.getInt(1);
-                int managerID = resultSet.getInt(2);
-                String name = resultSet.getString(3);
-                int duration = resultSet.getInt(4);
-                LocalDate deadline = LocalDate.parse(resultSet.getString(5));
-                boolean completed = resultSet.getBoolean(6);
-
-                projectList.add(new Project(projectID,managerID,name,duration,deadline,completed));
+                projectList.add(new Project(
+                        resultSet.getInt("project_id"),
+                        resultSet.getInt("project_manager_id"),
+                        resultSet.getString("project_name"),
+                        resultSet.getInt("project_duration"),
+                        LocalDate.parse(resultSet.getString("project_deadline")),
+                        resultSet.getBoolean("project_completed")
+                ));
             }
 
         } catch (SQLException e) {

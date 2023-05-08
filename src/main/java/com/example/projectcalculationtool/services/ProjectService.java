@@ -19,7 +19,7 @@ public class ProjectService {
     }
 
     public List<Project> getProjects(int ID){ //session managerID
-        return projectRepository.getProject(ID);
+        return projectRepository.getProjects(ID);
     }
 
 }

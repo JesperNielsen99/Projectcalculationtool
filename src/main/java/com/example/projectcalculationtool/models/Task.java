@@ -6,21 +6,23 @@ public class Task {
     private int taskID;
     private int subprojectID;
     private String name;
+    private String description;
     private int priority;
-    private LocalDate deadline;
     private int duration;
-    private Boolean completed;
+    private LocalDate deadline;
+    private Boolean isCompleted;
 
     public Task(){}
 
-    public Task(int taskID, int subprojectID, String name, int priority, LocalDate deadline, int duration, Boolean completed) {
+    public Task(int taskID, int subprojectID, String name, String description, int priority, int duration, LocalDate deadline, Boolean isCompleted) {
         this.taskID = taskID;
         this.subprojectID = subprojectID;
         this.name = name;
+        this.description = description;
         this.priority = priority;
-        this.deadline = deadline;
         this.duration = duration;
-        this.completed = completed;
+        this.deadline = deadline;
+        this.isCompleted = isCompleted;
     }
 
     public int getTaskID() {
@@ -47,20 +49,20 @@ public class Task {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getPriority() {
         return priority;
     }
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
     }
 
     public int getDuration() {
@@ -71,11 +73,19 @@ public class Task {
         this.duration = duration;
     }
 
-    public Boolean getCompleted() {
-        return completed;
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }
