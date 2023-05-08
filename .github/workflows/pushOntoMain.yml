@@ -46,7 +46,9 @@ jobs:
         run: mysqlshow --host 127.0.0.1 --port 3306 --user root --password=root projectcalculationtool_test_db
 
       - name: Build with Maven
-        run: ./mvnw -Dspring.profiles.active=test clean package
+        run: |
+          chmod +x mvnw
+          ./mvnw -Dspring.profiles.active=test clean package
 
       - name: Push changes to main
         run: git push --force-with-lease origin ${{ github.ref }}:main
