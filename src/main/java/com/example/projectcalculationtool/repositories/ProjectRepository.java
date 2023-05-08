@@ -73,7 +73,7 @@ public class ProjectRepository implements IProjectRepository {
         Project project = null;
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "SELETC * FROM project WHERE project_id= ?";
+            String SQL = "SELECT * FROM project WHERE project_id= ?";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
             preparedStatement.setInt(1, projectID);
@@ -87,7 +87,7 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getString("project_name"),
                         resultSet.getInt("project_duration"),
                         LocalDate.parse(resultSet.getString("project_deadline")),
-                        resultSet.getBoolean("task_completed")
+                        resultSet.getBoolean("project_completed")
                 );
             }
             return project;
@@ -112,6 +112,8 @@ public class ProjectRepository implements IProjectRepository {
             preparedStatement.setInt(4, project.getDuration());
             preparedStatement.setDate(5, Date.valueOf(project.getDeadline()));
             preparedStatement.setBoolean(6, project.isCompleted());
+            preparedStatement.setInt(7,project.getProjectID());
+
 
 
             preparedStatement.executeUpdate();

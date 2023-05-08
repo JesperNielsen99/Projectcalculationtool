@@ -51,17 +51,17 @@ public class ProjectController {
         return "redirect:/projectsPage"; //TODO change redirect to homepage
     }
 
-    @PostMapping("/updateProjectt")
-    public String updateProjectSubmit(@ModelAttribute Project project){
-        projectService.updateProject(project);
-        return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
-    }
-
-    @GetMapping("/updateProject")
+    @GetMapping("projectsPage/updateProject")
     public String updateProjectForm(@RequestParam int projectID, Model model){
         Project project = projectService.getProject(projectID);
         model.addAttribute("project", project);
         return "updateProjectForm";
+    }
+
+    @PostMapping("/projectsPage/updateProject")
+    public String updateProjectSubmit(@ModelAttribute Project project){
+        projectService.updateProject(project);
+        return "redirect:/projectsPage"; //TODO needs a 'mainPage' as landing page + an ID
     }
 
 
