@@ -40,7 +40,7 @@ public class TaskRepository implements ITaskRepository {
         List<Task> tasks = new ArrayList<>();
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "SELETC * FROM task WHERE subproject_id = ?";
+            String SQL = "SELECT * FROM task WHERE subproject_id = ?;";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectID);
@@ -72,7 +72,7 @@ public class TaskRepository implements ITaskRepository {
         Task task = null;
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "SELETC * FROM task WHERE task_id= ?";
+            String SQL = "SELECT * FROM task WHERE task_id= ?";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
             preparedStatement.setInt(1, taskID);
@@ -91,11 +91,11 @@ public class TaskRepository implements ITaskRepository {
                         resultSet.getBoolean("task_completed")
                 );
             }
-            return task;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return task;
     }
 
     @Override
