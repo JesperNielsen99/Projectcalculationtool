@@ -1,15 +1,28 @@
 package com.example.projectcalculationtool.repositories;
 
+import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
-import org.springframework.stereotype.Component;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-@Component
-public class TaskTestDB {
 
+public class TaskTestDB {
+    private DB_Connector db_connector;
+    @BeforeEach
+    void setUp(){
+        db_connector = new DB_Connector();
+        db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
+        db_connector.setUser("root");
+        db_connector.setPass("Jw-180490");
+    }
+
+    @Test
     public void taskTestDB(){
         try{
             Connection conn = DB_Connector.getConnection();
