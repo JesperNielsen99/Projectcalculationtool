@@ -17,7 +17,7 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
     private DB_Connector db_connector;
-    private TaskTestDB testDB;
+    private TaskTestDB testDB = new TaskTestDB();
     private Task task1;
     private Task task2;
 
@@ -28,7 +28,6 @@ class TaskRepositoryTest {
         db_connector.setUrl("jdbc:mysql://localhost:3306/tasktest_db");
         db_connector.setUser("root");
         db_connector.setPass("Jw-180490");
-        testDB = new TaskTestDB();
         testDB.taskTestDB();
 
         task1 = new Task(1,1,"T-Task1", "T-Description1", 1,1, LocalDate.now(),false);
