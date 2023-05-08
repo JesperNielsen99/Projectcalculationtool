@@ -42,6 +42,9 @@ jobs:
           mysql --host 127.0.0.1 --port 3306 --user root --password=root < SQL/testDatabase/1-create-test-database.sql
           mysql --host 127.0.0.1 --port 3306 --user root --password=root projectcalculationtool_test_db < SQL/testDatabase/2-insert-test-data.sql
 
+      - name: Show Database
+        run: mysqlshow --host 127.0.0.1 --port 3306 --user root --password=root projectcalculationtool_test_db
+
       - name: Build with Maven
         run: mvn clean package
 

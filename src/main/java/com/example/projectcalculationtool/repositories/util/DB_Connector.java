@@ -16,7 +16,6 @@ public class DB_Connector {
     private static Connection connection;
 
     @Value("${" + "${spring.profiles.active}" + ".spring.datasource.url}")
-    //@Value("dev."+"${spring.datasource.url}")
     public void setUrl(String url) {
         URL = url;
     }
