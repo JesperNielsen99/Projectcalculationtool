@@ -39,8 +39,6 @@ jobs:
 
       - name: Run SQL script
         run: |
-          mysql --host 127.0.0.1 --port 3306 --user root --password=root < SQL/productionDatabase/1-create-database.sql
-          mysql --host 127.0.0.1 --port 3306 --user root --password=root projectcalculationtool_db < SQL/productionDatabase/2-insert-data.sql
           mysql --host 127.0.0.1 --port 3306 --user root --password=root < SQL/testDatabase/1-create-test-database.sql
           mysql --host 127.0.0.1 --port 3306 --user root --password=root projectcalculationtool_test_db < SQL/testDatabase/2-insert-test-data.sql
 
