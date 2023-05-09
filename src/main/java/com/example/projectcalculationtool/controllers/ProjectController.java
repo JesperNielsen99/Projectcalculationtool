@@ -60,5 +60,13 @@ public class ProjectController {
         return "redirect:/projects"; //TODO needs a 'mainPage' as landing page + an ID
     }
 
+    /* ------------------------------------ Delete project ----------------------------------------- */
+
+    @GetMapping("project/delete")
+    public String deleteProject(@RequestParam int projectID){
+        projectService.deleteTask(projectID);
+        return "redirect:/projects"; //TODO needs a 'mainPage' as landing page + an ID
+    }
+
 
 }

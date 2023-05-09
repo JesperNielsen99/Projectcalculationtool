@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public class ProjectRepository implements IProjectRepository {
 
+    /* ------------------------------------ Create project ----------------------------------------- */
+
     @Override
     public void createProject(Project project) {
         try{
@@ -37,6 +39,7 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
+    /* ------------------------------------ Get list<project> ----------------------------------------- */
     @Override
     public List<Project> getProjects(int managerID) {
         List<Project> projectList = new ArrayList<>();
@@ -68,6 +71,8 @@ public class ProjectRepository implements IProjectRepository {
         return projectList;
     }
 
+    /* ------------------------------------ Get project (single) ----------------------------------------- */
+
     @Override
     public Project getProject(int projectID) {
         Project project = null;
@@ -97,6 +102,8 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
+    /* ------------------------------------ Update project ----------------------------------------- */
+
     @Override
     public void updateProject(Project project) {
         try {
@@ -122,6 +129,25 @@ public class ProjectRepository implements IProjectRepository {
             throw new RuntimeException(e);
         }
     }
+
+    /* ------------------------------------ Delete project ----------------------------------------- */
+
+    @Override
+    public void deleteProject(int projectID) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String SQL = "DElETE FROM project WHERE project_id=?;";
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            preparedStatement.setInt(1, projectID);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 }
 

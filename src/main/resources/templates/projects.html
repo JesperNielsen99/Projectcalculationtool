@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <a th:href="@{/projectsPage/createProject}">
+    <a th:href="@{/project/create}">
         <button>Add project</button>
     </a>
 </div>
@@ -25,12 +25,15 @@
         <a th:href="@{/project/update (projectID=${project.getProjectID()})}">
             <button>Edit</button>
         </a>
+        <a th:href="@{/project/delete (projectID=${project.getProjectID()})}">
+            <button>Delete</button>
+        </a>
         <a href="#">
             <button>See Overview</button>
         </a>
         <br>
+        <br>
 </div>
-<br>
 
 </tr>
 </div>

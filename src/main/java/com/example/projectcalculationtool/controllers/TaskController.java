@@ -41,8 +41,8 @@ public class TaskController {
     }
 
     @GetMapping("/deleteTask")
-    public String deleteTask(@RequestParam int taskID){
-        taskService.deleteTask(taskID);
+    public String deleteTask(@RequestParam int projectID){
+        taskService.deleteTask(projectID);
         return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
     }
 }
