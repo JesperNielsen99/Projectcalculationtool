@@ -10,8 +10,6 @@ import java.sql.Statement;
 @ActiveProfiles("test")
 public class ProjectTestDB {
 
-
-
     public void projectTestDB(){
         try {
             Connection connection = DB_Connector.getConnection();
@@ -24,7 +22,7 @@ public class ProjectTestDB {
             statement.addBatch("DROP TABLE IF EXISTS project;");
 
             statement.addBatch("CREATE TABLE project (\n" +
-                    "\project_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
+                    "\tproject_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
                     "project_manager_id INT NOT NULL,\n" +
                     "project_name VARCHAR(255) NOT NULL,\n" +
                     "project_duration INT,\n" +
