@@ -37,11 +37,11 @@
         <p th:if="${wrongCredentials}" class="error alert alert-warning" role="alert">Wrong username or password. Try again!
         </p>
 
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/sign-in}" method="post">
 
             <div class="input-group mb-3">
                 <span class="input-group-text">Username</span>
-                <input type="email" class="form-control" id="username" name="username" placeholder="name@alpha.com" autofocus="autofocus" />
+                <input type="email" class="form-control" id="username" name="email" placeholder="name@alpha.com" autofocus="autofocus" />
             </div>
 
             <div class="input-group mb-4">

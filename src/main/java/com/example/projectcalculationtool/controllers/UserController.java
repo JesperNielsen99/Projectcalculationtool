@@ -63,7 +63,7 @@ public class UserController {
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
-        return "redirect:/sign-in";
+        return "index-login";
     }
 
     @GetMapping("/sign-out")
