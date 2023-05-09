@@ -387,7 +387,7 @@ class UserRepositoryTest {
         User expectedUser = null;
 
         repository.deleteUser(1);
-        User user = repository.getUser("thomløv@alpha.com", "123");
-        Assertions.assertNull(user);
+        User actualUser = repository.getUser("thomløv@alpha.com", "123");
+        Assertions.assertEquals(expectedUser, actualUser);
     }
 }
