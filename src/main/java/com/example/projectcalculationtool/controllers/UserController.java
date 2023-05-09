@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public String signUpSubmit(@ModelAttribute("user") User user) {
         service.createUser(user);
-        return "redirect:/login";
+        return "redirect:/sign-in";
     }
 
     @GetMapping("/profile")
@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping("/sign-in")
     public String loginForm(HttpSession session) {
         session.invalidate();
-        return "sign-in";
+        return "index-login";
     }
 
     @PostMapping("/sign-in")
