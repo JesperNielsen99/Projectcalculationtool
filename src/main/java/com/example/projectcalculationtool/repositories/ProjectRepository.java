@@ -123,6 +123,23 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
+    @Override
+    public void deleteProject(int projectID) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String SQL = "DElETE FROM project WHERE project_id=?;";
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            preparedStatement.setInt(1, projectID);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }
 
 

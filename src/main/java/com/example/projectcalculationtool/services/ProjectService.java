@@ -29,4 +29,8 @@ public class ProjectService {
     public Project getProject(int projectID) {
         return projectRepository.getProject(projectID);
     }
+
+    public void deleteTask(int projectID) {
+        projectRepository.deleteProject(projectID);
+    }
 }
