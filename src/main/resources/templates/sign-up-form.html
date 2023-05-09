@@ -23,7 +23,7 @@
             padding-top: 50px;
         }
 
-        .header-one, .error {
+        .header-one {
             text-align: center;
         }
     </style>
@@ -31,7 +31,7 @@
 <body>
 <div class="sign-in-form">
     <div class="sign-in-box shadow p-3 mb-5 rounded">
-        <h1 class="header-one">C-Tool Sign-up</h1>
+        <h1 class="header-one">Sign-up</h1>
         <br>
 
         <form th:action="@{/sign-up}" th:object="${user}" th:method="post">
