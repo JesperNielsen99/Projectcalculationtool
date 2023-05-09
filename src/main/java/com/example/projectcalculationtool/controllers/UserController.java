@@ -26,7 +26,7 @@ public class UserController {
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", service.getRoles());
-        return "sign-up";
+        return "sign-up-form";
     }
 
     @PostMapping("/sign-up")
