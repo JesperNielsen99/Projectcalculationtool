@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <a th:href="@{/createSubproject}">
+    <a th:href="@{/createSubproject(projectID=${projectID})}">
         <button>Add subproject</button>
     </a>
 </div>
@@ -27,6 +27,16 @@
                 <input type="hidden" name="subprojectId" th:value="${subproject.subprojectID}" />
                 <button type="submit">See Tasks</button>
             </form>
+        </td>
+        <td>
+            <form method="get" th:action="@{/updateSubproject}">
+                <input type="hidden" name="subprojectID" th:value="${subproject.subprojectID}" />
+                <button type="submit">Update subproject</button>
+            </form>
+<!--            <form method="get" th:action="@{/updateSubproject(subprojectID=${subproject.subprojectID})}">-->
+<!--                <input type="hidden" name="subprojectId" th:value="${subproject.subprojectID}" />-->
+<!--                <button type="submit">Update subproject</button>-->
+<!--            </form>-->
         </td>
         <br>
     </tr>

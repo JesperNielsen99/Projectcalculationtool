@@ -3,6 +3,7 @@ package com.example.projectcalculationtool.controllers;
 
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.services.SubprojectService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,9 @@ public class SubprojectController {
     }
 
     @GetMapping("/createSubproject")
-    public String createSubproject(Model model){
+    public String createSubproject(@RequestParam int projectID, Model model){
         Subproject subproject = new Subproject();
+        subproject.setProjectID(projectID);
         model.addAttribute("subproject", subproject);
         return "createSubprojectForm";
     }
@@ -30,13 +32,14 @@ public class SubprojectController {
     @PostMapping("/createSubproject")
     public String createSubproject(@ModelAttribute Subproject subproject){
         subprojectService.createSubproject(subproject);
-        return "redirect:/createSubproject";
+        return "redirect:/subprojects?projectID=" + subproject.getProjectID();
     }
 
     @GetMapping("/subprojects")
-    public String getSubprojects(@RequestParam() int projectID, Model model){
+    public String getSubprojects(@RequestParam() int projectID, Model model, HttpSession session){
         List<Subproject> subprojects = subprojectService.getSubprojects(projectID);
         model.addAttribute("subprojectList", subprojects);
+        model.addAttribute("projectID", projectID);
         return "subprojects";
     }
 
@@ -52,8 +55,5 @@ public class SubprojectController {
         subprojectService.updateSubproject(subproject);
         return "redirect:/subprojects?projectID=" + subproject.getProjectID();
     }
-
-
-
 
 }
