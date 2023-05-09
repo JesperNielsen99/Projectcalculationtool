@@ -1,7 +1,9 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Role;
+import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.IUserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,22 +23,37 @@ class UserRepositoryTest {
     }
 
     @Test
+    void getUser() {
+        int expectedUserID = 1;
+        User user = repository.getUser("thomløv@alpha.com", "123");
+        int actualUserID = user.getUserID();
+        Assertions.assertEquals(expectedUserID, actualUserID);
+    }
+
+    @Test
     void createUser() {
 
     }
 
     @Test
-    void getRoles() {
-        int expected = 2;
+    void numberOfRoles() {
+        int expectedNumberOfRoles = 2;
         List<Role> roles = repository.getRoles();
-        int actual = roles.size();
-        assert(expected == actual);
+        int actualNumberOfRoles  = roles.size();
+        Assertions.assertEquals(expectedNumberOfRoles, actualNumberOfRoles);
     }
 
     @Test
-    void getRole() {
+    void getRoleOne() {
         String expected = "Admin";
         String actual = repository.getRole(1);
+        assert(expected.equals(actual));
+    }
+
+    @Test
+    void getRoleTwo() {
+        String expected = "User";
+        String actual = repository.getRole(2);
         assert(expected.equals(actual));
     }
 
@@ -46,9 +63,5 @@ class UserRepositoryTest {
 
     @Test
     void deleteUser() {
-    }
-
-    @Test
-    void getUser() {
     }
 }
