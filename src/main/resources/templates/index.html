@@ -31,7 +31,7 @@
 <body>
 <div class="sign-in-form">
     <div class="sign-in-box shadow p-4 mb-5 rounded">
-        <h1 class="header-one">C-Tool Login</h1>
+        <h1 class="header-one">Login</h1>
         <br>
 
         <p th:if="${wrongCredentials}" class="error alert alert-warning" role="alert">Wrong username or password. Try again!
@@ -39,13 +39,13 @@
 
         <form th:action="@{/login}" method="post">
 
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>:
+            <div class="input-group mb-3">
+                <span class="input-group-text">Username</span>
                 <input type="email" class="form-control" id="username" name="username" placeholder="name@alpha.com" autofocus="autofocus" />
             </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>:
+            <div class="input-group mb-4">
+                <span class="input-group-text">Password </span>
                 <input type="password" class="form-control" id="password" name="password" placeholder="*******************" /> <br />
             </div>
 
