@@ -26,10 +26,20 @@ public class SubprojectController {
     @GetMapping("/subprojects")
     public String showSubprojects(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
+            session.removeAttribute("subproject");
             Project project = (Project) session.getAttribute("project");
             List<Subproject> subprojects = subprojectService.getSubprojects(project.getProjectID());
             model.addAttribute("subprojects", subprojects);
             return "subprojects";
+        }
+        return "redirect:/sign-in";
+    }
+
+    @GetMapping("/subproject/addToSession")
+    public String showProjects(@RequestParam int subprojectID, HttpSession session){
+        if (isLoggedIn(session)) {
+            session.setAttribute("subproject", subprojectService.getSubproject(subprojectID));
+            return "redirect:/project/subprojects/tasks";
         }
         return "redirect:/sign-in";
     }
@@ -57,6 +67,7 @@ public class SubprojectController {
     @GetMapping("/subproject/update")
     public String updateProjectForm(@RequestParam int subprojectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
+            session.setAttribute("subproject", subprojectService.getSubproject(subprojectID));
             Subproject subproject = subprojectService.getSubproject(subprojectID);
             model.addAttribute("subproject", subproject);
             return "updateSubprojectForm";

@@ -26,10 +26,20 @@ public class ProjectController {
     @GetMapping("/projects")
     public String showProjects(Model model, HttpSession session){
         if (isLoggedIn(session)) {
+            session.removeAttribute("project");
             int ID = 1;
             List<Project> projects = projectService.getProjects(ID);
             model.addAttribute("projectList", projects);
             return "projects";
+        }
+        return "redirect:/sign-in";
+    }
+
+    @GetMapping("/project/addToSession")
+    public String showProjects(@RequestParam int projectID, HttpSession session){
+        if (isLoggedIn(session)) {
+            session.setAttribute("project", projectService.getProject(projectID));
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }
@@ -62,6 +72,7 @@ public class ProjectController {
     @GetMapping("project/update")
     public String updateProjectForm(@RequestParam int projectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
+            session.setAttribute("project", projectService.getProject(projectID));
             Project project = projectService.getProject(projectID);
             model.addAttribute("project", project);
             return "updateProjectForm";
@@ -73,6 +84,7 @@ public class ProjectController {
     public String updateProjectSubmit(@ModelAttribute Project project, HttpSession session) {
         if (isLoggedIn(session)) {
             projectService.updateProject(project);
+            session.setAttribute("project", projectService.getProject(project.getProjectID()));
             return "redirect:/projects"; //TODO needs a 'mainPage' as landing page + an ID
         }
         return "redirect:/sign-in";

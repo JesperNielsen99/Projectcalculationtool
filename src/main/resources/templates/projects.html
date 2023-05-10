@@ -28,7 +28,7 @@
         <a th:href="@{/project/delete (projectID=${project.getProjectID()})}">
             <button>Delete</button>
         </a>
-        <a href="/project/subprojects/">
+        <a th:href="@{/project/addToSession (projectID=${project.getProjectID()})}">
             <button>See Overview</button>
         </a>
         <br>

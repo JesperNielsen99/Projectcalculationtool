@@ -69,7 +69,7 @@ public class SubprojectRepository implements ISubprojectRepository {
         Subproject subproject = null;
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "SELETC * FROM subproject WHERE subproject_id= ?";
+            String SQL = "SELECT * FROM subproject WHERE subproject_id= ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectID);
