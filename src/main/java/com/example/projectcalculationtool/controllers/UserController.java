@@ -59,7 +59,7 @@ public class UserController {
         if (user != null) {
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
-            return "redirect:/project";
+            return "redirect:/projects";
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
