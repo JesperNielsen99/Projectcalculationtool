@@ -10,19 +10,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Repository("User_DB")
 public class UserRepository implements IUserRepository {
-    String SQL = null;
-    Connection connection = DB_Connector.getConnection();
-    PreparedStatement preparedStatement = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
-
     @Override
     public void createUser(User user) {
         try {
-            SQL = "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
-            preparedStatement = connection.prepareStatement(SQL);
+            Connection connection = DB_Connector.getConnection();
+
+            String SQL = "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
@@ -37,9 +34,10 @@ public class UserRepository implements IUserRepository {
     @Override
     public List<Role> getRoles() {
         try {
-            SQL = "SELECT * FROM role";
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(SQL);
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "SELECT * FROM role";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL);
             List<Role> roles = new ArrayList<>();
             while (resultSet.next()) {
                 roles.add(new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
@@ -53,10 +51,11 @@ public class UserRepository implements IUserRepository {
     @Override
     public String getRole(int roleID) {
         try {
-            SQL = "SELECT role_name FROM role WHERE role_id = ?";
-            preparedStatement = connection.prepareStatement(SQL);
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "SELECT role_name FROM role WHERE role_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, roleID);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             String role = "";
             if (resultSet.next()) {
                 role = resultSet.getString("role_name");
@@ -67,18 +66,20 @@ public class UserRepository implements IUserRepository {
         }
     }
 
-    /*
+
     @Override
-    public User updateUser(User user) {
+    public void updateUser(User user) {
         try {
-            SQL = "UPDATE user SET UserName = ?, Email = ?, Password = ? WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getEmail());
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "UPDATE user SET user_first_name = ?, user_last_name = ?, user_password = ?, " +
+                    "user_role_id = ? WHERE user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setInt(4, user.getUserID());
+            preparedStatement.setInt(4, user.getRoleID());
+            preparedStatement.setInt(5, user.getUserID());
             preparedStatement.executeUpdate();
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -86,39 +87,26 @@ public class UserRepository implements IUserRepository {
 
 
     @Override
-    public User DeleteUser(User user) {
+    public void deleteUser(int userID) {
         try {
-            SQL = "SELECT WishlistID FROM wishlist WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int wishlistID = resultSet.getInt("WishlistID");
-                SQL = "DELETE FROM wishlist_wish WHERE wishlistID = ?";
-                preparedStatement.setInt(1, wishlistID);
-                preparedStatement.executeUpdate();
-            }
-            SQL = "DELETE FROM wishlist WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "DELETE FROM user WHERE user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, userID);
             preparedStatement.executeUpdate();
-            SQL = "DELETE FROM user WHERE UserID = ?";
-            preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, user.getUserID());
-            preparedStatement.executeUpdate();
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    } */
+    }
 
     public User getUser(String email, String password) {
         try {
-            SQL = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
             PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
             preparedStatementUserID.setString(1, email);
             preparedStatementUserID.setString(2, password);
-            resultSet = preparedStatementUserID.executeQuery();
+            ResultSet resultSet = preparedStatementUserID.executeQuery();
             User user = null;
             if (resultSet.next()) {
                 user = new User(

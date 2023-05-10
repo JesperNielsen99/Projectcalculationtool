@@ -1,6 +1,5 @@
 package com.example.projectcalculationtool.repositories.util;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -9,13 +8,13 @@ import java.sql.SQLException;
 
 @Component
 public class DB_Connector {
-    private static String URL = "jdbc:mysql://localhost:3306/projectcalculationtool_db";
-    private static String USER = "root";
-    private static String PASS = "root";
+    private static String URL;
+    private static String USER;
+    private static String PASS;
 
     private static Connection connection;
 
-    /*@Value("${spring.datasource.url}")
+    @Value("${spring.datasource.url}")
     public void setUrl(String url) {
         URL = url;
     }
@@ -28,7 +27,7 @@ public class DB_Connector {
     @Value("${spring.datasource.password}")
     public void setPass(String pass) {
         PASS = pass;
-    }*/
+    }
 
     public static Connection getConnection() {
         try {

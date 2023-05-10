@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,19 +8,29 @@ import java.util.List;
 
 @Service
 public class ProjectService {
+    private IProjectRepository projectRepository;
 
-    IProjectRepository iProjectRepository;
-
-    public ProjectService(IProjectRepository iProjectRepository) {
-        this.iProjectRepository = iProjectRepository;
+    public ProjectService(IProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
     }
 
     public void createProject(Project project){
-        iProjectRepository.createProject(project);
+        projectRepository.createProject(project);
     }
 
     public List<Project> getProjects(int ID){ //session managerID
-        return iProjectRepository.getProject(ID);
+        return projectRepository.getProjects(ID);
     }
 
+    public void updateProject(Project project) {
+        projectRepository.updateProject(project);
+    }
+
+    public Project getProject(int projectID) {
+        return projectRepository.getProject(projectID);
+    }
+
+    public void deleteTask(int projectID) {
+        projectRepository.deleteProject(projectID);
+    }
 }

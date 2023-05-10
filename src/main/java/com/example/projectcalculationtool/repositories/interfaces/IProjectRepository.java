@@ -9,6 +9,11 @@ public interface IProjectRepository {
 
     void createProject(Project project);
 
-    List<Project> getProject(int ID);
+    List<Project> getProjects(int managerID);
 
+    void updateProject(Project project);
+
+    Project getProject(int projectID);
+
+    void deleteProject(int projectID);
 }
