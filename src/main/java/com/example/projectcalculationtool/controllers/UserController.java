@@ -41,7 +41,7 @@ public class UserController {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
             model.addAttribute("role", service.getRole(user.getRoleID()));
-            return "profile";
+            return "show-user-profile";
         }
         return "redirect:/sign-in";
     }
@@ -59,7 +59,7 @@ public class UserController {
         if (user != null) {
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
-            return "redirect:/project";
+            return "redirect:/projects";
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
@@ -97,7 +97,7 @@ public class UserController {
     public String updateUserSubmit(@ModelAttribute("user") User user, HttpSession session) {
         if (isLoggedIn(session)) {
             service.updateUser(user);
-            return "profile";
+            return "show-user-profile";
         }
         return "redirect:/sign-in";
     }
