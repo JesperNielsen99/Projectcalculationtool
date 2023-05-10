@@ -26,7 +26,6 @@ class TaskRepositoryTest {
 
 
     @BeforeEach
-
     void setUp() {
         testDB = new TaskTestDB();
         testDB.taskTestDB();
