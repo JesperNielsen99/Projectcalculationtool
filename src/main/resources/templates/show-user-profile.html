@@ -36,11 +36,30 @@
         <h1 class="header-one">Your profile</h1>
         <br>
 
-        <p>First Name: <span th:text="${user.getFirstName()}"></span></p>
-        <p>Last Name: <span th:text="${user.getLastName()}"></span></p>
-        <p>Email: <span th:text="${user.getEmail()}"></span></p>
-        <p>Password: <span th:text="${user.getPassword()}"></span></p>
-        <p>Role: <span th:text="${role}"></span></p>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="firstName">First name</span>
+            <input class="form-control" type="text" placeholder="Disabled input" th:value="${user.getFirstName()}" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="lastName">Last name</span>
+            <input class="form-control" type="text" placeholder="Disabled input" th:value="${user.getLastName()}" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="email">Username</span>
+            <input class="form-control" type="email" placeholder="Disabled input" th:value="${user.getEmail()}" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="password">Password </span>
+            <input class="form-control" type="text" placeholder="Disabled input" th:value="${user.getPassword()}" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="Role">Role</span>
+            <input class="form-control" type="text" placeholder="Disabled input" th:value="${role}" disabled>
+        </div>
 
 
         <div class="btn-group d-flex justify-content-between" role="group" aria-label="Basic example">
