@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public String signUpSubmit(@ModelAttribute("user") User user) {
         service.createUser(user);
-        return "redirect:/login";
+        return "redirect:/sign-in";
     }
 
     @GetMapping("/profile")
