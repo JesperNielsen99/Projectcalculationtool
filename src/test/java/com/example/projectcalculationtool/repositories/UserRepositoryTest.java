@@ -290,7 +290,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void updateUserLastName() {
+    void updateUserLastNameCorrect() {
         String expectedUserLastName = "hejsa";
 
         User user = repository.getUser("thomløv@alpha.com", "123");
