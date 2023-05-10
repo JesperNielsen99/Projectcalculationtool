@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public String signUpSubmit(@ModelAttribute("user") User user) {
         service.createUser(user);
-        return "redirect:/login";
+        return "redirect:/sign-in";
     }
 
     @GetMapping("/profile")
@@ -59,7 +59,7 @@ public class UserController {
         if (user != null) {
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
-            return "redirect:/project";
+            return "redirect:/projects";
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
