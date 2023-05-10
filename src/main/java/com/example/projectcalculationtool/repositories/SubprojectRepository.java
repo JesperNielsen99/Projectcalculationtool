@@ -29,8 +29,4 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
 }
