@@ -21,7 +21,7 @@
     <label>Duration: </label>
     <td th:text="${subproject.getDuration()}"/>
     <label>Completed: </label>
-    <td th:text="${subproject.isCompleted()}"/>
+    <td th:text="${subproject.getCompleted()}"/>
 
     <a th:href="@{/project/subproject/update (subprojectID=${subproject.getSubprojectID()})}">
       <button>Edit</button>

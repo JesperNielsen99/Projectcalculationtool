@@ -72,7 +72,7 @@ public class Subproject {
         this.duration = duration;
     }
 
-    public Boolean isCompleted() {
+    public Boolean getCompleted() {
         return completed;
     }
 

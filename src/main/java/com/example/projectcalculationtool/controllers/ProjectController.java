@@ -86,11 +86,11 @@ public class ProjectController {
     @PostMapping("/project/update")
     public String updateProjectSubmit(@ModelAttribute Project project, HttpSession session) {
         if (isLoggedIn(session)) {
-            projectService.updateProject(project);
             if (project.getDeadline() == null) {
                 LocalDate deadline = (LocalDate) session.getAttribute("projectDeadline");
                 project.setDeadline(deadline);
             }
+            projectService.updateProject(project);
             session.setAttribute("project", project);
             return "redirect:/projects";
         }
