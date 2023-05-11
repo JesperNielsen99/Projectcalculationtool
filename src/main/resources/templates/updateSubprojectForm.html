@@ -34,11 +34,13 @@
   <div>
     <label>Deadline</label>
     <input type="date" id="deadline" th:field="*{deadline}">
+    <p th:text="*{deadline}"></p>
+
   </div>
 
   <div>
     <label>Completed</label>
-    <input type="checkbox" id="completed" th:field="*{completed}" th:checked="${project.completed} ? 'checked' : ''" >
+    <input type="checkbox" id="completed" th:field="*{completed}" th:checked="${subproject.completed} ? 'checked' : ''" >
   </div>
 
   <div>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -75,6 +76,7 @@ public class ProjectController {
     public String updateProjectForm(@RequestParam int projectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Project project = projectService.getProject(projectID);
+            session.setAttribute("deadline", project.getDeadline());
             model.addAttribute("project", project);
             return "updateProjectForm";
         }
@@ -85,6 +87,10 @@ public class ProjectController {
     public String updateProjectSubmit(@ModelAttribute Project project, HttpSession session) {
         if (isLoggedIn(session)) {
             projectService.updateProject(project);
+            if (project.getDeadline() == null) {
+                LocalDate deadline = (LocalDate) session.getAttribute("deadline");
+                project.setDeadline(deadline);
+            }
             session.setAttribute("project", project);
             return "redirect:/projects";
         }
