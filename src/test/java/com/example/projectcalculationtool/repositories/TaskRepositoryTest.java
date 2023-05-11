@@ -108,11 +108,11 @@ class TaskRepositoryTest {
     void updateTaskIsCompletedTrue() {
         taskRepository.createTask(task1);
 
-        task1.setIsCompleted(true);
+        task1.setCompleted(true);
         taskRepository.updateTask(task1);
 
         Task taskFound = taskRepository.getTask(1);
-        Assertions.assertEquals(task1.getIsCompleted(),taskFound.getIsCompleted());
+        Assertions.assertEquals(task1.isCompleted(),taskFound.isCompleted());
     }
 
     @Test

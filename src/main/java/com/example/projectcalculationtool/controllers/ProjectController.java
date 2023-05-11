@@ -76,7 +76,7 @@ public class ProjectController {
     public String updateProjectForm(@RequestParam int projectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Project project = projectService.getProject(projectID);
-            session.setAttribute("deadline", project.getDeadline());
+            session.setAttribute("projectDeadline", project.getDeadline());
             model.addAttribute("project", project);
             return "updateProjectForm";
         }
@@ -88,7 +88,7 @@ public class ProjectController {
         if (isLoggedIn(session)) {
             projectService.updateProject(project);
             if (project.getDeadline() == null) {
-                LocalDate deadline = (LocalDate) session.getAttribute("deadline");
+                LocalDate deadline = (LocalDate) session.getAttribute("projectDeadline");
                 project.setDeadline(deadline);
             }
             session.setAttribute("project", project);

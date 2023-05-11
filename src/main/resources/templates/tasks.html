@@ -21,7 +21,7 @@
     <label>Duration: </label>
     <td th:text="${task.getDuration()}"/>
     <label>Completed: </label>
-    <td th:text="${task.getIsCompleted()}"/>
+    <td th:text="${task.isCompleted()}"/>
 
     <a th:href="@{/project/subprojects/task/update/ (taskID=${task.getTaskID()})}">
       <button>Edit</button>

@@ -112,7 +112,7 @@ public class SubprojectRepository implements ISubprojectRepository {
             preparedStatement.setInt(2, subproject.getPriority());
             preparedStatement.setInt(3, subproject.getDuration());
             preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
-            preparedStatement.setBoolean(5, subproject.getCompleted());
+            preparedStatement.setBoolean(5, subproject.isCompleted());
             preparedStatement.setInt(6, subproject.getSubprojectID());
             preparedStatement.executeUpdate();
 

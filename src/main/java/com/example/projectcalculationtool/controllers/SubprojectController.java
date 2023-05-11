@@ -69,7 +69,7 @@ public class SubprojectController {
     public String updateSubprojectForm(@RequestParam int subprojectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Subproject subproject = subprojectService.getSubproject(subprojectID);
-            session.setAttribute("deadline", subproject.getDeadline());
+            session.setAttribute("subprojectDeadline", subproject.getDeadline());
             model.addAttribute("subproject", subproject);
             return "updateSubprojectForm";
         }
@@ -82,7 +82,7 @@ public class SubprojectController {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
             if (subproject.getDeadline() == null) {
-                LocalDate deadline = (LocalDate) session.getAttribute("deadline");
+                LocalDate deadline = (LocalDate) session.getAttribute("subprojectDeadline");
                 subproject.setDeadline(deadline);
             }
             subprojectService.updateSubproject(subproject);
