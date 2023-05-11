@@ -67,7 +67,6 @@ public class SubprojectController {
     @GetMapping("/subproject/update")
     public String updateProjectForm(@RequestParam int subprojectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
-            session.setAttribute("subproject", subprojectService.getSubproject(subprojectID));
             Subproject subproject = subprojectService.getSubproject(subprojectID);
             model.addAttribute("subproject", subproject);
             return "updateSubprojectForm";
@@ -78,7 +77,10 @@ public class SubprojectController {
     @PostMapping("/subproject/update")
     public String updateProjectSubmit(@ModelAttribute Subproject subproject, HttpSession session) {
         if (isLoggedIn(session)) {
+            Project project = (Project) session.getAttribute("project");
+            subproject.setProjectID(project.getProjectID());
             subprojectService.updateSubproject(subproject);
+            session.setAttribute("subproject", subproject);
             return "redirect:/subprojects";
         }
         return "redirect:/sign-in";
