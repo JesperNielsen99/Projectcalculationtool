@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Projects</title>
+  <title>Subprojects</title>
 </head>
 <body>
 <div>
@@ -12,7 +12,7 @@
 </div>
 
 <div>
-  <h1>Project list:</h1>
+  <h1>Subproject list:</h1>
   <tr th:each="subproject : ${subprojects}">
     <label>Name: </label>
     <td th:text="${subproject.getName()}"/>

@@ -97,6 +97,7 @@ public class UserController {
     public String updateUserSubmit(@ModelAttribute("user") User user, HttpSession session) {
         if (isLoggedIn(session)) {
             service.updateUser(user);
+            session.setAttribute("user", user);
             return "show-user-profile";
         }
         return "redirect:/sign-in";
