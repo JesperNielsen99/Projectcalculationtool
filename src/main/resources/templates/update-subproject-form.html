@@ -60,11 +60,17 @@
             </div>
 
             <div class="input-group mb-3">
+                <span class="input-group-text">Priority</span>
+                <input type="number" class="form-control" id="priority" name="duration" th:field="*{priority}" required>
+            </div>
+
+            <div class="input-group mb-3">
                 <span class="input-group-text">Completed</span>
                 <div class="input-group-text">
                     <input type="checkbox" class="" id="completed" name="completed" th:field="*{completed}" th:checked="${project.completed} ? 'checked' : ''" >
                 </div>
             </div>
+
 
             <div class="btn-group d-flex justify-content-between" role="group" aria-label="Basic example">
                 <button class= "btn btn-primary" type="button" onclick="history.back()">Back</button>
