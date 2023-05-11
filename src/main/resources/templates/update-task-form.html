@@ -65,6 +65,11 @@
       </div>
 
       <div class="input-group mb-3">
+        <span class="input-group-text">Description</span>
+        <textarea class="form-control" id="Description" name="Description" th:field="*{description}" rows="2"></textarea>
+      </div>
+
+      <div class="input-group mb-3">
         <span class="input-group-text">Completed</span>
         <div class="input-group-text">
           <input type="checkbox" class="" id="completed" name="completed" th:field="*{isCompleted}" th:checked="${project.completed} ? 'checked' : ''" >
