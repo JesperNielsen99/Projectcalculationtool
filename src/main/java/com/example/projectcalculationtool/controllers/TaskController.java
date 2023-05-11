@@ -72,8 +72,11 @@ public class TaskController {
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task, HttpSession session){
         if (isLoggedIn(session)) {
+            Subproject subproject = (Subproject) session.getAttribute("task");
+            task.setSubprojectID(subproject.getSubprojectID());
             taskService.updateTask(task);
-            return "redirect:/projectOverview";
+            session.setAttribute("task", task);
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }
@@ -84,7 +87,7 @@ public class TaskController {
     public String deleteTask(@RequestParam int projectID, HttpSession session){
         if (isLoggedIn(session)) {
             taskService.deleteTask(projectID);
-            return "redirect:/projectOverview";
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }

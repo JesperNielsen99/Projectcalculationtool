@@ -6,7 +6,7 @@
     <title>Create subproject</title>
 </head>
 <body>
-<form action="@{project/subproject/create}" th:method="post" th:object="${subproject}">
+<form th:action="@{project/subproject/create}" th:method="post" th:object="${subproject}">
     <div>
         <label>Name </label>
         <input type="text" id="name" th:field="*{name}">

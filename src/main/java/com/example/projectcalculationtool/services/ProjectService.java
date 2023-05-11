@@ -30,7 +30,7 @@ public class ProjectService {
         return projectRepository.getProject(projectID);
     }
 
-    public void deleteTask(int projectID) {
+    public void deleteProject(int projectID) {
         projectRepository.deleteProject(projectID);
     }
 }
