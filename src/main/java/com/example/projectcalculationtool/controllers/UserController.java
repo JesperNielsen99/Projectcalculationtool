@@ -26,7 +26,7 @@ public class UserController {
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", service.getRoles());
-        return "sign-up";
+        return "sign-up-form";
     }
 
     @PostMapping("/sign-up")
@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping("/sign-in")
     public String loginForm(HttpSession session) {
         session.invalidate();
-        return "sign-in";
+        return "index-login";
     }
 
     @PostMapping("/sign-in")
@@ -63,7 +63,7 @@ public class UserController {
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
-        return "redirect:/sign-in";
+        return "index-login";
     }
 
     @GetMapping("/sign-out")
