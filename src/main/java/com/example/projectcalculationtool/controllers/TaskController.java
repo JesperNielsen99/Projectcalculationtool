@@ -1,5 +1,7 @@
 package com.example.projectcalculationtool.controllers;
 
+import com.example.projectcalculationtool.models.Project;
+import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.services.TaskService;
 import jakarta.servlet.http.HttpSession;
@@ -7,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Controller
+@RequestMapping(path="/project/subprojects")
 public class TaskController {
     private TaskService taskService;
 
@@ -19,8 +25,22 @@ public class TaskController {
         return session.getAttribute("user") != null;
     }
 
+    @GetMapping("/tasks")
+    public String showTasks(Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            session.removeAttribute("task");
+            Subproject subproject = (Subproject) session.getAttribute("subproject");
+            List<Task> tasks = taskService.getTasks(subproject.getSubprojectID());
+            model.addAttribute("tasks", tasks);
+            return "tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
+    /* ------------------------------------ Create project ----------------------------------------- */
+
     @GetMapping("/createTask")
-    public String createTask(Model model, HttpSession session) { //TODO needs an subprojectID or Session
+    public String createTask(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Task task = new Task();
             model.addAttribute("task", task);
@@ -33,15 +53,18 @@ public class TaskController {
     public String addTask(@ModelAttribute Task task, HttpSession session) {
         if (isLoggedIn(session)) {
         taskService.createTask(task);
-        return "redirect:/createTaskFrom"; //TODO needs a 'mainPage' as landing page + an ID
+        return "redirect:/createTaskFrom";
         }
         return "redirect:/sign-in";
     }
+
+    /* ------------------------------------ Update project ----------------------------------------- */
 
     @GetMapping("/updateTask")
     public String updateTask(@RequestParam int taskID, Model model, HttpSession session){
         if (isLoggedIn(session)) {
             Task task = taskService.getTask(taskID);
+            session.setAttribute("taskDeadline", task.getDeadline());
             model.addAttribute("task", task);
             return "updateTask";
         }
@@ -51,17 +74,26 @@ public class TaskController {
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task, HttpSession session){
         if (isLoggedIn(session)) {
+            Subproject subproject = (Subproject) session.getAttribute("subproject");
+            task.setSubprojectID(subproject.getSubprojectID());
+            if (task.getDeadline() == null) {
+                LocalDate deadline = (LocalDate) session.getAttribute("taskDeadline");
+                task.setDeadline(deadline);
+            }
             taskService.updateTask(task);
-            return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
+            session.setAttribute("task", task);
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }
+
+    /* ------------------------------------ Delete subproject ----------------------------------------- */
 
     @GetMapping("/deleteTask")
     public String deleteTask(@RequestParam int projectID, HttpSession session){
         if (isLoggedIn(session)) {
             taskService.deleteTask(projectID);
-            return "redirect:/projectOverview"; //TODO needs a 'mainPage' as landing page + an ID
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }

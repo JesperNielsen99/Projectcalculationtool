@@ -41,7 +41,7 @@ public class UserController {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
             model.addAttribute("role", service.getRole(user.getRoleID()));
-            return "profile";
+            return "show-user-profile";
         }
         return "redirect:/sign-in";
     }
@@ -97,7 +97,8 @@ public class UserController {
     public String updateUserSubmit(@ModelAttribute("user") User user, HttpSession session) {
         if (isLoggedIn(session)) {
             service.updateUser(user);
-            return "profile";
+            session.setAttribute("user", user);
+            return "show-user-profile";
         }
         return "redirect:/sign-in";
     }

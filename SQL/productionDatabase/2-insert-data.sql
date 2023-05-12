@@ -30,9 +30,3 @@ INSERT INTO task_user (task_id, user_id) VALUES
     (1,3),
     (2,3),
     (2,4);
-
-SELECT * FROM user;
-SELECT * FROM project;
-SELECT * FROM subproject;
-SELECT * FROM task;
-SELECT * FROM role;

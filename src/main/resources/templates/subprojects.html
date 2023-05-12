@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Subprojects</title>
+</head>
+<body>
+<div>
+  <a th:href="@{/project/subproject/create}">
+    <button>Add subproject</button>
+  </a>
+</div>
+
+<div>
+  <h1>Subproject list:</h1>
+  <tr th:each="subproject : ${subprojects}">
+    <label>Name: </label>
+    <td th:text="${subproject.getName()}"/>
+    <label>Deadline: </label>
+    <td th:text="${subproject.getDeadline()}"/>
+    <label>Duration: </label>
+    <td th:text="${subproject.getDuration()}"/>
+    <label>Completed: </label>
+    <td th:text="${subproject.getCompleted()}"/>
+
+    <a th:href="@{/project/subproject/update (subprojectID=${subproject.getSubprojectID()})}">
+      <button>Edit</button>
+    </a>
+    <a th:href="@{/project/subproject/delete (subprojectID=${subproject.getSubprojectID()})}">
+      <button>Delete</button>
+    </a>
+    <a th:href="@{/project/subproject/addToSession (subprojectID=${subproject.getSubprojectID()})}">
+      <button>See Overview</button>
+    </a>
+    <br>
+    <br>
+</div>
+
+</tr>
+</div>
+</body>
+</html>
