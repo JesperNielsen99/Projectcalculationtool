@@ -1,5 +1,5 @@
 SET foreign_key_checks = 0;
-DROP TABLE IF EXISTS task;
+DROP TABLE IF EXISTS user;
 
 CREATE TABLE user (
 	user_id         INTEGER      NOT NULL AUTO_INCREMENT,

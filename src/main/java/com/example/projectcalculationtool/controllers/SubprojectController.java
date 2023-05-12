@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class SubprojectController {
     }
 
     @GetMapping("/subproject/addToSession")
-    public String showProjects(@RequestParam int subprojectID, HttpSession session){
+    public String addToSession(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             session.setAttribute("subproject", subprojectService.getSubproject(subprojectID));
             return "redirect:/project/subprojects/tasks";
@@ -65,9 +66,10 @@ public class SubprojectController {
     /* ------------------------------------ Update project ----------------------------------------- */
 
     @GetMapping("/subproject/update")
-    public String updateProjectForm(@RequestParam int subprojectID, Model model, HttpSession session) {
+    public String updateSubprojectForm(@RequestParam int subprojectID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Subproject subproject = subprojectService.getSubproject(subprojectID);
+            session.setAttribute("subprojectDeadline", subproject.getDeadline());
             model.addAttribute("subproject", subproject);
             return "updateSubprojectForm";
         }
@@ -75,13 +77,18 @@ public class SubprojectController {
     }
 
     @PostMapping("/subproject/update")
-    public String updateProjectSubmit(@ModelAttribute Subproject subproject, HttpSession session) {
+    public String updateSubprojectSubmit(@ModelAttribute Subproject subproject, HttpSession session) {
         if (isLoggedIn(session)) {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
+            if (subproject.getDeadline() == null) {
+                LocalDate deadline = (LocalDate) session.getAttribute("subprojectDeadline");
+                subproject.setDeadline(deadline);
+            }
             subprojectService.updateSubproject(subproject);
+            session.removeAttribute("deadline");
             session.setAttribute("subproject", subproject);
-            return "redirect:/subprojects";
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }
@@ -89,7 +96,7 @@ public class SubprojectController {
     /* ------------------------------------ Delete subproject ----------------------------------------- */
 
     @GetMapping("/subproject/delete")
-    public String deleteProject(@RequestParam int subprojectID, HttpSession session){
+    public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             subprojectService.deleteSubproject(subprojectID);
             return "redirect:/subprojects";

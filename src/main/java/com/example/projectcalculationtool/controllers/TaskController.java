@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -63,6 +64,7 @@ public class TaskController {
     public String updateTask(@RequestParam int taskID, Model model, HttpSession session){
         if (isLoggedIn(session)) {
             Task task = taskService.getTask(taskID);
+            session.setAttribute("taskDeadline", task.getDeadline());
             model.addAttribute("task", task);
             return "updateTask";
         }
@@ -72,8 +74,12 @@ public class TaskController {
     @PostMapping("/updateTask")
     public String updateTask(@ModelAttribute Task task, HttpSession session){
         if (isLoggedIn(session)) {
-            Subproject subproject = (Subproject) session.getAttribute("task");
+            Subproject subproject = (Subproject) session.getAttribute("subproject");
             task.setSubprojectID(subproject.getSubprojectID());
+            if (task.getDeadline() == null) {
+                LocalDate deadline = (LocalDate) session.getAttribute("taskDeadline");
+                task.setDeadline(deadline);
+            }
             taskService.updateTask(task);
             session.setAttribute("task", task);
             return "redirect:/project/subproject/tasks";
