@@ -5,7 +5,7 @@
     <title>Create Task</title>
 </head>
 <body>
-<form th:action="@{/addTask}" th:method="post" th:object="${task}">
+<form th:action="@{/project/subproject/task/create}" th:method="post" th:object="${task}">
 
     <div>
         <input type="hidden" id="subprojectID" th:field="*{subprojectID}">

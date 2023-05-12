@@ -40,7 +40,7 @@ public class SubprojectController {
     public String addToSession(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             session.setAttribute("subproject", subprojectService.getSubproject(subprojectID));
-            return "redirect:/project/subprojects/tasks";
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }
@@ -58,9 +58,14 @@ public class SubprojectController {
     }
 
     @PostMapping("/subproject/create")
-    public String createSubproject(@ModelAttribute Subproject subproject){
-        subprojectService.createSubproject(subproject);
-        return "redirect:/create";
+    public String createSubproject(@ModelAttribute Subproject subproject, HttpSession session){
+        if (isLoggedIn(session)) {
+            Project project = (Project) session.getAttribute("project");
+            subproject.setProjectID(project.getProjectID());
+            subprojectService.createSubproject(subproject);
+            return "redirect:project/subproject/create";
+        }
+        return "redirect:/sign-in";
     }
 
     /* ------------------------------------ Update project ----------------------------------------- */
@@ -99,7 +104,7 @@ public class SubprojectController {
     public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             subprojectService.deleteSubproject(subprojectID);
-            return "redirect:/subprojects";
+            return "redirect:project/subprojects";
         }
         return "redirect:/sign-in";
     }
