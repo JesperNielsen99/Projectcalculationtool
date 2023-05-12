@@ -104,7 +104,7 @@ public class SubprojectController {
     public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             subprojectService.deleteSubproject(subprojectID);
-            return "redirect:project/subprojects";
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }

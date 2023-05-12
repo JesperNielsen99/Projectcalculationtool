@@ -33,7 +33,7 @@
   <div class="sign-in-box shadow p-4 mb-5 rounded">
     <h1 class="header-one">Create subproject</h1>
     <br>
-    <form th:action="@{create}" th:method="post" th:object="${subproject}">
+    <form th:action="@{project/subproject/create}" th:method="post" th:object="${subproject}">
       <div>
         <input type=hidden id="projectID" th:field="*{projectID}">
       </div>
