@@ -23,10 +23,10 @@
     <label>Completed: </label>
     <td th:text="${task.isCompleted()}"/>
 
-    <a th:href="@{/project/subprojects/task/update/ (taskID=${task.getTaskID()})}">
+    <a th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">
       <button>Edit</button>
     </a>
-    <a th:href="@{/project/subprojects/task/delete/ (taskID=${task.getTaskID()})}">
+    <a th:href="@{/project/subproject/task/delete (taskID=${task.getTaskID()})}">
       <button>Delete</button>
     </a>
     <a th:href="@{/project/subproject/task (taskID=${task.getTaskID()})}">

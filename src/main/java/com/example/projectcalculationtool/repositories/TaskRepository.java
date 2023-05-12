@@ -26,7 +26,7 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setInt(4, task.getPriority());
             preparedStatement.setInt(5, task.getDuration());
             preparedStatement.setDate(6, Date.valueOf(task.getDeadline()));
-            preparedStatement.setBoolean(7, task.isCompleted());
+            preparedStatement.setBoolean(7, false);
 
             preparedStatement.executeUpdate();
 
@@ -126,7 +126,7 @@ public class TaskRepository implements ITaskRepository {
     public void deleteTask(int taskID) {
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "DElETE FROM task WHERE task_id=?;";
+            String SQL = "DElETE FROM task WHERE task_id = ?;";
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
             preparedStatement.setInt(1, taskID);
 
@@ -136,5 +136,4 @@ public class TaskRepository implements ITaskRepository {
             throw new RuntimeException(e);
         }
     }
-
 }
