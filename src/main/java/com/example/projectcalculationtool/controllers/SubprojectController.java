@@ -31,6 +31,11 @@ public class SubprojectController {
             Project project = (Project) session.getAttribute("project");
             List<Subproject> subprojects = subprojectService.getSubprojects(project.getProjectID());
             model.addAttribute("subprojects", subprojects);
+
+            for (Subproject subproject : subprojects) {
+                System.out.println(subproject.getSubprojectID());
+            }
+
             return "show-subprojects";
         }
         return "redirect:/sign-in";
@@ -63,7 +68,7 @@ public class SubprojectController {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
             subprojectService.createSubproject(subproject);
-            return "redirect:project/subproject/create";
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }
@@ -103,6 +108,7 @@ public class SubprojectController {
     @GetMapping("/subproject/delete")
     public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
+            System.out.println("Del: " + subprojectID);
             subprojectService.deleteSubproject(subprojectID);
             return "redirect:/project/subprojects";
         }
