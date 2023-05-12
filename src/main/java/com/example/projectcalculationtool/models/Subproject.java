@@ -9,7 +9,7 @@ public class Subproject {
     private int priority;
     private LocalDate deadline;
     private int duration;
-    private Boolean completed;
+    private boolean completed;
 
     public Subproject(int subprojectID, int projectID, String name, int priority, LocalDate deadline, int duration, Boolean completed) {
         this.subprojectID = subprojectID;
@@ -72,7 +72,7 @@ public class Subproject {
         this.duration = duration;
     }
 
-    public Boolean getCompleted() {
+    public boolean isCompleted() {
         return completed;
     }
 

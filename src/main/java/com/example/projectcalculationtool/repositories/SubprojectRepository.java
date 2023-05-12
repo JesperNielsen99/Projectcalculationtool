@@ -18,20 +18,46 @@ public class SubprojectRepository implements ISubprojectRepository {
         try{
             Connection connection = DB_Connector.getConnection();
             String SQL = "INSERT INTO subproject\n" +
-                    "(project_id, subproject_name, subproject_priority, subproject_deadline, subproject_duration, subproject_completed\n)"+
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    "(project_id, \n" +
+                    "subproject_name, \n" +
+                    "subproject_priority, \n" +
+                    "subproject_duration, \n" +
+                    "subproject_deadline, \n" +
+                    "subproject_completed)\n" +
+                    "VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subproject.getProjectID());
             preparedStatement.setString(2, subproject.getName());
             preparedStatement.setInt(3, subproject.getPriority());
-            preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
-            preparedStatement.setInt(1, subproject.getDuration());
-            preparedStatement.setBoolean(1, false);
+            preparedStatement.setInt(4, subproject.getDuration());
+            preparedStatement.setDate(5, Date.valueOf(subproject.getDeadline()));
+            preparedStatement.setBoolean(6, subproject.isCompleted());
             preparedStatement.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    /*@Override
+    public void createSubproject(Subproject subproject){
+        try{
+            Connection connection = DB_Connector.getConnection();
+            String SQL = "INSERT INTO subproject " +
+                    "(project_id, subproject_name, subproject_priority, subproject_deadline, " +
+                    "subproject_duration, subproject_completed) "+
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subproject.getProjectID());
+            preparedStatement.setString(2, subproject.getName());
+            preparedStatement.setInt(3, subproject.getPriority());
+            preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
+            preparedStatement.setInt(5, subproject.getDuration());
+            preparedStatement.setBoolean(6, subproject.getCompleted());
+            preparedStatement.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
 
     @Override
     public List<Subproject> getSubprojects(int projectID) {
@@ -112,7 +138,7 @@ public class SubprojectRepository implements ISubprojectRepository {
             preparedStatement.setInt(2, subproject.getPriority());
             preparedStatement.setInt(3, subproject.getDuration());
             preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
-            preparedStatement.setBoolean(5, subproject.getCompleted());
+            preparedStatement.setBoolean(5, subproject.isCompleted());
             preparedStatement.setInt(6, subproject.getSubprojectID());
             preparedStatement.executeUpdate();
 

@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/project/subprojects")
+@RequestMapping(path="/project/subproject")
 public class TaskController {
     private TaskService taskService;
 
@@ -36,9 +37,19 @@ public class TaskController {
         return "redirect:/sign-in";
     }
 
+    @GetMapping("/task")
+    public String showTask(@RequestParam int taskID, Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            Task task = taskService.getTask(taskID);
+            model.addAttribute("task", task);
+            return "readTask";
+        }
+        return "redirect:/sign-in";
+    }
+
     /* ------------------------------------ Create project ----------------------------------------- */
 
-    @GetMapping("/createTask")
+    @GetMapping("task/create")
     public String createTask(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Task task = new Task();
@@ -48,32 +59,39 @@ public class TaskController {
         return "redirect:/sign-in";
     }
 
-    @PostMapping("/createTask")
+    @PostMapping("task/create")
     public String addTask(@ModelAttribute Task task, HttpSession session) {
         if (isLoggedIn(session)) {
-        taskService.createTask(task);
-        return "redirect:/createTaskFrom";
+            Subproject subproject = (Subproject) session.getAttribute("subproject");
+            task.setSubprojectID(subproject.getSubprojectID());
+            taskService.createTask(task);
+        return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }
 
     /* ------------------------------------ Update project ----------------------------------------- */
 
-    @GetMapping("/updateTask")
+    @GetMapping("task/update")
     public String updateTask(@RequestParam int taskID, Model model, HttpSession session){
         if (isLoggedIn(session)) {
             Task task = taskService.getTask(taskID);
+            session.setAttribute("taskDeadline", task.getDeadline());
             model.addAttribute("task", task);
             return "updateTask";
         }
         return "redirect:/sign-in";
     }
 
-    @PostMapping("/updateTask")
+    @PostMapping("task/update")
     public String updateTask(@ModelAttribute Task task, HttpSession session){
         if (isLoggedIn(session)) {
-            Subproject subproject = (Subproject) session.getAttribute("task");
+            Subproject subproject = (Subproject) session.getAttribute("subproject");
             task.setSubprojectID(subproject.getSubprojectID());
+            if (task.getDeadline() == null) {
+                LocalDate deadline = (LocalDate) session.getAttribute("taskDeadline");
+                task.setDeadline(deadline);
+            }
             taskService.updateTask(task);
             session.setAttribute("task", task);
             return "redirect:/project/subproject/tasks";
@@ -83,10 +101,10 @@ public class TaskController {
 
     /* ------------------------------------ Delete subproject ----------------------------------------- */
 
-    @GetMapping("/deleteTask")
-    public String deleteTask(@RequestParam int projectID, HttpSession session){
+    @GetMapping("task/delete")
+    public String deleteTask(@RequestParam int taskID, HttpSession session){
         if (isLoggedIn(session)) {
-            taskService.deleteTask(projectID);
+            taskService.deleteTask(taskID);
             return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";

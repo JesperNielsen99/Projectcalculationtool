@@ -21,12 +21,12 @@
     <label>Duration: </label>
     <td th:text="${subproject.getDuration()}"/>
     <label>Completed: </label>
-    <td th:text="${subproject.getCompleted()}"/>
+    <td th:text="${subproject.isCompleted()}"/>
 
-    <a th:href="@{/project/subprojects/update/ (subprojectID=${subproject.getSubprojectID()})}">
+    <a th:href="@{/project/subproject/update (subprojectID=${subproject.getSubprojectID()})}">
       <button>Edit</button>
     </a>
-    <a th:href="@{/project/subprojects/delete/ (subprojectID=${subproject.getSubprojectID()})}">
+    <a th:href="@{/project/subproject/delete (subprojectID=${subproject.getSubprojectID()})}">
       <button>Delete</button>
     </a>
     <a th:href="@{/project/subproject/addToSession (subprojectID=${subproject.getSubprojectID()})}">

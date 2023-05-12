@@ -21,7 +21,8 @@ public class ProjectRepository implements IProjectRepository {
         try{
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "INSERT INTO project (project_manager_id, project_name, project_duration, project_deadline, project_completed) VALUES (?,?,?,?,?);";
+            String SQL = "INSERT INTO project (project_manager_id, project_name, project_duration, " +
+                    "project_deadline, project_completed) VALUES (?,?,?,?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
