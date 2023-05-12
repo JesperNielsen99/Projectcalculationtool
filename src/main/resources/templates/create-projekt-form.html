@@ -33,7 +33,6 @@
     <div class="sign-in-box shadow p-4 mb-5 rounded">
       <h1 class="header-one">Create project</h1>
       <br>
-
       <form th:action="@{/project/create}" th:method="post" th:object="${project}">
         <div>
           <input type=hidden id="managerID" th:field="*{managerID}">
