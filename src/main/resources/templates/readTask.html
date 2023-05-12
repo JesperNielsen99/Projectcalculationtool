@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+</head>
+<body>
+<div>
+    <h1> Task: <c th:text="${task.getName()}"/> </h1>
+    <label>Description: </label>
+    <br>
+    <textarea th:text="${task.getDescription()}" readonly style="resize: none;"></textarea>
+    <p>Deadline: <c th:text=" ${task.getDeadline()}"/> </p>
+    <p>Duration: <c th:text="${task.getDuration()}"/> </p>
+    <p>Completed: <c th:text="${task.isCompleted()}"/> </p>
+    <a th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">
+        <button>Edit</button>
+    </a>
+    <a th:href="@{/project/subproject/task/delete (taskID=${task.getTaskID()})}">
+        <button>Delete</button>
+    </a>
+    <button type="button" onclick="history.back()">Back</button>
+</div>
+</body>
+</html>

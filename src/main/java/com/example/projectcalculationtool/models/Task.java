@@ -10,7 +10,7 @@ public class Task {
     private int priority;
     private int duration;
     private LocalDate deadline;
-    private Boolean completed;
+    private boolean completed;
 
     public Task(){}
 
@@ -81,11 +81,11 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public Boolean isCompleted() {
+    public boolean isCompleted() {
         return completed;
     }
 
-    public void setCompleted(Boolean isCompleted) {
-        this.completed = isCompleted;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }
