@@ -32,7 +32,7 @@ public class ProjectController {
             User user = (User) session.getAttribute("user");
             List<Project> projects = projectService.getProjects(user.getUserID());
             model.addAttribute("projectList", projects);
-            return "projects";
+            return "show-projects";
         }
         return "redirect:/sign-in";
     }
@@ -54,7 +54,7 @@ public class ProjectController {
         if (isLoggedIn(session)) {
             Project project = new Project();
             model.addAttribute("project", project);
-            return "createProjectForm";
+            return "create-project-form";
         }
         return "redirect:/sign-in";
     }
@@ -78,7 +78,7 @@ public class ProjectController {
             Project project = projectService.getProject(projectID);
             session.setAttribute("projectDeadline", project.getDeadline());
             model.addAttribute("project", project);
-            return "updateProjectForm";
+            return "update-project-form";
         }
         return "redirect:/sign-in";
     }

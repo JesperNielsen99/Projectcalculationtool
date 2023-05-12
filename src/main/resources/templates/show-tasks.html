@@ -29,8 +29,8 @@
       <h1>Tasks</h1>
     </div>
     <div class="header-buttons">
-      <a class="btn btn-primary btn-sm" href="#">Show profile</a>
-      <a class="btn btn-primary btn-sm" href="#">Sign out</a>
+      <a class="btn btn-primary btn-sm" th:href="@{/profile}">Show profile</a>
+      <a class="btn btn-primary btn-sm" th:href="@{/sign-out}">Sign out</a>
     </div>
   </div>
   <br>
@@ -57,7 +57,7 @@
       <td th:text="${task.isCompleted()}"></td>
 
       <td>
-        <a class="btn btn-primary btn-sm" th:href="@{/project/subprojects/task/update/ (taskID=${task.getTaskID()})}">Edit</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">Edit</a>
         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
       </td>
       <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -72,7 +72,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <a type="button" class="btn btn-danger" th:href="@{/project/subprojects/task/delete/ (taskID=${task.getTaskID()})}">Delete</a>
+              <a type="button" class="btn btn-danger" th:href="@{/project/subproject/task/delete (taskID=${task.getTaskID()})}">Delete</a>
             </div>
           </div>
         </div>

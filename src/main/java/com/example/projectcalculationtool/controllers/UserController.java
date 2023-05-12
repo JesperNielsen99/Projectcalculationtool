@@ -26,7 +26,7 @@ public class UserController {
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", service.getRoles());
-        return "sign-up-form";
+        return "create-user-form";
     }
 
     @PostMapping("/sign-up")
@@ -88,7 +88,7 @@ public class UserController {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
             model.addAttribute("roles", service.getRoles());
-            return "updateUser";
+            return "update-user-form";
         }
         return "redirect:/sign-in";
     }
