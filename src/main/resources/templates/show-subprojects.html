@@ -46,7 +46,6 @@
         <th scope="col">Duration</th>
         <th scope="col">Completed</th>
         <th scope="col">Actions</th>
-        <th scope="col">Id</th>
       </tr>
       </thead>
       <tbody>
@@ -61,7 +60,6 @@
           <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/update (subprojectID=${subproject.getSubprojectID()})}">Edit</a>
           <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
           <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/addToSession (subprojectID=${subproject.getSubprojectID()})}">Tasks</a>
-          <p th:text="${subproject.getSubprojectID()}" />
           <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
@@ -71,7 +69,6 @@
                 </div>
                 <div class="modal-body">
                   <p>Continuing this action will terminate the subproject and tasks associated with this subproject . Press delete to accept.</p>
-                  <p th:text="${subproject.getSubprojectID()}"/>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -81,7 +78,6 @@
             </div>
           </div>
         </td>
-        <td> <p th:text="${subproject.getSubprojectID()}"/> </td>
       </tr>
     </tbody>
   </table>
