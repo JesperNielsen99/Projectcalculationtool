@@ -48,7 +48,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr th:each="project : ${projectList}">
+        <tr th:each="project, projectIndex : ${projectList}">
           <td th:text="${project.getName()}"></td>
           <td th:text="${project.getDeadline()}"></td>
           <td th:text="${project.getDuration()}"></td>
@@ -56,28 +56,30 @@
 
           <td>
             <a class="btn btn-primary btn-sm" th:href="@{/project/update (projectID=${project.getProjectID()})}">Edit</a>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${projectIndex.index}">Delete</button>
             <a class="btn btn-primary btn-sm" th:href="@{/project/addToSession (projectID=${project.getProjectID()})}">Subproject</a>
           </td>
+
           <td>
-              <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-4" id="ModalLabel">Warning!!!</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <p>Continuing this action terminate the project, subproject and tasks associated with this project . Press delete to accept.</p>
-                    </div>
-                    <div class="modal-footer">
+            <div class="modal fade" th:id="'deleteModal-' + ${projectIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="ModalLabel">Warning!!!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Continuing this action terminate the project, subproject and tasks associated with this project . Press delete to accept.</p>
+                  </div>
+                  <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <a type="button" class="btn btn-danger" th:href="@{/project/delete (projectID=${project.getProjectID()})}">Delete</a>
-                    </div>
+                  </div>
                 </div>
-                </div>
+              </div>
             </div>
           </td>
+
         </tr>
       </tbody>
     </table>

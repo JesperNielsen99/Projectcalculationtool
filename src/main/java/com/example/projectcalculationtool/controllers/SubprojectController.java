@@ -63,7 +63,7 @@ public class SubprojectController {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
             subprojectService.createSubproject(subproject);
-            return "redirect:project/subproject/create";
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }
