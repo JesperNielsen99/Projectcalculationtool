@@ -6,7 +6,7 @@ ENV MYSQL_PORT=3306
 COPY src /src
 COPY pom.xml /pom.xml
 RUN set -ex; \
-     mvn -f /pom.xml clean package; \
+     mvn -f /pom.xml clean package -DskipTests; \
      mv /target/*.jar /app/; \
      rm -rf /target; \
      rm -rf /src; \

@@ -49,7 +49,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="subproject : ${subprojects}">
+      <tr th:each="subproject, subprojectIndex : ${subprojects}">
         <td th:text="${subproject.getPriority()}"></td>
         <td th:text="${subproject.getName()}"></td>
         <td th:text="${subproject.getDeadline()}"></td>
@@ -58,11 +58,11 @@
 
         <td>
           <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/update (subprojectID=${subproject.getSubprojectID()})}">Edit</a>
-          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${subprojectIndex.index}">Delete</button>
           <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/addToSession (subprojectID=${subproject.getSubprojectID()})}">Tasks</a>
         </td>
         <td>
-          <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+          <div class="modal fade" th:id="'deleteModal-' + ${subprojectIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">

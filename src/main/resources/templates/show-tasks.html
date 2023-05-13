@@ -49,7 +49,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="task : ${tasks}">
+    <tr th:each="task, taskIndex : ${tasks}">
       <td th:text="${task.getPriority()}"></td>
       <td th:text="${task.getName()}"></td>
       <td th:text="${task.getDeadline()}"></td>
@@ -58,9 +58,10 @@
 
       <td>
         <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">Edit</a>
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${taskIndex.index}">Delete</button>
       </td>
-      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+
+      <div class="modal fade" th:id="'deleteModal-' + ${taskIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
