@@ -64,6 +64,9 @@ public class ProjectController {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             project.setManagerID(user.getUserID());
+            if (project.getDeadline() == null) {
+                project.setDeadline(LocalDate.now());
+            }
             projectService.createProject(project);
             return "redirect:/projects";
         }

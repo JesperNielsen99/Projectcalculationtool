@@ -64,6 +64,9 @@ public class TaskController {
         if (isLoggedIn(session)) {
             Subproject subproject = (Subproject) session.getAttribute("subproject");
             task.setSubprojectID(subproject.getSubprojectID());
+            if (task.getDeadline() == null) {
+                task.setDeadline(LocalDate.now());
+            }
             taskService.createTask(task);
         return "redirect:/project/subproject/tasks";
         }

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -62,6 +63,9 @@ public class SubprojectController {
         if (isLoggedIn(session)) {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
+            if (subproject.getDeadline() == null) {
+                subproject.setDeadline(LocalDate.now());
+            }
             subprojectService.createSubproject(subproject);
             return "redirect:/project/subprojects";
         }
