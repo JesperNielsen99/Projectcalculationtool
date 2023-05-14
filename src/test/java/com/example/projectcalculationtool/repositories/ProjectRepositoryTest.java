@@ -19,19 +19,14 @@ import java.util.stream.Collectors;
 @ActiveProfiles("test")
 public class ProjectRepositoryTest {
 
-
-
-
     @Autowired
     private ProjectRepository projectRepository;
 
     private ProjectTestDB projectTestDB;
     private Project project1;
     private Project project2;
-
     private Project project3;
-
-
+    private Project project4;
 
     @BeforeEach
     void setUp(){
@@ -41,9 +36,11 @@ public class ProjectRepositoryTest {
         project1 = new Project(1,1,"T-Project1",1, LocalDate.now(),true);
         project2 = new Project(2,2,"T-Project2",2, LocalDate.now(),true);
         project3 = new Project(3,2,"T-Project3",3, LocalDate.now(),true);
+        project4 = new Project(4,2,"T-Project4",4, LocalDate.now(),true);
     }
 
     /* ------------------------------------ Create, Size, Contains ----------------------------------------- */
+
     @Test
     void createProject(){
         projectRepository.createProject(project1);
@@ -52,7 +49,14 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(project1.getName(), projectFound.getName());
     }
+    @Test
+    void createProject2(){
+        projectRepository.createProject(project2);
 
+        Project projectFound = projectRepository.getProject(project2.getProjectID());
+
+        Assertions.assertEquals(project2.getName(), projectFound.getName());
+    }
     @Test
     void assertSizeOneInstance(){
         projectRepository.createProject(project1);
@@ -62,7 +66,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(1, projectList.size());
     }
-
     @Test
     void assertSizeMultipleInstances(){
         projectRepository.createProject(project1);
@@ -73,7 +76,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(2, projectList.size());
     }
-
     @Test
     void listContainsProject1(){
         projectRepository.createProject(project1);
@@ -94,7 +96,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(projectList.get(0).getName(), project1.getName());
     }
-
     @Test
     void getProject1(){
         projectRepository.createProject(project1);
@@ -105,7 +106,6 @@ public class ProjectRepositoryTest {
     }
 
     /* ------------------------------------ Update Project ----------------------------------------- */
-
     @Test
     void updateProject1IsCompleted(){
         projectRepository.createProject(project1);
@@ -117,7 +117,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(project1.isCompleted(), projectFound.isCompleted());
     }
-
     @Test
     void updateProject1Name(){
         projectRepository.createProject(project1);
@@ -129,7 +128,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(project1.getName(), projectFound.getName());
     }
-
     @Test
     void updateProject1ManagerID() {
         projectRepository.createProject(project1);
@@ -141,7 +139,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(project1.getManagerID(), projectFound.getManagerID());
     }
-
     @Test
     void updateProject1Duration() {
         projectRepository.createProject(project1);
@@ -153,7 +150,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(project1.getDuration(), projectFound.getDuration());
     }
-
     @Test
     void updateProject1Deadline() {
         projectRepository.createProject(project1);
@@ -167,7 +163,6 @@ public class ProjectRepositoryTest {
     }
 
     /* ------------------------------------ Delete Project ----------------------------------------- */
-
     @Test
     void deleteProject(){
         projectRepository.createProject(project1);
@@ -178,7 +173,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertNull(projectFound);
     }
-
     @Test
     void getProjectCorrectly() {
         int managerID = 1;
@@ -189,7 +183,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertNotNull(project);
     }
-
     @Test
     void getProjectsWithDifferentManagerID() {
         projectRepository.createProject(project1);
@@ -199,14 +192,12 @@ public class ProjectRepositoryTest {
 
         Assertions.assertTrue(projectList.isEmpty());
     }
-
     @Test
     void getProjectsWhenNoProjectsExist() {
         List<Project> projectList = projectRepository.getProjects(1);
 
         Assertions.assertTrue(projectList.isEmpty());
     }
-
     @Test
     void getProjectsForMultipleManagers() {
         projectRepository.createProject(project1);
@@ -219,8 +210,6 @@ public class ProjectRepositoryTest {
         boolean condition = projectsManager1.size() == 1 && projectsManager2.size() == 2;
         Assertions.assertTrue(condition);
     }
-
-
     @Test
     void updateProjectWithMultipleProjects() {
         projectRepository.createProject(project1);
@@ -240,8 +229,6 @@ public class ProjectRepositoryTest {
         }
         Assertions.assertTrue(updated);
     }
-
-
     @Test
     void deleteProjectWithMultipleProjects() {
         projectRepository.createProject(project1);
@@ -260,7 +247,6 @@ public class ProjectRepositoryTest {
         }
         Assertions.assertTrue(deleted);
     }
-
     @Test
     void updateProjectWithNegativeDuration() {
         projectRepository.createProject(project1);
@@ -272,7 +258,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(-5, projectFound.getDuration());
     }
-
     @Test
     void deleteNonExistentProject() {
         projectRepository.createProject(project1);
@@ -285,7 +270,6 @@ public class ProjectRepositoryTest {
         // Ensure that project1 still exists after trying to delete a non-existent project.
         Assertions.assertNotNull(project1Found);
     }
-
     @Test
     void getProjectsWithNonExistentManagerID() {
         projectRepository.createProject(project1);
@@ -295,7 +279,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertTrue(projectList.isEmpty());
     }
-
     @Test
     void updateProjectWithPastDeadline() {
         projectRepository.createProject(project1);
@@ -307,7 +290,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(LocalDate.now().minusDays(10), projectFound.getDeadline());
     }
-
     @Test
     void createMultipleProjectsWithSameManagerID() {
         projectRepository.createProject(project1);
@@ -317,8 +299,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(2, projectList.size());
     }
-
-
     @Test
     void updateProjectManagerIDToNonExistingManagerID() {
         projectRepository.createProject(project1);
@@ -330,7 +310,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(999, projectFound.getManagerID());
     }
-
     @Test
     void updateProjectNameToEmptyString() {
         projectRepository.createProject(project1);
@@ -342,7 +321,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals("", projectFound.getName());
     }
-
     @Test
     void updateProjectDurationToZero() {
         projectRepository.createProject(project1);
@@ -354,7 +332,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(0, projectFound.getDuration());
     }
-
     @Test
     void updateProjectDeadlineToSameDate() {
         projectRepository.createProject(project1);
@@ -367,7 +344,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(sameDeadline, projectFound.getDeadline());
     }
-
     @Test
     void updateProjectCompletionStatusToSameStatus() {
         projectRepository.createProject(project1);
@@ -379,7 +355,6 @@ public class ProjectRepositoryTest {
 
         Assertions.assertEquals(true, projectFound.isCompleted());
     }
-
     @Test
     void getEmptyListOfProjectsWithNonExistingManagerID() {
         projectRepository.createProject(project1);
@@ -388,27 +363,4 @@ public class ProjectRepositoryTest {
 
         Assertions.assertTrue(projectList.isEmpty());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
