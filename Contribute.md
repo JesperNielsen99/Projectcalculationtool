@@ -53,6 +53,11 @@ When reporting on a bug, we strongly advice you to use the following ***How to r
 
 If you have suggestions to implementations of new features or generel ideas to enhance the program, please create a issue
 
+We consider there to be to type of issues in this area that are
+- ***Ides to enhance the program***
+-   This could be optimization of functions, better arrangement of backend code, better arrangement of frontend code, and so on. 
+
+
 ### Style Guide
 
 Please follow the standard Java coding conventions. This ensures that the source code is easy to read and reduces the chance of introducing bugs.
