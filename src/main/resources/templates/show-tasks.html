@@ -29,11 +29,10 @@
       <h1>Tasks</h1>
     </div>
     <div class="header-buttons">
-      <a class="btn btn-primary btn-sm" href="#">Show profile</a>
-      <a class="btn btn-primary btn-sm" href="#">Sign out</a>
+      <a class="btn btn-primary btn-sm" th:href="@{/profile}">Show profile</a>
+      <a class="btn btn-primary btn-sm" th:href="@{/sign-out}">Sign out</a>
     </div>
   </div>
-
   <br>
   <div class="add-button">
     <a class="btn btn-success btn-sm" th:href="@{/project/subproject/task/create}">Add task</a>
@@ -50,18 +49,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="task : ${tasks}">
-      <td th:text="${task.priority()}"></td>
+    <tr th:each="task, taskIndex : ${tasks}">
+      <td th:text="${task.getPriority()}"></td>
       <td th:text="${task.getName()}"></td>
       <td th:text="${task.getDeadline()}"></td>
       <td th:text="${task.getDuration()}"></td>
       <td th:text="${task.isCompleted()}"></td>
 
       <td>
-        <a class="btn btn-primary btn-sm" th:href="@{/project/subprojects/task/update/ (taskID=${task.getTaskID()})}">Edit</a>
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+        <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">Edit</a>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${taskIndex.index}">Delete</button>
       </td>
-      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+
+      <div class="modal fade" th:id="'deleteModal-' + ${taskIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -73,7 +73,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <a type="button" class="btn btn-danger" th:href="@{/project/subprojects/task/delete/ (taskID=${task.getTaskID()})}">Delete</a>
+              <a type="button" class="btn btn-danger" th:href="@{/project/subproject/task/delete (taskID=${task.getTaskID()})}">Delete</a>
             </div>
           </div>
         </div>
@@ -81,6 +81,9 @@
     </tr>
     </tbody>
   </table>
+</div>
+<div>
+  <a class="btn btn-primary btn-sm" th:href="@{/project/subprojects}">Back</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>

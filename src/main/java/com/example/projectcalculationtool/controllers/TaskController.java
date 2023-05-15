@@ -32,7 +32,7 @@ public class TaskController {
             Subproject subproject = (Subproject) session.getAttribute("subproject");
             List<Task> tasks = taskService.getTasks(subproject.getSubprojectID());
             model.addAttribute("tasks", tasks);
-            return "tasks";
+            return "show-tasks";
         }
         return "redirect:/sign-in";
     }
@@ -54,7 +54,7 @@ public class TaskController {
         if (isLoggedIn(session)) {
             Task task = new Task();
             model.addAttribute("task", task);
-            return "createTaskForm";
+            return "create-task-form";
         }
         return "redirect:/sign-in";
     }
@@ -64,6 +64,9 @@ public class TaskController {
         if (isLoggedIn(session)) {
             Subproject subproject = (Subproject) session.getAttribute("subproject");
             task.setSubprojectID(subproject.getSubprojectID());
+            if (task.getDeadline() == null) {
+                task.setDeadline(LocalDate.now());
+            }
             taskService.createTask(task);
         return "redirect:/project/subproject/tasks";
         }
@@ -78,7 +81,7 @@ public class TaskController {
             Task task = taskService.getTask(taskID);
             session.setAttribute("taskDeadline", task.getDeadline());
             model.addAttribute("task", task);
-            return "updateTask";
+            return "update-task-form";
         }
         return "redirect:/sign-in";
     }

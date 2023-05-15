@@ -45,22 +45,22 @@
 
       <div class="input-group mb-3">
         <span class="input-group-text">Name</span>
-        <input type="text" id="taskName" name="taskName" class="form-control" th:field="*{name}" required autofocus>
+        <input type="text" id="taskName" name="taskName" class="form-control" th:field="*{name}" autofocus>
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text">Deadline</span>
-        <input type="date" id="deadline" name="deadline" class="form-control" th:field="*{deadline}" required>
+        <input type="date" id="deadline" th:min="${#temporals.format(#temporals.createNow(),'yyyy-MM-dd')}" name="deadline" class="form-control" th:field="*{deadline}">
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text">Duration</span>
-        <input type="number" class="form-control" id="duration" name="duration" th:field="*{duration}" required>
+        <input type="number" min=1" class="form-control" id="duration" name="duration" placeholder="In hours" th:field="*{duration}">
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text">Priority</span>
-        <input type="number" class="form-control" id="priority" name="duration" th:field="*{priority}" required>
+        <input type="number" min="1" max="5" class="form-control" id="priority" name="duration" placeholder="1-5" th:field="*{priority}">
       </div>
 
       <div class="input-group mb-3">
@@ -71,7 +71,7 @@
       <div class="input-group mb-3">
         <span class="input-group-text">Completed</span>
         <div class="input-group-text">
-          <input type="checkbox" class="" id="completed" name="completed" th:field="*{isCompleted}" th:checked="${project.completed} ? 'checked' : ''" >
+          <input type="checkbox" class="" id="completed" name="completed" th:field="*{completed}" th:checked="${task.completed} ? 'checked' : ''" >
         </div>
       </div>
 

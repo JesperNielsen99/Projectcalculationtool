@@ -33,8 +33,7 @@
   <div class="sign-in-box shadow p-4 mb-5 rounded">
     <h1 class="header-one">Create subproject</h1>
     <br>
-
-    <form th:action="@{project/subproject/create}" th:method="post" th:object="${subproject}">
+    <form th:action="@{/project/subproject/create}" th:method="post" th:object="${subproject}">
       <div>
         <input type=hidden id="projectID" th:field="*{projectID}">
       </div>
@@ -46,17 +45,17 @@
 
       <div class="input-group mb-3">
         <span class="input-group-text">Deadline</span>
-        <input type="date" min="2000-01-01" id="deadline" name="deadline" class="form-control" th:field="*{deadline}" required>
+        <input type="date" th:min="${#temporals.format(#temporals.createNow(),'yyyy-MM-dd')}" id="deadline" name="deadline" class="form-control" th:field="*{deadline}">
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text">Duration</span>
-        <input type="number" min="0" class="form-control" id="duration" name="duration" placeholder="365 days" th:field="*{duration}" required>
+        <input type="number" min="1" class="form-control" id="duration" name="duration" placeholder="In hours" th:field="*{duration}" required>
       </div>
 
       <div class="input-group mb-3">
         <span class="input-group-text">Priority</span>
-        <input type="number" min="0" class="form-control" id="priority" name="duration" placeholder="1-5" th:field="*{priority}" required>
+        <input type="number" min="1" max="5" class="form-control" id="priority" name="duration" placeholder="1-5" th:field="*{priority}" required>
       </div>
 
       <div class="btn-group d-flex justify-content-between" role="group" aria-label="Basic example">

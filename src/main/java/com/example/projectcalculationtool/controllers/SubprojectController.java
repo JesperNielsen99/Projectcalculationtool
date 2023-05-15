@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,7 +32,7 @@ public class SubprojectController {
             Project project = (Project) session.getAttribute("project");
             List<Subproject> subprojects = subprojectService.getSubprojects(project.getProjectID());
             model.addAttribute("subprojects", subprojects);
-            return "subprojects";
+            return "show-subprojects";
         }
         return "redirect:/sign-in";
     }
@@ -52,7 +53,7 @@ public class SubprojectController {
         if (isLoggedIn(session)) {
             Subproject subproject = new Subproject();
             model.addAttribute("subproject", subproject);
-            return "createSubprojectForm";
+            return "create-subproject-form";
         }
         return "redirect:/sign-in";
     }
@@ -62,8 +63,11 @@ public class SubprojectController {
         if (isLoggedIn(session)) {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
+            if (subproject.getDeadline() == null) {
+                subproject.setDeadline(LocalDate.now());
+            }
             subprojectService.createSubproject(subproject);
-            return "redirect:project/subproject/create";
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }
@@ -76,7 +80,7 @@ public class SubprojectController {
             Subproject subproject = subprojectService.getSubproject(subprojectID);
             session.setAttribute("subprojectDeadline", subproject.getDeadline());
             model.addAttribute("subproject", subproject);
-            return "updateSubprojectForm";
+            return "update-subproject-form";
         }
         return "redirect:/sign-in";
     }
@@ -104,7 +108,7 @@ public class SubprojectController {
     public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             subprojectService.deleteSubproject(subprojectID);
-            return "redirect:project/subprojects";
+            return "redirect:/project/subprojects";
         }
         return "redirect:/sign-in";
     }
