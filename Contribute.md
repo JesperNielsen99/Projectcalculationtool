@@ -36,12 +36,18 @@ In this project, we follow a feature branch workflow. Each contributor works on 
 
 ### Help us test the program
 
-Help us test the program by heading to [**https://calculationtool.onrender.com/sign-up**](https://calculationtool.onrender.com/sign-up)
-
+Help us test the program by heading to [**https://calculationtool.onrender.com/sign-up**](https://calculationtool.onrender.com/sign-up). Create a account and try to use the program and all of its functions.
 
 ### Reporting Bugs
 
-This section guides you through submitting a bug report for Projectcalculationtool. Following these guidelines helps maintainers and the community understand your report, reproduce the behavior, and find related reports.
+If you find a bug consider creating a issue with it. Here we will look further into the issue and take in generel feedback about the programming and how it can be improved.
+
+In order to provide us with the most useable feedback we strongly advide you to use the following blueprint when reporting on a bug using issues
+
+```markdown
+test
+```
+
 
 ### Suggesting Enhancements
 
