@@ -66,6 +66,6 @@ Please follow the standard Java coding conventions. This ensures that the source
 
 ## Community
 
-You can chat with the core contributors and the Projectcalculationtool community on Microsoft Teams. We have a group chat there where we discuss about the project, share ideas, and solve problems.
+You can chat with the core contributors and the dev team through issues.
 
 Thank you for contributing to the Projectcalculationtool!
