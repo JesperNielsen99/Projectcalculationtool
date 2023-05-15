@@ -12,6 +12,7 @@ The following is a set of guidelines for contributing to Projectcalculationtool,
 - An IDE installed like VSCode, IntelliJ, or other.
 - Knowledge of SQL database and how to use it and send/retrive data from it. 
 - MySQL Workbench.
+- Microsoft teams: This is our platform where we keep contact and you will be added to our group chat.
 
 ## Setup
 
