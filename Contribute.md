@@ -9,12 +9,18 @@ The following is a set of guidelines for contributing to Projectcalculationtool,
 - JDK 17: You should have JDK 17 installed on your machine as the project uses Java 17 as mentioned in the `pom.xml`.
 - Apache Maven: As this is a Maven project, you need to have Maven installed on your machine.
 - MySQL: As the project uses `mysql-connector-j` for database connectivity, you should have MySQL installed and properly set up on your machine.
+- An IDE installed like VSCode, IntelliJ, or other.
+- Knowledge of SQL database and how to use it and send/retrive data from it. 
+- MySQL Workbench.
 
 ## Setup
 
 1. Clone the repository.
-2. Navigate to the project directory and run `mvn install` to download the dependencies.
-3. To start the application, use `mvn spring-boot:run`.
+2. Use git pull
+3. thoroughly look through our code and how its been set up.
+4. Setup your own local test database in your MySQL workbench.
+5. Setup your own local production database in your MySQL workbench.
+6. Run the program locally, we use port 8080, and use all the functions of the program to make sure it is fully functional.
 
 ## Workflow
 
@@ -27,6 +33,11 @@ In this project, we follow a feature branch workflow. Each contributor works on 
 5. After your changes are in `main`, all team members should pull the latest changes from `main`.
 
 ## How Can I Contribute?
+
+### Help us test the program
+
+Help us test the program by heading to [**https://calculationtool.onrender.com/sign-up**](https://calculationtool.onrender.com/sign-up)
+
 
 ### Reporting Bugs
 
