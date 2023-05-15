@@ -54,9 +54,10 @@ When reporting on a bug, we strongly advice you to use the following ***How to r
 If you have suggestions to implementations of new features or generel ideas to enhance the program, please create a issue
 
 We consider there to be to type of issues in this area that are
-- ***Ides to enhance the program***
+- ***Ideas to enhance the program***
   - This could be optimization of functions, better arrangement of backend code, better arrangement of frontend code, and so on. 
-
+- ***Ideas to new features***
+  - These are new functions that will evolve the programming that users can benafit from.
 
 ### Style Guide
 
