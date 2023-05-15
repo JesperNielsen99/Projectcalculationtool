@@ -42,16 +42,16 @@ Help us test the program by heading to [**https://calculationtool.onrender.com/s
 
 If you find a bug consider creating a issue with it. Here we will look further into the issue and take in generel feedback about the programming and how it can be improved.
 
-In order to provide us with the most useable feedback we strongly advide you to use the following blueprint when reporting on a bug using issues
+When reporting on a bug, we strongly advice you to use the following ***How to report on a bug***
 
-```markdown
-test
-```
-
+***How to report on a bug, step by step***
+- Create a issue with the title BUG.
+- Include step by step details as to what you did, prior to the bug happening.
+- Insert a picture of the screen where you clearly can see the redirected error page and the URL.
 
 ### Suggesting Enhancements
 
-This section guides you through submitting an enhancement suggestion for Projectcalculationtool, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion and make decisions.
+If you have suggestions to implementations of new features or generel ideas to enhance the program, please create a issue
 
 ### Style Guide
 
