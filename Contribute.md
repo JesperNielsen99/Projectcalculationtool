@@ -55,7 +55,7 @@ If you have suggestions to implementations of new features or generel ideas to e
 
 We consider there to be to type of issues in this area that are
 - ***Ides to enhance the program***
--   This could be optimization of functions, better arrangement of backend code, better arrangement of frontend code, and so on. 
+  - This could be optimization of functions, better arrangement of backend code, better arrangement of frontend code, and so on. 
 
 
 ### Style Guide
