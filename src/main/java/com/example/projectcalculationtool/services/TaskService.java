@@ -1,9 +1,13 @@
 package com.example.projectcalculationtool.services;
 
+import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
+import com.example.projectcalculationtool.services.comparators.CompletedComparator;
+import com.example.projectcalculationtool.services.comparators.PriorityComparator;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -19,7 +23,9 @@ public class TaskService {
     }
 
     public List<Task> getTasks(int subprojectID){
-        return taskRepository.getTasks(subprojectID);
+        List<Task> tasks = taskRepository.getTasks(subprojectID);
+        Collections.sort(tasks, new CompletedComparator().thenComparing(new PriorityComparator()));
+        return tasks;
     }
 
     public Task getTask(int taskID){
