@@ -2,7 +2,7 @@ package com.example.projectcalculationtool.models;
 
 import java.time.LocalDate;
 
-public class Project {
+public class Project implements Comparable<Project>{
     private int projectID;
     private int ManagerID;
     private String name;
@@ -20,6 +20,11 @@ public class Project {
         this.duration = duration;
         this.deadline = deadline;
         this.completed = completed;
+    }
+
+    @Override
+    public int compareTo(Project otherProject) {
+        return Boolean.compare(completed, otherProject.completed) ;
     }
 
 
