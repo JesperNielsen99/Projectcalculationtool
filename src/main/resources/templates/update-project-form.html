@@ -51,12 +51,12 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text">Deadline</span>
-                <input type="date" th:min="${#temporals.format(#temporals.createNow(),'yyyy-MM-dd')}" id="deadline" name="deadline" class="form-control" th:field="*{deadline}">
+                <input type="date" th:min="${#temporals.format(#temporals.createNow(),'yyyy-MM-dd')}" th:max="9999-12-31" id="deadline" name="deadline" class="form-control" th:field="*{deadline}">
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text">Duration</span>
-                <input type="number" min="1" class="form-control" id="duration" name="duration" placeholder="In hours" th:field="*{duration}">
+                <input type="number" min="1" max="1000000" class="form-control" id="duration" name="duration" placeholder="In hours" th:field="*{duration}">
             </div>
 
             <div class="input-group mb-3">

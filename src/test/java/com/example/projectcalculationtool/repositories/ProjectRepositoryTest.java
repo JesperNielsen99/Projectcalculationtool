@@ -10,10 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -51,6 +49,7 @@ public class ProjectRepositoryTest {
     }
     @Test
     void createProject2(){
+        projectRepository.createProject(project1);
         projectRepository.createProject(project2);
 
         Project projectFound = projectRepository.getProject(project2.getProjectID());
