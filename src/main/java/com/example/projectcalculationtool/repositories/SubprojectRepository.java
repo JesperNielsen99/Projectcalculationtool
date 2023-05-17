@@ -38,27 +38,6 @@ public class SubprojectRepository implements ISubprojectRepository {
         }
     }
 
-    /*@Override
-    public void createSubproject(Subproject subproject){
-        try{
-            Connection connection = DB_Connector.getConnection();
-            String SQL = "INSERT INTO subproject " +
-                    "(project_id, subproject_name, subproject_priority, subproject_deadline, " +
-                    "subproject_duration, subproject_completed) "+
-                    "VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, subproject.getProjectID());
-            preparedStatement.setString(2, subproject.getName());
-            preparedStatement.setInt(3, subproject.getPriority());
-            preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
-            preparedStatement.setInt(5, subproject.getDuration());
-            preparedStatement.setBoolean(6, subproject.getCompleted());
-            preparedStatement.executeUpdate();
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
     @Override
     public List<Subproject> getSubprojects(int projectID) {
         List<Subproject> subprojectList = new ArrayList<>();
@@ -154,6 +133,29 @@ public class SubprojectRepository implements ISubprojectRepository {
             String sql = "DELETE FROM subproject WHERE subproject_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, subprojectID);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateSubprojectDuration(int subprojectID) {
+        try{
+            Connection connection = DB_Connector.getConnection();
+            String sql = "SELECT task_duration FROM task WHERE subproject_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, subprojectID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int duration = 0;
+            while (resultSet.next()) {
+                duration += resultSet.getInt(1);
+            }
+
+            String prepSql = "UPDATE subproject SET subproject_duration = ? WHERE subproject_id = ?";
+            preparedStatement = connection.prepareStatement(prepSql);
+            preparedStatement.setInt(1, duration);
+            preparedStatement.setInt(2, subprojectID);
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             throw new RuntimeException(e);

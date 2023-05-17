@@ -36,4 +36,8 @@ public class ProjectService {
     public void deleteProject(int projectID) {
         projectRepository.deleteProject(projectID);
     }
+
+    public void updateProjectDuration(int projectID){
+        projectRepository.updateProjectDuration(projectID);
+    }
 }

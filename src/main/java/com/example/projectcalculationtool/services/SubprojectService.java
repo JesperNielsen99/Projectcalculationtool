@@ -39,4 +39,7 @@ public class SubprojectService {
         subprojectRepository.deleteSubproject(subprojectID);
     }
 
+    public void updateSubprojectDuration(int subprojectID){
+        subprojectRepository.updateSubprojectDuration(subprojectID);
+    }
 }

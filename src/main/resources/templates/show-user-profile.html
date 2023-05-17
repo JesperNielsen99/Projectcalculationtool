@@ -57,13 +57,13 @@
         </div>
 
         <div class="input-group mb-3">
-            <span class="input-group-text" id="Role">Role</span>
+            <span class="input-group-text" id="Role">Your role</span>
             <input class="form-control" type="text" placeholder="Disabled input" th:value="${role}" disabled>
         </div>
 
 
         <div class="btn-group d-flex justify-content-between" role="group" aria-label="Basic example">
-            <button class= "btn btn-primary" type="button" onclick="history.back()">Back</button>
+            <a class="btn btn-primary" th:href="@{/projects}">Back</a>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             <a class= "btn btn-primary" th:href="@{/update}">Update</a>
             <a class= "btn btn-primary" th:href="@{/sign-out}">Sign out</a>

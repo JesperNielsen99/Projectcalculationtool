@@ -98,7 +98,7 @@ public class UserController {
         if (isLoggedIn(session)) {
             service.updateUser(user);
             session.setAttribute("user", user);
-            return "show-user-profile";
+            return "redirect:/profile";
         }
         return "redirect:/sign-in";
     }

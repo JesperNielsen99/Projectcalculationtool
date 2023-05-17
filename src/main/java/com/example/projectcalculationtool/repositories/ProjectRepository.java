@@ -148,8 +148,28 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
+    @Override
+    public void updateProjectDuration(int projectID) {
+        try{
+            Connection connection = DB_Connector.getConnection();
+            String sql = "SELECT subproject_duration FROM subproject WHERE project_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int duration = 0;
+            while (resultSet.next()) {
+                duration += resultSet.getInt(1);
+            }
 
-
+            String prepSql = "UPDATE project SET project_duration = ? WHERE project_id = ?";
+            preparedStatement = connection.prepareStatement(prepSql);
+            preparedStatement.setInt(1, duration);
+            preparedStatement.setInt(2, projectID);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

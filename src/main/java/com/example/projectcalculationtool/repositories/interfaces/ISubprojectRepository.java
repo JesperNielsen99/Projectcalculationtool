@@ -15,4 +15,6 @@ public interface ISubprojectRepository {
     void updateSubproject(Subproject subproject);
 
     void deleteSubproject(int subprojectID);
+
+    void updateSubprojectDuration(int subprojectID);
 }
