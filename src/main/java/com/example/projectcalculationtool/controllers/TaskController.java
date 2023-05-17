@@ -68,7 +68,7 @@ public class TaskController {
                 task.setDeadline(LocalDate.now());
             }
             taskService.createTask(task);
-        return "redirect:/project/subproject/tasks";
+        return "redirect:/project/subproject/updateDuration";
         }
         return "redirect:/sign-in";
     }
@@ -97,7 +97,7 @@ public class TaskController {
             }
             taskService.updateTask(task);
             session.setAttribute("task", task);
-            return "redirect:/project/subproject/tasks";
+            return "redirect:/project/subproject/updateDuration";
         }
         return "redirect:/sign-in";
     }
@@ -108,7 +108,7 @@ public class TaskController {
     public String deleteTask(@RequestParam int taskID, HttpSession session){
         if (isLoggedIn(session)) {
             taskService.deleteTask(taskID);
-            return "redirect:/project/subproject/tasks";
+            return "redirect:/project/subproject/updateDuration";
         }
         return "redirect:/sign-in";
     }

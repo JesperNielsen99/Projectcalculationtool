@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.controllers;
 
 
 import com.example.projectcalculationtool.models.Project;
+import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.services.ProjectService;
 import jakarta.servlet.http.HttpSession;
@@ -121,5 +122,30 @@ public class ProjectController {
             return "redirect:/projects";
         }
         return "redirect:/sign-in";
+    }
+
+    @GetMapping("/project/updateDuration")
+    public String updateProjectDurationFromTask(HttpSession session){
+        if (isLoggedIn(session)) {
+            updateProjectDuration(session);
+            return "redirect:/project/subproject/tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
+    @GetMapping("/project/updateDurationOnDelete")
+    public String updateProjectDurationFromSubproject(HttpSession session){
+        if (isLoggedIn(session)) {
+            updateProjectDuration(session);
+            return "redirect:/project/subprojects";
+        }
+        return "redirect:/sign-in";
+    }
+
+    private void updateProjectDuration(HttpSession session) {
+        Project project = (Project) session.getAttribute("project");
+        projectService.updateProjectDuration(project.getProjectID());
+        project = projectService.getProject(project.getProjectID());
+        session.setAttribute("project", project);
     }
 }

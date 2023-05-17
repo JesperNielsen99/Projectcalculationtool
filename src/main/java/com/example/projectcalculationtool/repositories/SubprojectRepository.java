@@ -143,16 +143,17 @@ public class SubprojectRepository implements ISubprojectRepository {
     public void updateSubprojectDuration(int subprojectID) {
         try{
             Connection connection = DB_Connector.getConnection();
-            String sql = "SELECT task_duration FROM task";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            String sql = "SELECT task_duration FROM task WHERE subproject_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, subprojectID);
+            ResultSet resultSet = preparedStatement.executeQuery();
             int duration = 0;
             while (resultSet.next()) {
                 duration += resultSet.getInt(1);
             }
 
             String prepSql = "UPDATE subproject SET subproject_duration = ? WHERE subproject_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(prepSql);
+            preparedStatement = connection.prepareStatement(prepSql);
             preparedStatement.setInt(1, duration);
             preparedStatement.setInt(2, subprojectID);
             preparedStatement.executeUpdate();
