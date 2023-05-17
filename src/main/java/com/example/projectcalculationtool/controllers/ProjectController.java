@@ -100,6 +100,18 @@ public class ProjectController {
         return "redirect:/sign-in";
     }
 
+    @PostMapping("/project/update/completed")
+    public String updateCompleted(@RequestParam int projectID, @RequestParam boolean completed, HttpSession session) {
+        Project project = projectService.getProject(projectID);
+        project.setCompleted(completed);
+        if (isLoggedIn(session)) {
+            projectService.updateProject(project);
+            session.setAttribute("project", project);
+            return "redirect:/projects";
+        }
+        return "redirect:/sign-in";
+    }
+
     /* ------------------------------------ Delete project ----------------------------------------- */
 
     @GetMapping("project/delete")

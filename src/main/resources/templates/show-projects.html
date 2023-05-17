@@ -53,6 +53,12 @@
           <td th:text="${project.getDeadline()}"></td>
           <td th:text="${project.getDuration()}"></td>
           <td th:text="${project.isCompleted()}"></td>
+          <td>
+            <form action="/project/update/completed" method="post">
+              <input onchange="this.form.submit()" type="checkbox" name="completed" th:checked="${project.isCompleted()}" >
+              <input type="hidden" name="projectID" th:value="${project.projectID}">
+            </form>
+          </td>
 
           <td>
             <a class="btn btn-primary btn-sm" th:href="@{/project/update (projectID=${project.getProjectID()})}">Edit</a>
@@ -79,7 +85,6 @@
               </div>
             </div>
           </td>
-
         </tr>
       </tbody>
     </table>
