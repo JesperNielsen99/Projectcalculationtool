@@ -113,4 +113,15 @@ public class SubprojectController {
         return "redirect:/sign-in";
     }
 
+
+    @GetMapping("/subproject/updateDuration")
+    public String updateSubprojectDuration(HttpSession session){
+        if (isLoggedIn(session)) {
+            Subproject subproject = (Subproject) session.getAttribute("subproject");
+            subprojectService.updateSubprojectDuration(subproject.getSubprojectID());
+            return "redirect:/project/updateDuration";
+        }
+        return "redirect:/sign-in";
+    }
+
 }
