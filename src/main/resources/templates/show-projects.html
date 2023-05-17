@@ -53,10 +53,20 @@
           <td th:text="${project.getDeadline()}"></td>
           <td th:text="${project.getDuration()}"></td>
           <td th:text="${project.isCompleted()}"></td>
-          <td>
+
+          <td th:if="${project.isCompleted() == true}">
             <form action="/project/update/completed" method="post">
-              <input onchange="this.form.submit()" type="checkbox" name="completed" th:checked="${project.isCompleted()}" >
+              <input onchange="this.form.submit()" type="checkbox" th:checked="${project.isCompleted()}">
               <input type="hidden" name="projectID" th:value="${project.projectID}">
+              <input type="hidden" name="completed" value="false">
+            </form>
+          </td>
+
+          <td th:unless="${project.isCompleted() == true}">
+            <form action="/project/update/completed" method="post">
+              <input onchange="this.form.submit()" type="checkbox" th:checked="${project.isCompleted()}">
+              <input type="hidden" name="projectID" th:value="${project.projectID}">
+              <input type="hidden" name="completed" value="true">
             </form>
           </td>
 
@@ -90,5 +100,15 @@
     </table>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script>
+    function updateCompleted(checkbox) {
+      if (checkbox.checked) {
+        checkbox.value = 'true';
+      } else {
+        checkbox.value = 'false';
+      }
+      checkbox.form.submit();
+    }
+  </script>
 </body>
 </html>
