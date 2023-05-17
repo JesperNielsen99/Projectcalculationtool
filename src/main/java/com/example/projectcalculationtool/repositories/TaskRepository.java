@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
+import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,6 @@ public class TaskRepository implements ITaskRepository {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public List<Task> getTasks(int subprojectID) {
         List<Task> tasks = new ArrayList<>();
@@ -132,6 +132,87 @@ public class TaskRepository implements ITaskRepository {
 
             preparedStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<User> getUsersAssignedTo(int taskID){
+
+        List<User> assignedUsers = new ArrayList<>();
+
+        try{
+            Connection conn = DB_Connector.getConnection();
+            String sql = "SELECT * FROM user WHERE user_id IN \n" +
+                    "(SELECT user_id FROM task_user WHERE task_id = ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, taskID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("user_first_name"),
+                        resultSet.getString("user_last_name"),
+                        resultSet.getString("user_email"),
+                        resultSet.getString("user_password"),
+                        resultSet.getInt("user_role_id")
+                );
+                assignedUsers.add(user);
+            }
+            return assignedUsers;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public List<User> getUsersUnassignedTo(int taskID){
+
+        List<User> unassignedUsers = new ArrayList<>();
+
+        try{
+            Connection conn = DB_Connector.getConnection();
+            String sql = "SELECT * FROM user WHERE user_id NOT IN \n" +
+                    "(SELECT user_id FROM task_user WHERE task_id = ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, taskID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("user_first_name"),
+                        resultSet.getString("user_last_name"),
+                        resultSet.getString("user_email"),
+                        resultSet.getString("user_password"),
+                        resultSet.getInt("user_role_id")
+                );
+                unassignedUsers.add(user);
+            }
+            return unassignedUsers;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void addUsersToTask(List<User> users, int taskID) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String sql = "INSERT INTO task_user (task_id, user_id) VALUES (?, ?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            for (User user : users) {
+                statement.setInt(1, taskID);
+                statement.setInt(2, user.getUserID());
+                statement.executeUpdate();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
