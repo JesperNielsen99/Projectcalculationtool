@@ -16,4 +16,6 @@ public interface IProjectRepository {
     Project getProject(int projectID);
 
     void deleteProject(int projectID);
+
+    void updateProjectDuration(int projectID);
 }
