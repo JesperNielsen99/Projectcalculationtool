@@ -102,6 +102,18 @@ public class TaskController {
         return "redirect:/sign-in";
     }
 
+    @PostMapping("/task/update/completed")
+    public String updateCompleted(@RequestParam int taskID, @RequestParam boolean completed, HttpSession session) {
+        Task task = taskService.getTask(taskID);
+        task.setCompleted(completed);
+        if (isLoggedIn(session)) {
+            taskService.updateTask(task);
+            session.setAttribute("task", task);
+            return "redirect:/project/subproject/tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
     /* ------------------------------------ Delete subproject ----------------------------------------- */
 
     @GetMapping("task/delete")
