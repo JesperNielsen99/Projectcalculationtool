@@ -40,20 +40,15 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
+        <th scope="col">Done</th>
         <th scope="col">Name</th>
         <th scope="col">Deadline</th>
         <th scope="col">Duration</th>
-        <th scope="col">Completed</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
       <tbody>
         <tr th:each="project, projectIndex : ${projectList}">
-          <td th:text="${project.getName()}"></td>
-          <td th:text="${project.getDeadline()}"></td>
-          <td th:text="${project.getDuration()}"></td>
-          <td th:text="${project.isCompleted()}"></td>
-
           <td th:if="${project.isCompleted() == true}">
             <form action="/project/update/completed" method="post">
               <input onchange="this.form.submit()" type="checkbox" th:checked="${project.isCompleted()}">
@@ -69,6 +64,10 @@
               <input type="hidden" name="completed" value="true">
             </form>
           </td>
+          <td th:text="${project.getName()}"></td>
+          <td th:text="${project.getDeadline()}"></td>
+          <td th:text="${project.getDuration()}"></td>
+
 
           <td>
             <a class="btn btn-primary btn-sm" th:href="@{/project/update (projectID=${project.getProjectID()})}">Edit</a>
