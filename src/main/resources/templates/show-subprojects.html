@@ -40,21 +40,35 @@
   <table class="table table-striped table-hover">
     <thead>
       <tr>
+        <th scope="col">Done</th>
         <th scope="col">Priority</th>
         <th scope="col">Name</th>
         <th scope="col">Deadline</th>
         <th scope="col">Duration</th>
-        <th scope="col">Completed</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="subproject, subprojectIndex : ${subprojects}">
+        <td th:if="${subproject.isCompleted() == true}">
+          <form action="/project/subproject/update/completed" method="post">
+            <input onchange="this.form.submit()" type="checkbox" th:checked="${subproject.isCompleted()}">
+            <input type="hidden" name="subprojectID" th:value="${subproject.subprojectID}">
+            <input type="hidden" name="completed" value="false">
+          </form>
+        </td>
+
+        <td th:unless="${subproject.isCompleted() == true}">
+          <form action="/project/subproject/update/completed" method="post">
+            <input onchange="this.form.submit()" type="checkbox" th:checked="${subproject.isCompleted()}">
+            <input type="hidden" name="subprojectID" th:value="${subproject.subprojectID}">
+            <input type="hidden" name="completed" value="true">
+          </form>
+        </td>
         <td th:text="${subproject.getPriority()}"></td>
         <td th:text="${subproject.getName()}"></td>
         <td th:text="${subproject.getDeadline()}"></td>
         <td th:text="${subproject.getDuration()}"></td>
-        <td th:text="${subproject.isCompleted()}"></td>
 
         <td>
           <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/update (subprojectID=${subproject.getSubprojectID()})}">Edit</a>

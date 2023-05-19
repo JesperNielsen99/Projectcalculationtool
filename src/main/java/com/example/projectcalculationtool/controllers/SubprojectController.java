@@ -102,6 +102,18 @@ public class SubprojectController {
         return "redirect:/sign-in";
     }
 
+    @PostMapping("/subproject/update/completed")
+    public String updateCompleted(@RequestParam int subprojectID, @RequestParam boolean completed, HttpSession session) {
+        Subproject subproject = subprojectService.getSubproject(subprojectID);
+        subproject.setCompleted(completed);
+        if (isLoggedIn(session)) {
+            subprojectService.updateSubproject(subproject);
+            session.setAttribute("subproject", subproject);
+            return "redirect:/project/subprojects";
+        }
+        return "redirect:/sign-in";
+    }
+
     /* ------------------------------------ Delete subproject ----------------------------------------- */
 
     @GetMapping("/subproject/delete")
