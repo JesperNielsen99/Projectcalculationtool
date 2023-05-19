@@ -206,13 +206,41 @@ public class TaskRepository implements ITaskRepository {
         try {
             Connection conn = DB_Connector.getConnection();
             String sql = "INSERT INTO task_user (task_id, user_id) VALUES (?, ?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement preparedstatement = conn.prepareStatement(sql);
 
             for (User user : users) {
-                statement.setInt(1, taskID);
-                statement.setInt(2, user.getUserID());
-                statement.executeUpdate();
+                preparedstatement.setInt(1, taskID);
+                preparedstatement.setInt(2, user.getUserID());
+                preparedstatement.executeUpdate();
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Task> getUserTasks(int userID) {
+        try {
+            Connection conn = DB_Connector.getConnection();
+            String sql = "SELECT * FROM task JOIN task_user USING (task_id) WHERE user_id = ?";
+            PreparedStatement preparedstatement = conn.prepareStatement(sql);
+            preparedstatement.setInt(1, userID);
+            ResultSet resultSet = preparedstatement.executeQuery();
+            List<Task> tasks = new ArrayList<>();
+            while (resultSet.next()) {
+                tasks.add(new Task(
+                        resultSet.getInt("task_id"),
+                        resultSet.getInt("subproject_id"),
+                        resultSet.getString("task_name"),
+                        resultSet.getString("task_description"),
+                        resultSet.getInt("task_priority"),
+                        resultSet.getInt("task_duration"),
+                        LocalDate.parse(resultSet.getString("task_deadline")),
+                        resultSet.getBoolean("task_completed")
+                        )
+                );
+            }
+            return tasks;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

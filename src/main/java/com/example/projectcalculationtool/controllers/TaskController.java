@@ -3,6 +3,7 @@ package com.example.projectcalculationtool.controllers;
 import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
+import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.services.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,7 +32,14 @@ public class TaskController {
         if (isLoggedIn(session)) {
             session.removeAttribute("task");
             Subproject subproject = (Subproject) session.getAttribute("subproject");
-            List<Task> tasks = taskService.getTasks(subproject.getSubprojectID());
+            User user = (User) session.getAttribute("user");
+            List<Task> tasks = new ArrayList<>();
+            if (user.getRoleID() == 1) {
+                tasks = taskService.getTasks(subproject.getSubprojectID());
+            } else {
+                tasks = taskService.getUserTasks(user.getUserID());
+            }
+            model.addAttribute("roleID", user.getRoleID()) ;
             model.addAttribute("tasks", tasks);
             return "show-tasks";
         }

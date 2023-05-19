@@ -22,4 +22,6 @@ public interface ITaskRepository {
     List<User> getUsersAssignedTo(int taskID);
 
     void addUsersToTask(List<User> users, int taskID);
+
+    List<Task> getUserTasks(int userID);
 }

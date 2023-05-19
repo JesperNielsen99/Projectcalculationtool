@@ -59,4 +59,8 @@ public class TaskService {
     public void addUsersToTask(List<User> users, int taskID){
         taskRepository.addUsersToTask(users, taskID);
     }
+
+    public List<Task> getUserTasks(int userID) {
+        return taskRepository.getUserTasks(userID);
+    }
 }

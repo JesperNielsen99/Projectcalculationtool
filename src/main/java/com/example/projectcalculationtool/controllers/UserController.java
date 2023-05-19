@@ -59,6 +59,9 @@ public class UserController {
         if (user != null) {
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
+            if (user.getRoleID() == 2) {
+                return "redirect:/project/subproject/tasks";
+            }
             return "redirect:/projects";
         }
         // wrong credentials
