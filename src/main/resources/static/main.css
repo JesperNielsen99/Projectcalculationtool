@@ -4,13 +4,13 @@ body {
     padding: 10px;
 }
 
-.create-box {
+.create-box, .sign-up-box {
     max-width: 42%;
     padding-top: 20px;
     margin: auto;
 }
 
-.create-form {
+.create-form, .sign-up-form {
     padding-top: 50px;
 }
 
