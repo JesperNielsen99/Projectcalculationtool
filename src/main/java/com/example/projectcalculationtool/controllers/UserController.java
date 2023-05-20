@@ -46,7 +46,7 @@ public class UserController {
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/sign-in")
+    @GetMapping(value = {"", "/","/sign-in"})
     public String loginForm(HttpSession session) {
         session.invalidate();
         return "index-login";
