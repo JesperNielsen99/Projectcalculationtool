@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,20 +19,18 @@ class TaskRepositoryTest {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
     private TaskTestDB testDB;
 
     private Task task1;
     private Task task2;
-    //test test
-
 
     @BeforeEach
     void setUp() {
-        testDB = new TaskTestDB();
         testDB.taskTestDB();
 
-        task1 = new Task(1, 1, "T-Task1", "T-Description1", 1, 1, LocalDate.now(), false, "nr.1");
-        task2 = new Task(2, 1, "T-Task2", "T-Description2", 1, 1, LocalDate.now(), false, "nr.2");
+        task1 = new Task(1, 1, "T-Task1", "T-Description1", 1, 1, LocalDate.now(), false, "T-manager1");
+        task2 = new Task(2, 1, "T-Task2", "T-Description2", 1, 1, LocalDate.now(), false, "T-manager2");
     }
 
     @Test
@@ -41,6 +40,141 @@ class TaskRepositoryTest {
         Task taskFound = taskRepository.getTask(task1.getTaskID());
 
         Assertions.assertEquals(task1.getName(),taskFound.getName());
+    }
+
+
+    @Test
+    void createTaskWithMaxCharacterName(){
+        String randomCharacters = RandomString.make(50);
+        task1.setDescription(randomCharacters);
+
+        taskRepository.createTask(task1);
+        Task taskFound = taskRepository.getTask(task1.getTaskID());
+
+        Assertions.assertEquals(randomCharacters, taskFound.getDescription());
+    }
+
+    @Test
+    void createTaskWithNullNameException(){
+        String invalidName = null;
+
+        task1.setName(invalidName);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
+    }
+
+    @Test
+    void createTaskWithOverMaxCharactersNameException(){
+        String randomCharacters = RandomString.make(51);
+        task1.setName(randomCharacters);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
+    }
+
+    @Test
+    void createTaskWithMaxCharacterOf255(){
+        String randomCharacters = RandomString.make(255);
+        task1.setDescription(randomCharacters);
+
+        taskRepository.createTask(task1);
+        Task taskFound = taskRepository.getTask(task1.getTaskID());
+
+        Assertions.assertEquals(randomCharacters, taskFound.getDescription());
+
+    }
+
+    @Test
+    void createTaskWithNullValueInDescriptionException(){
+        String invalidNullValue = null;
+
+        task1.setDescription(invalidNullValue);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
+    }
+
+    @Test
+    void createTaskWith256CharactersInDescriptionException(){
+        String randomCharacters = RandomString.make(256);
+
+        task1.setDescription(randomCharacters);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
+    }
+
+    @Test
+    void createTaskWithMinimumPriority(){
+        int minValidNumber = 1;
+
+        task1.setPriority(minValidNumber);
+        taskRepository.createTask(task1);
+
+        Task taskFound = taskRepository.getTask(task1.getTaskID());
+
+        Assertions.assertEquals(task1.getPriority(), taskFound.getPriority());
+    }
+
+    @Test
+    void createTaskWithMaxPriority(){
+        int maxValidNumber = 5;
+
+        task1.setPriority(maxValidNumber);
+        taskRepository.createTask(task1);
+
+        Task taskFound = taskRepository.getTask(task1.getTaskID());
+
+        Assertions.assertEquals(task1.getPriority(), taskFound.getPriority());
+    }
+
+    @Test
+    void createTaskWithUnderMinimumPriorityNumberException(){
+        int invalidNumber = 0;
+
+        task1.setPriority(invalidNumber);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
+    }
+
+    @Test
+    void createTaskWithAnOverMaxPriorityNumberException(){
+        int invalidNumber = 6;
+
+        task1.setPriority(invalidNumber);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
+    }
+
+    @Test
+    void createTaskWithMaxDate(){
+        LocalDate maxDate = LocalDate.parse("3000-12-31");
+        task1.setDeadline(maxDate);
+        taskRepository.createTask(task1);
+
+        Task taskFound = taskRepository.getTask(task1.getTaskID());
+
+        Assertions.assertEquals(maxDate,taskFound.getDeadline());
+
+    }
+
+    @Test
+    void createTaskWithOverMaxDate(){
+        LocalDate maxDate = LocalDate.parse("3001-01-01");
+        task1.setDeadline(maxDate);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.createTask(task1);
+        });
     }
 
     @Test
@@ -89,7 +223,7 @@ class TaskRepositoryTest {
         task1.setName("T-Task3");
         taskRepository.updateTask(task1);
 
-        Task taskFound = taskRepository.getTask(1);
+        Task taskFound = taskRepository.getTask(task1.getTaskID());
         Assertions.assertEquals(task1.getName(),taskFound.getName());
     }
 
@@ -116,12 +250,25 @@ class TaskRepositoryTest {
     }
 
     @Test
+    void updateTaskPlus255CharactersException(){
+        taskRepository.createTask(task1);
+
+        String randomChar = RandomString.make(260);
+        task1.setDescription(randomChar);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            taskRepository.updateTask(task1);
+        });
+    }
+
+
+    @Test
     void deleteTask() {
         taskRepository.createTask(task1);
 
         taskRepository.deleteTask(task1.getTaskID());
 
-        Task taskFound = taskRepository.getTask(task1.getTaskID());
-        Assertions.assertNull(taskFound);
+        Task taskNotFound = taskRepository.getTask(task1.getTaskID());
+        Assertions.assertNull(taskNotFound);
     }
 }
