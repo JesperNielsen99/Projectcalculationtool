@@ -1,0 +1,76 @@
+body {
+    max-width: 80%;
+    margin: auto;
+    padding: 10px;
+}
+
+.create-box, .sign-up-box, .sign-in-box, .show-user-box,
+.update-project-box, .update-subproject-box, .update-task-box, .update-user-box {
+    max-width: 42%;
+    padding-top: 20px;
+    margin: auto;
+}
+
+.create-form, .sign-up-form, .sign-in-form, .show-user-form,
+.update-project-form, .update-project-box, .update-subproject-form, .update-task-form, .update-user-form {
+    padding-top: 50px;
+}
+
+.header-one, .error {
+    text-align: center;
+}
+
+.header-buttons {
+    padding-top: 20px;
+}
+
+.add-button {
+    padding-bottom: 10px;
+}
+
+.custom-popover {
+    --bs-popover-max-width: 350px;
+    --bs-popover-body-padding-x: 2rem;
+    --bs-popover-body-padding-y: 1rem;
+}
+
+
+.error-h1 {
+    font-size: 120px;
+    font-weight: 700;
+    color: skyblue;
+}
+
+.error-h2 {
+    font-size: 35px;
+    font-weight: 400;
+    padding-bottom: 40px;
+    padding-top: 20px;
+    color: darkgray;
+}
+
+.error-code {
+    font-weight: bold;
+    color: dimgray;
+}
+
+.error-text {
+    color: dimgray;
+}
+
+.error-link {
+    color: skyblue;
+}
+
+.error-back-button {
+    color: skyblue;
+    border: none;
+    background: none;
+    text-decoration-line: underline;
+}
+
+.error-wrap {
+    max-width: 55%;
+    margin: auto;
+    padding-top: 60px;
+}

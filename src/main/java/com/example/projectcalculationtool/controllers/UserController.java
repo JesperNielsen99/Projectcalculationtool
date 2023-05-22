@@ -46,7 +46,7 @@ public class UserController {
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/sign-in")
+    @GetMapping(value = {"", "/","/sign-in"})
     public String loginForm(HttpSession session) {
         session.invalidate();
         return "index-login";
@@ -59,6 +59,9 @@ public class UserController {
         if (user != null) {
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
+            if (user.getRoleID() == 2) {
+                return "redirect:/project/subproject/tasks";
+            }
             return "redirect:/projects";
         }
         // wrong credentials
