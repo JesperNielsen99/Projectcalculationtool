@@ -30,6 +30,7 @@ public class TaskTestDB {
                     "    task_duration INT NOT NULL,\n" +
                     "    task_deadline DATE NOT NULL,\n" +
                     "    task_completed TINYINT NOT NULL,\n" +
+                    "    task_manager_name VARCHAR(255) NOT NULL,\n" +
                     "    PRIMARY KEY (task_id),\n" +
                     "    FOREIGN KEY (subproject_id) REFERENCES subproject (subproject_id) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                     ");");
