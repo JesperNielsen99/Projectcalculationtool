@@ -1,6 +1,6 @@
 package com.example.projectcalculationtool.models;
 
-import com.example.projectcalculationtool.models.Interfaces.ICompletedAndPriority;
+import com.example.projectcalculationtool.models.interfaces.ICompletedAndPriority;
 
 import java.time.LocalDate;
 

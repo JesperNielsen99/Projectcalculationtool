@@ -1,6 +1,6 @@
 package com.example.projectcalculationtool.models;
 
-import com.example.projectcalculationtool.models.Interfaces.ICompletedAndPriority;
+import com.example.projectcalculationtool.models.interfaces.ICompletedAndPriority;
 
 import java.time.LocalDate;
 
@@ -13,10 +13,12 @@ public class Task implements ICompletedAndPriority {
     private int duration;
     private LocalDate deadline;
     private boolean completed;
+    private String managerName;
 
     public Task(){}
 
-    public Task(int taskID, int subprojectID, String name, String description, int priority, int duration, LocalDate deadline, Boolean completed) {
+    public Task(int taskID, int subprojectID, String name, String description, int priority,
+                int duration, LocalDate deadline, Boolean completed, String managerName) {
         this.taskID = taskID;
         this.subprojectID = subprojectID;
         this.name = name;
@@ -25,6 +27,7 @@ public class Task implements ICompletedAndPriority {
         this.duration = duration;
         this.deadline = deadline;
         this.completed = completed;
+        this.managerName = managerName;
     }
 
     public int getTaskID() {
@@ -89,5 +92,13 @@ public class Task implements ICompletedAndPriority {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 }

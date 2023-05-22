@@ -53,6 +53,7 @@ CREATE TABLE task (
     task_duration INT NOT NULL,
     task_deadline DATE NOT NULL,
     task_completed TINYINT NOT NULL,
+    task_manager_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (task_id),
     FOREIGN KEY (subproject_id) REFERENCES subproject (subproject_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

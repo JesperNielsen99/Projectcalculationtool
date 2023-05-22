@@ -19,9 +19,9 @@ INSERT INTO subproject (project_id, subproject_name, subproject_priority, subpro
 	(1, 'test', 1, 0, '2023-10-30', 0),
 	(2, 'init', 10000, 0, current_date(), 2);
 
-INSERT INTO task (subproject_id, task_name, task_description, task_priority, task_duration, task_deadline, task_completed) VALUES
-	(1, 'methods', 'Do it better nutjob', 7, 2, current_date(), 0),
-	(3, 'set-up',  'Fix it nutjob', 7, 3, current_date(), 0);
+INSERT INTO task (subproject_id, task_name, task_description, task_priority, task_duration, task_deadline, task_completed, task_manager_name) VALUES
+	(1, 'methods', 'Do it better nutjob', 7, 2, current_date(), 0, "Thomas Løvkilde"),
+	(3, 'set-up',  'Fix it nutjob', 7, 3, current_date(), 0, "Jesper Nielsen");
 
 INSERT INTO task_user (task_id, user_id) VALUES
 	(1,1),

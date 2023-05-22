@@ -15,6 +15,7 @@
     <form th:action="@{create}" th:method="post" th:object="${task}">
       <div>
         <input type=hidden id="subprojectID" name="subprojectID" th:field="*{subprojectID}">
+        <input type="hidden" id="managerName" th:field="*{managerName}">
       </div>
 
       <div class="input-group mb-3">

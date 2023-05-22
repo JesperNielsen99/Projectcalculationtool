@@ -1,6 +1,5 @@
 package com.example.projectcalculationtool.controllers;
 
-import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
@@ -35,7 +34,7 @@ public class TaskController {
         return false;
     }
 
-    @GetMapping("/tasks")
+    @GetMapping("tasks")
     public String showTasks(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             session.removeAttribute("task");
@@ -76,6 +75,9 @@ public class TaskController {
             if (task.getDeadline() == null) {
                 task.setDeadline(LocalDate.now());
             }
+            User user = (User) session.getAttribute("user");
+            String managerName = user.getFirstName() + " " + user.getLastName();
+            task.setManagerName(managerName);
             taskService.createTask(task);
         return "redirect:/project/subproject/updateDuration";
         }
@@ -113,7 +115,7 @@ public class TaskController {
         return "redirect:/sign-in";
     }
 
-    @PostMapping("/task/update/completed")
+    @PostMapping("task/update/completed")
     public String updateCompleted(@RequestParam int taskID, @RequestParam boolean completed, HttpSession session) {
         Task task = taskService.getTask(taskID);
         task.setCompleted(completed);
