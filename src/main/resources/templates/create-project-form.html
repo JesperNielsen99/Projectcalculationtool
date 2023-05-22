@@ -27,10 +27,7 @@
           <input type="date" th:min="${#temporals.format(#temporals.createNow(),'yyyy-MM-dd')}" th:max="9999-12-31"  id="deadline" name="deadline" class="form-control" th:field="*{deadline}">
         </div>
 
-        <div class="input-group mb-3">
-          <span class="input-group-text">Duration</span>
-          <input type="number" min="1" th:max="2147483647" class="form-control" id="duration" name="duration" th:field="*{duration}" placeholder="In hours" required>
-        </div>
+        <input type="hidden" id="duration" name="duration" th:field="*{duration}">
 
         <div class="btn-group d-flex justify-content-between" role="group" aria-label="Basic example">
           <button class= "btn btn-primary" type="button" onclick="history.back()">Back</button>
