@@ -149,9 +149,8 @@ public class SubprojectRepository implements ISubprojectRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             int duration = 0;
             while (resultSet.next()) {
-                duration += resultSet.getInt(1);
+                duration += resultSet.getInt("task_duration");
             }
-
             String prepSql = "UPDATE subproject SET subproject_duration = ? WHERE subproject_id = ?";
             preparedStatement = connection.prepareStatement(prepSql);
             preparedStatement.setInt(1, duration);

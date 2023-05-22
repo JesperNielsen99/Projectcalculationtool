@@ -158,9 +158,8 @@ public class ProjectRepository implements IProjectRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             int duration = 0;
             while (resultSet.next()) {
-                duration += resultSet.getInt(1);
+                duration += resultSet.getInt("subproject_duration");
             }
-
             String prepSql = "UPDATE project SET project_duration = ? WHERE project_id = ?";
             preparedStatement = connection.prepareStatement(prepSql);
             preparedStatement.setInt(1, duration);

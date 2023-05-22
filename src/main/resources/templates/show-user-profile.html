@@ -40,7 +40,8 @@
 
 
         <div class="btn-group d-flex justify-content-between" role="group" aria-label="Basic example">
-            <a class="btn btn-primary" th:href="@{/projects}">Back</a>
+            <a th:if="${user.roleID == 1}" class="btn btn-primary" th:href="@{/projects}">Back</a>
+            <a th:unless="${user.roleID == 1}" class="btn btn-primary" th:href="@{/project/subproject/tasks}">Back</a>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             <a class= "btn btn-primary" th:href="@{/update}">Update</a>
             <a class= "btn btn-primary" th:href="@{/sign-out}">Sign out</a>

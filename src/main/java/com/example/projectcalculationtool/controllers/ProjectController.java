@@ -133,11 +133,23 @@ public class ProjectController {
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/project/updateDurationOnDelete")
+    @GetMapping("/project/updateDurationFromSubproject")
     public String updateProjectDurationFromSubproject(HttpSession session){
         if (isLoggedIn(session)) {
             updateProjectDuration(session);
             return "redirect:/project/subprojects";
+        }
+        return "redirect:/sign-in";
+    }
+
+    @GetMapping("/project/updateDurationByUser")
+    private String updateProjectDurationByUser(@RequestParam int projectID, HttpSession session) {
+        if (isLoggedIn(session)) {
+            Project project = projectService.getProject(projectID);
+            projectService.updateProjectDuration(project.getProjectID());
+            project = projectService.getProject(project.getProjectID());
+            session.setAttribute("project", project);
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }
