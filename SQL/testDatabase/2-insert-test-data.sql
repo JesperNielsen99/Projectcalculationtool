@@ -12,14 +12,14 @@ INSERT INTO user (user_first_name, user_last_name, user_email, user_password, us
     ('Test', 'test', 'test@alpha.com', '1', '2');
 
 INSERT INTO project (project_manager_id, project_name, project_duration, project_deadline, project_completed) VALUES 
-	(1, 'test1', 10, current_date(), 0),
-	(2, 'sheite', 8, current_date(), 1);
+	(1, 'test1', 0, current_date(), 0),
+	(2, 'sheite', 0, current_date(), 1);
 
 INSERT INTO subproject (project_id, subproject_name, subproject_priority, 
 	subproject_duration, subproject_deadline, subproject_completed) VALUES 
-    (1, 'create', 2, 10, '2023-06-10', 0),
-	(1, 'test', 1, 7, '2023-10-30', 0),
-	(2, 'init', 10000, 6, current_date(), 2);
+    (1, 'create', 2, 0, '2023-06-10', 0),
+	(1, 'test', 1, 0, '2023-10-30', 0),
+	(2, 'init', 10000, 0, current_date(), 2);
 
 INSERT INTO task (subproject_id, task_name, task_description, 
 	task_priority, task_duration, task_deadline, task_completed) VALUES 

@@ -120,7 +120,7 @@ public class SubprojectController {
     public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
         if (isLoggedIn(session)) {
             subprojectService.deleteSubproject(subprojectID);
-            return "redirect:/project/updateDurationOnDelete";
+            return "redirect:/project/updateDurationFromSubproject";
         }
         return "redirect:/sign-in";
     }
@@ -138,4 +138,15 @@ public class SubprojectController {
         return "redirect:/sign-in";
     }
 
+    @GetMapping("/subproject/updateDurationByUser")
+    public String updateSubprojectDurationByUser(@RequestParam int subprojectID, HttpSession session){
+        if (isLoggedIn(session)) {
+            Subproject subproject = subprojectService.getSubproject(subprojectID);
+            subprojectService.updateSubprojectDuration(subproject.getSubprojectID());
+            subproject = subprojectService.getSubproject(subproject.getSubprojectID());
+            session.setAttribute("subproject", subproject);
+            return "redirect:/project/updateDurationByUser?projectID=" + subproject.getProjectID();
+        }
+        return "redirect:/sign-in";
+    }
 }

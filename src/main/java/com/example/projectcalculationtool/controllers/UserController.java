@@ -39,6 +39,7 @@ public class UserController {
     public String profile(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
+            boolean isAdmin = user.getRoleID() == 1;
             model.addAttribute("user", user);
             model.addAttribute("role", service.getRole(user.getRoleID()));
             return "show-user-profile";

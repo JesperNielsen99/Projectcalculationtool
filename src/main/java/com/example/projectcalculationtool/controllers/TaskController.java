@@ -27,31 +27,30 @@ public class TaskController {
         return session.getAttribute("user") != null;
     }
 
+    private boolean isAdmin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user.getRoleID() == 1) {
+            return true;
+        }
+        return false;
+    }
+
     @GetMapping("/tasks")
     public String showTasks(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             session.removeAttribute("task");
-            Subproject subproject = (Subproject) session.getAttribute("subproject");
             User user = (User) session.getAttribute("user");
             List<Task> tasks = new ArrayList<>();
-            if (user.getRoleID() == 1) {
+            if (isAdmin(session)) {
+                Subproject subproject = (Subproject) session.getAttribute("subproject");
                 tasks = taskService.getTasks(subproject.getSubprojectID());
             } else {
                 tasks = taskService.getUserTasks(user.getUserID());
             }
+            model.addAttribute("isAdmin", isAdmin(session));
             model.addAttribute("roleID", user.getRoleID()) ;
             model.addAttribute("tasks", tasks);
             return "show-tasks";
-        }
-        return "redirect:/sign-in";
-    }
-
-    @GetMapping("/task")
-    public String showTask(@RequestParam int taskID, Model model, HttpSession session) {
-        if (isLoggedIn(session)) {
-            Task task = taskService.getTask(taskID);
-            model.addAttribute("task", task);
-            return "readTask";
         }
         return "redirect:/sign-in";
     }
@@ -62,6 +61,7 @@ public class TaskController {
     public String createTask(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Task task = new Task();
+            model.addAttribute("isAdmin", isAdmin(session));
             model.addAttribute("task", task);
             return "create-task-form";
         }
@@ -98,15 +98,17 @@ public class TaskController {
     @PostMapping("task/update")
     public String updateTask(@ModelAttribute Task task, HttpSession session){
         if (isLoggedIn(session)) {
-            Subproject subproject = (Subproject) session.getAttribute("subproject");
-            task.setSubprojectID(subproject.getSubprojectID());
             if (task.getDeadline() == null) {
                 LocalDate deadline = (LocalDate) session.getAttribute("taskDeadline");
                 task.setDeadline(deadline);
             }
+            session.removeAttribute("taskDeadLine");
             taskService.updateTask(task);
             session.setAttribute("task", task);
-            return "redirect:/project/subproject/updateDuration";
+            if (isAdmin(session)) {
+                return "redirect:/project/subproject/updateDuration";
+            }
+            return "redirect:/project/subproject/updateDurationByUser?subprojectID=" + task.getSubprojectID();
         }
         return "redirect:/sign-in";
     }

@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.repositories.interfaces;
 
+import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
 
