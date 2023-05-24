@@ -18,7 +18,8 @@ public class TaskRepository implements ITaskRepository {
     public void createTask(Task task) {
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "INSERT INTO task (subproject_id, task_name, task_description, task_priority, task_duration, task_deadline, task_completed) VALUES (?,?,?,?,?,?,?);";
+            String SQL = "INSERT INTO task (subproject_id, task_name, task_description, task_priority, " +
+                    "task_duration, task_deadline, task_completed, task_manager_name) VALUES (?,?,?,?,?,?,?,?);";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
             preparedStatement.setInt(1, task.getSubprojectID());
@@ -27,7 +28,8 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setInt(4, task.getPriority());
             preparedStatement.setInt(5, task.getDuration());
             preparedStatement.setDate(6, Date.valueOf(task.getDeadline()));
-            preparedStatement.setBoolean(7, false);
+            preparedStatement.setBoolean(7, task.isCompleted());
+            preparedStatement.setString(8, task.getManagerName());
 
             preparedStatement.executeUpdate();
 
@@ -56,7 +58,8 @@ public class TaskRepository implements ITaskRepository {
                         resultSet.getInt("task_priority"),
                         resultSet.getInt("task_duration"),
                         LocalDate.parse(resultSet.getString("task_deadline")),
-                        resultSet.getBoolean("task_completed")
+                        resultSet.getBoolean("task_completed"),
+                        resultSet.getString("task_manager_name")
                 ));
             }
 
@@ -88,7 +91,8 @@ public class TaskRepository implements ITaskRepository {
                         resultSet.getInt("task_priority"),
                         resultSet.getInt("task_duration"),
                         LocalDate.parse(resultSet.getString("task_deadline")),
-                        resultSet.getBoolean("task_completed")
+                        resultSet.getBoolean("task_completed"),
+                        resultSet.getString("task_manager_name")
                 );
             }
 
@@ -102,18 +106,20 @@ public class TaskRepository implements ITaskRepository {
     public void updateTask(Task task) {
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "UPDATE task SET task_name=?, task_description=?, task_priority=?, task_duration=?, task_deadline=?, task_completed=? WHERE task_id=?;";
+            String SQL = "UPDATE task SET task_name=?, task_description=?, task_priority=?, " +
+                    "task_duration=?, task_deadline=?, task_completed=?, task_manager_name=? WHERE task_id=?;";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
 
             preparedStatement.setString(1, task.getName());
             preparedStatement.setString(2, task.getDescription());
             preparedStatement.setInt(3, task.getPriority());
-            preparedStatement.setInt(4, task.getPriority());
+            preparedStatement.setInt(4, task.getDuration());
             preparedStatement.setDate(5, Date.valueOf(task.getDeadline()));
             preparedStatement.setBoolean(6, task.isCompleted());
+            preparedStatement.setString(7, task.getManagerName());
 
-            preparedStatement.setInt(7, task.getTaskID());
+            preparedStatement.setInt(8, task.getTaskID());
 
             preparedStatement.executeUpdate();
 
@@ -228,16 +234,16 @@ public class TaskRepository implements ITaskRepository {
             ResultSet resultSet = preparedstatement.executeQuery();
             List<Task> tasks = new ArrayList<>();
             while (resultSet.next()) {
-                tasks.add(new Task(
-                        resultSet.getInt("task_id"),
+                tasks.add(new Task(resultSet.getInt("task_id"),
                         resultSet.getInt("subproject_id"),
                         resultSet.getString("task_name"),
                         resultSet.getString("task_description"),
                         resultSet.getInt("task_priority"),
                         resultSet.getInt("task_duration"),
                         LocalDate.parse(resultSet.getString("task_deadline")),
-                        resultSet.getBoolean("task_completed")
-                        )
+                        resultSet.getBoolean("task_completed"),
+                        resultSet.getString("task_manager_name")
+                    )
                 );
             }
             return tasks;

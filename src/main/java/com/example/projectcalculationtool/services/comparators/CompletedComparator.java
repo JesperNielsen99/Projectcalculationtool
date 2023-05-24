@@ -1,6 +1,6 @@
 package com.example.projectcalculationtool.services.comparators;
 
-import com.example.projectcalculationtool.models.Interfaces.ICompletedAndPriority;
+import com.example.projectcalculationtool.models.interfaces.ICompletedAndPriority;
 
 import java.util.Comparator;
 

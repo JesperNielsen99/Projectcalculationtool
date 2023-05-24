@@ -16,10 +16,8 @@
 
       <div>
         <input type="hidden" id="taskID" th:field="*{taskID}">
-      </div>
-
-      <div>
         <input type="hidden" id="subprojectID" th:field="*{subprojectID}">
+        <input type="hidden" id="managerName" th:field="*{managerName}">
       </div>
 
       <div class="input-group mb-3">
@@ -39,7 +37,7 @@
 
       <div class="input-group mb-3">
         <span class="input-group-text">Priority</span>
-        <input type="number" min="1" max="5" class="form-control" id="priority" name="duration" placeholder="1-5" th:field="*{priority}">
+        <input type="number" min="1" max="5" class="form-control" id="priority" name="priority" placeholder="1-5" th:field="*{priority}">
       </div>
 
       <div class="input-group mb-3">

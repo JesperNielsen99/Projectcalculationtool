@@ -1,20 +1,12 @@
 package com.example.projectcalculationtool.services;
 
-import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
-import com.example.projectcalculationtool.repositories.TaskRepository;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
-import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import com.example.projectcalculationtool.services.comparators.CompletedComparator;
 import com.example.projectcalculationtool.services.comparators.PriorityComparator;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

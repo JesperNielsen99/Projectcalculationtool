@@ -1,4 +1,4 @@
-package com.example.projectcalculationtool.models.Interfaces;
+package com.example.projectcalculationtool.models.interfaces;
 
 public interface ICompletedAndPriority {
     boolean isCompleted();

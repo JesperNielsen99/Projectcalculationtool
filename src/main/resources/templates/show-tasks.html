@@ -30,6 +30,7 @@
       <th scope="col">Name</th>
       <th scope="col">Deadline</th>
       <th scope="col">Duration</th>
+      <th scope="col">Manager</th>
       <th scope="col">Actions</th>
     </tr>
     </thead>
@@ -60,6 +61,7 @@
         <td th:text="${task.getName()}"></td>
         <td th:text="${task.getDeadline()}"></td>
         <td th:text="${task.getDuration()}"></td>
+        <td th:text="${task.getManagerName()}"></td>
 
         <td>
           <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">Update</a>
