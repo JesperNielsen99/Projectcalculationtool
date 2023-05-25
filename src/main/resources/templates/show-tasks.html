@@ -36,44 +36,44 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="task, taskIndex : ${tasks}">
-        <td th:if="${task.isCompleted() == true}">
+      <tr th:each="taskUserDTO, taskUserDTOIndex : ${taskUserDTOs}">
+        <td th:if="${taskUserDTO.task.completed == true}">
           <form action="/project/subproject/task/update/completed" method="post">
             <label>
-              <input onchange="this.form.submit()" type="checkbox" th:checked="${task.isCompleted()}">
-              <input type="hidden" name="taskID" th:value="${task.taskID}">
+              <input onchange="this.form.submit()" type="checkbox" th:checked="${taskUserDTO.task.completed}">
+              <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
               <input type="hidden" name="completed" value="false">
             </label>
           </form>
         </td>
 
-        <td th:unless="${task.isCompleted() == true}">
+        <td th:unless="${taskUserDTO.task.completed == true}">
           <form action="/project/subproject/task/update/completed" method="post">
             <label>
-              <input onchange="this.form.submit()" type="checkbox" th:checked="${task.isCompleted()}">
-              <input type="hidden" name="taskID" th:value="${task.taskID}">
+              <input onchange="this.form.submit()" type="checkbox" th:checked="${taskUserDTO.task.completed}">
+              <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
               <input type="hidden" name="completed" value="true">
             </label>
           </form>
         </td>
 
-        <td th:text="${task.getPriority()}"></td>
-        <td th:text="${task.getName()}"></td>
-        <td th:text="${task.getDeadline()}"></td>
-        <td th:text="${task.getDuration()}"></td>
-        <td th:text="${task.getManagerName()}"></td>
+        <td th:text="${taskUserDTO.task.priority}"></td>
+        <td th:text="${taskUserDTO.task.name}"></td>
+        <td th:text="${taskUserDTO.task.deadline}"></td>
+        <td th:text="${taskUserDTO.task.duration}"></td>
+        <td th:text="${taskUserDTO.task.managerName}"></td>
 
 
         <!-- Assigned, Assign, Unassign buttons -->
         <td>
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#assignedModal">Assigned</button>
-          <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#assignModal">Assign</button>
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignedModal-'+ ${taskUserDTOIndex.index}">Assigned</button>
+          <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignModal-' + ${taskUserDTOIndex.index}">Assign</button>
           <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#">Unassign</button>
         </td>
 
 
         <!-- Assigned modal -->
-        <td class="modal fade" id="assignedModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <td class="modal fade" th:id="'assignedModal-'+ ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -81,10 +81,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <div th:each="task: ${tasks}">
-                  <div th:each="user : ${task.getAssignedUsers()}">
-                    <p th:text="${user}"></p>
-                  </div>
+                <div th:each="user : ${taskUserDTO.assignedUsers}">
+                  <p th:text="${user.firstName}"></p>
                 </div>
               </div>
               <div class="modal-footer">
@@ -95,7 +93,7 @@
         </td>
 
         <!-- Assign modal -->
-        <td class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <td class="modal fade" th:id="'assignModal-' + ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -103,11 +101,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form th:action="@{/project/subproject/task/assign}" th:object="${assignedUsers}" method="post">
-                  <input type="hidden" name="taskID" th:value="${task.getTaskID()}">
+                <form th:action="@{/project/subproject/task/assign}" th:object="${assignedUsers}" th:method="post">
+                  <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
                   <div th:each="user : ${userAssignDTOList}">
                     <div>
-                      <input type="checkbox" th:value="${user.userID}" th:text="${user.getFullName()}" style="margin:6px"/>
+                      <input type="checkbox" th:value="${user.userID}" th:text="${user.fullName}" style="margin:6px"/>
                     </div>
                   </div>
                   <br>
@@ -124,12 +122,12 @@
         <!-- AAU end -->
 
         <td>
-          <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">Update</a>
-          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${taskIndex.index}">Delete</button>
-          <button type="button" class="btn btn-primary btn-sm custom-popover" data-bs-custom-class="custom-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" th:data-bs-title="'Description of ' + ${task.getName()}" th:data-bs-content="${task.getDescription()}">Description</button>
+          <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${taskUserDTO.task.taskID})}">Update</a>
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${taskUserDTOIndex.index}">Delete</button>
+          <button type="button" class="btn btn-primary btn-sm custom-popover" data-bs-custom-class="custom-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" th:data-bs-title="'Description of ' + ${taskUserDTO.task.name}" th:data-bs-content="${taskUserDTO.task.description}">Description</button>
         </td>
 
-        <td class="modal fade" th:id="'deleteModal-' + ${taskIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <td class="modal fade" th:id="'deleteModal-' + ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -141,7 +139,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a type="button" class="btn btn-danger" th:href="@{/project/subproject/task/delete (taskID=${task.getTaskID()})}">Delete</a>
+                <a type="button" class="btn btn-danger" th:href="@{/project/subproject/task/delete (taskID=${taskUserDTO.task.taskID})}">Delete</a>
               </div>
             </div>
           </div>

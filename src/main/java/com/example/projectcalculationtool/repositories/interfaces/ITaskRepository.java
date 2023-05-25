@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.repositories.interfaces;
 
-import com.example.projectcalculationtool.models.DTO.TaskUserDTO;
-import com.example.projectcalculationtool.models.DTO.UserAssignDTO;
+import com.example.projectcalculationtool.models.dto.TaskUserDTO;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
 
@@ -29,7 +28,6 @@ public interface ITaskRepository {
 
     /* ------------------------------------ New Assign & Unassigned ----------------------------------------- */
 
-    List<UserAssignDTO> getUserAssignDTO();
     List<TaskUserDTO> getTaskUsersDTO(int subprojectID);
     void addAssignedUsersToTask(List<Integer> userID, int taskID);
 }

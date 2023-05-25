@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.controllers;
 
-import com.example.projectcalculationtool.models.DTO.TaskUserDTO;
-import com.example.projectcalculationtool.models.DTO.UserAssignDTO;
+import com.example.projectcalculationtool.models.dto.TaskUserDTO;
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
@@ -40,37 +39,29 @@ public class TaskController {
     public String showTasks(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             session.removeAttribute("task");
-            User user = (User) session.getAttribute("user");
 
-            List<UserAssignDTO> userAssignDTOList = null;// 1.0 Declare variable
-            List<TaskUserDTO> tasks = null; // 2.0 Changed to from Task to TaskUserDTO
+            List<TaskUserDTO> taskUserDTOs = null;
 
             if (isAdmin(session)) {
                 Subproject subproject = (Subproject) session.getAttribute("subproject");
-
-                tasks = taskService.getTaskUsersDTO(subproject.getSubprojectID()); // 2.1 Changed to from Task to TaskUserDTO
-
-                userAssignDTOList = taskService.getUserAssignDTO(); //1.1 Get list of users / users to assign
-
+                taskUserDTOs = taskService.getTaskUsersDTO(subproject.getSubprojectID());
             } else {
-                //tasks = taskService.getUserTasks(user.getUserID());
+                //taskUserDTOs = taskService.getUserTasks(user.getUserID());
             }
-
             model.addAttribute("isAdmin", isAdmin(session));
-            model.addAttribute("roleID", user.getRoleID()) ;
-            model.addAttribute("tasks", tasks);
-            model.addAttribute("userAssignDTOList", userAssignDTOList); //1.2 Add to model
-            model.addAttribute("assignedUsers", new ArrayList<Integer>()); //3.0 Empty list object
-
+            model.addAttribute("taskUserDTOs", taskUserDTOs);
             return "show-tasks";
         }
         return "redirect:/sign-in";
     }
 
-    @PostMapping("/task/assign")
-    public String assignUser(@ModelAttribute List<Integer> assignedUsers, @RequestParam  int taskID, HttpSession session){
+    @PostMapping("task/assign")
+    public String assignUser(@ModelAttribute("assignedUsers") ArrayList<Integer> assignedUsers, @RequestParam  int taskID, HttpSession session){
         if(isAdmin(session)) {
             taskService.addAssignedUsersToTask(assignedUsers,taskID);
+            assignedUsers.forEach(System.out :: println);
+            System.out.println(assignedUsers.size());
+            System.out.println(taskID);
             return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
