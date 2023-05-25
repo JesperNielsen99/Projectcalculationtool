@@ -1,5 +1,7 @@
 package com.example.projectcalculationtool.services;
 
+import com.example.projectcalculationtool.models.DTO.TaskUserDTO;
+import com.example.projectcalculationtool.models.DTO.UserAssignDTO;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
@@ -55,4 +57,22 @@ public class TaskService {
     public List<Task> getUserTasks(int userID) {
         return taskRepository.getUserTasks(userID);
     }
+
+    /* ------------------------------------ New Assign & Unassigned ----------------------------------------- */
+
+    // List over users that can be assigned
+    public List<UserAssignDTO> getUserAssignDTO(){
+        return taskRepository.getUserAssignDTO();
+    }
+
+    // List of tasks with a list of users that have been added to the task
+    public List<TaskUserDTO> getTaskUsersDTO(int subprojectID) {
+        return taskRepository.getTaskUsersDTO(subprojectID);
+    }
+
+    // List of user-ids that needs to be added to table task_user in database
+    public void addAssignedUsersToTask(List<Integer> userID, int taskID) {
+       taskRepository.addAssignedUsersToTask(userID, taskID);
+    }
+
 }
