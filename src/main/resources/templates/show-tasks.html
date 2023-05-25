@@ -67,8 +67,8 @@
         <!-- Assigned, Assign, Unassign buttons -->
         <td>
           <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignedModal-'+ ${taskUserDTOIndex.index}">Assigned</button>
-          <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignModal-' + ${taskUserDTOIndex.index}">Assign</button>
-          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#">Unassign</button>
+          <button th:if="${isAdmin} == true" type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignModal-' + ${taskUserDTOIndex.index}">Assign</button>
+          <button th:if="${isAdmin} == true" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#unassignModal-' + ${taskUserDTOIndex.index}">Unassign</button>
         </td>
 
 
@@ -82,7 +82,7 @@
               </div>
               <div class="modal-body">
                 <div th:each="user : ${taskUserDTO.assignedUsers}">
-                  <p th:text="${user.firstName}"></p>
+                  <p th:text="${user.firstName} + ' ' + ${user.lastName}"></p>
                 </div>
               </div>
               <div class="modal-footer">
@@ -101,17 +101,40 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form th:action="@{/project/subproject/task/assign}" th:object="${assignedUsers}" th:method="post">
+                <form th:action="@{/project/subproject/task/assign}" th:method="post">
                   <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
-                  <div th:each="user : ${userAssignDTOList}">
-                    <div>
-                      <input type="checkbox" th:value="${user.userID}" th:text="${user.fullName}" style="margin:6px"/>
-                    </div>
+                  <div th:each="user : ${taskUserDTO.unassignedUsers}">
+                    <input type="checkbox" name="usersToAssign" th:value="${user.userID}" th:text="${user.firstName} + ' ' + ${user.lastName}" style="margin:6px"/>
                   </div>
                   <br>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Assign</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </td>
+
+        <!-- Unassign modal -->
+        <td class="modal fade" th:id="'unassignModal-' + ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-4" id="UnassignLabel">Unassign employee(s)</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form th:action="@{/project/subproject/task/unassign}" th:method="post">
+                  <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
+                  <div th:each="user : ${taskUserDTO.assignedUsers}">
+                    <input type="checkbox" name="usersToUnassign" th:value="${user.userID}" th:text="${user.firstName} + ' ' + ${user.lastName}" style="margin:6px"/>
+                  </div>
+                  <br>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Unassign</button>
                   </div>
                 </form>
               </div>

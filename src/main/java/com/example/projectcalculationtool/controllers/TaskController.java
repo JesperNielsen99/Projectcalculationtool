@@ -39,33 +39,41 @@ public class TaskController {
     public String showTasks(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             session.removeAttribute("task");
-
+            User user = (User) session.getAttribute("user");
             List<TaskUserDTO> taskUserDTOs = null;
-
             if (isAdmin(session)) {
                 Subproject subproject = (Subproject) session.getAttribute("subproject");
                 taskUserDTOs = taskService.getTaskUsersDTO(subproject.getSubprojectID());
             } else {
-                //taskUserDTOs = taskService.getUserTasks(user.getUserID());
+                taskUserDTOs = taskService.getUserTasks(user.getUserID());
             }
-            model.addAttribute("isAdmin", isAdmin(session));
             model.addAttribute("taskUserDTOs", taskUserDTOs);
+            model.addAttribute("isAdmin", isAdmin(session));
             return "show-tasks";
         }
         return "redirect:/sign-in";
     }
 
     @PostMapping("task/assign")
-    public String assignUser(@ModelAttribute("assignedUsers") ArrayList<Integer> assignedUsers, @RequestParam  int taskID, HttpSession session){
+    public String assignUser(@RequestParam("usersToAssign") List<Integer> usersToAssign, @RequestParam  int taskID, HttpSession session){
         if(isAdmin(session)) {
-            taskService.addAssignedUsersToTask(assignedUsers,taskID);
-            assignedUsers.forEach(System.out :: println);
-            System.out.println(assignedUsers.size());
-            System.out.println(taskID);
+            taskService.addAssignedUsersToTask(usersToAssign,taskID);
             return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }
+
+    @PostMapping("task/unassign")
+    public String unassignUser(@RequestParam("usersToUnassign") List<Integer> usersToUnassign, @RequestParam  int taskID, HttpSession session){
+        if(isAdmin(session)) {
+            taskService.removeAssignedUsersFromTask(usersToUnassign,taskID);
+            return "redirect:/project/subproject/tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
+
+
 
     /* ------------------------------------ Create project ----------------------------------------- */
 

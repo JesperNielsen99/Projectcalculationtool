@@ -1,10 +1,9 @@
 package com.example.projectcalculationtool.models;
 
-import com.example.projectcalculationtool.models.interfaces.ICompletedAndPriority;
 
 import java.time.LocalDate;
 
-public class Subproject implements ICompletedAndPriority {
+public class Subproject {
     private int subprojectID;
     private int projectID;
     private String name;
