@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
-    public UserService service;
+    private UserService userService;
 
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     private boolean isLoggedIn(HttpSession session) {
@@ -25,13 +25,13 @@ public class UserController {
     @GetMapping("/sign-up")
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roles", service.getRoles());
+        model.addAttribute("roles", userService.getRoles());
         return "create-user-form";
     }
 
     @PostMapping("/sign-up")
     public String signUpSubmit(@ModelAttribute("user") User user) {
-        service.createUser(user);
+        userService.createUser(user);
         return "redirect:/sign-in";
     }
 
@@ -41,7 +41,7 @@ public class UserController {
             User user = (User) session.getAttribute("user");
             boolean isAdmin = user.getRoleID() == 1;
             model.addAttribute("user", user);
-            model.addAttribute("role", service.getRole(user.getRoleID()));
+            model.addAttribute("role", userService.getRole(user.getRoleID()));
             return "show-user-profile";
         }
         return "redirect:/sign-in";
@@ -56,7 +56,7 @@ public class UserController {
     @PostMapping("/sign-in")
     public String loginSubmit(@RequestParam("email") String email, @RequestParam("password") String password,
                               HttpSession session, Model model) {
-        User user = service.getUser(email, password);
+        User user = userService.getUser(email, password);
         if (user != null) {
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
@@ -80,7 +80,7 @@ public class UserController {
     public String deleteUser(HttpSession session) {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
-            service.deleteUser(user.getUserID());
+            userService.deleteUser(user.getUserID());
             return "redirect:/sign-in";
         }
         return "redirect:/sign-in";
@@ -91,7 +91,7 @@ public class UserController {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
-            model.addAttribute("roles", service.getRoles());
+            model.addAttribute("roles", userService.getRoles());
             return "update-user-form";
         }
         return "redirect:/sign-in";
@@ -100,7 +100,7 @@ public class UserController {
     @PostMapping("/update")
     public String updateUserSubmit(@ModelAttribute("user") User user, HttpSession session) {
         if (isLoggedIn(session)) {
-            service.updateUser(user);
+            userService.updateUser(user);
             session.setAttribute("user", user);
             return "redirect:/profile";
         }
