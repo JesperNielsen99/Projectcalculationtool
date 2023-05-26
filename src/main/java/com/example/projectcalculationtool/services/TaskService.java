@@ -4,8 +4,6 @@ import com.example.projectcalculationtool.models.dto.TaskUserDTO;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.ITaskRepository;
-import com.example.projectcalculationtool.services.comparators.TaskUserDTOCompletedComparator;
-import com.example.projectcalculationtool.services.comparators.TaskUserDTOPriorityComparator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +46,6 @@ public class TaskService {
 
     public List<TaskUserDTO> getUserTasks(int userID) {
         List<TaskUserDTO> taskUserDTOs = taskRepository.getUserTasks(userID);
-        //taskUserDTOs.sort(new TaskUserDTOCompletedComparator().thenComparing(new TaskUserDTOPriorityComparator()));
         return taskUserDTOs ;
     }
 
@@ -58,7 +55,6 @@ public class TaskService {
     // List of tasks with a list of users that have been added to the task
     public List<TaskUserDTO> getTaskUsersDTO(int subprojectID) {
         List<TaskUserDTO> taskUserDTOs = taskRepository.getTaskUsersDTO(subprojectID);
-        taskUserDTOs.sort(new TaskUserDTOCompletedComparator().thenComparing(new TaskUserDTOPriorityComparator()));
         return taskUserDTOs ;
     }
 
