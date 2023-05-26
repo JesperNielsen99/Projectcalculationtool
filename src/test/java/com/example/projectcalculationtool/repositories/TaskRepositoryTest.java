@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
+import com.example.projectcalculationtool.models.User;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -270,5 +272,31 @@ class TaskRepositoryTest {
 
         Task taskNotFound = taskRepository.getTask(task1.getTaskID());
         Assertions.assertNull(taskNotFound);
+    }
+
+    // New tests
+
+    @Test
+    void addAssignedUsersToTask(){
+        //creating task
+        taskRepository.createTask(task1);
+        //adding people to task
+        List<User> addedUsersList = new ArrayList<>(List.of());
+        //taskRepository.addAssignedUsersToTask();
+    }
+
+    @Test
+    void getUserTasks(){
+
+    }
+
+    @Test
+    void getTaskUsersDTO(){
+
+    }
+
+    @Test
+    void removeAssignedUsersFromTask(){
+
     }
 }
