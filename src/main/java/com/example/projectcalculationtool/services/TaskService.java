@@ -48,7 +48,7 @@ public class TaskService {
 
     public List<TaskUserDTO> getUserTasks(int userID) {
         List<TaskUserDTO> taskUserDTOs = taskRepository.getUserTasks(userID);
-        taskUserDTOs.sort(new TaskUserDTOCompletedComparator().thenComparing(new TaskUserDTOPriorityComparator()));
+        //taskUserDTOs.sort(new TaskUserDTOCompletedComparator().thenComparing(new TaskUserDTOPriorityComparator()));
         return taskUserDTOs ;
     }
 

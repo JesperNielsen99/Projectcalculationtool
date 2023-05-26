@@ -45,7 +45,8 @@ public class SubprojectRepository implements ISubprojectRepository {
         try {
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "SELECT * FROM subproject WHERE project_id = ?;";
+            String SQL = "SELECT * FROM subproject WHERE project_id = ?\n" +
+                    "ORDER BY subproject_completed, subproject_priority";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setInt(1,projectID); // change to session

@@ -43,7 +43,8 @@ public class TaskRepository implements ITaskRepository {
         List<Task> tasks = new ArrayList<>();
         try {
             Connection conn = DB_Connector.getConnection();
-            String SQL = "SELECT * FROM task WHERE subproject_id = ?;";
+            String SQL = "SELECT * FROM task WHERE subproject_id = ?\n" +
+                    "ORDER BY task_completed, task_priority";
 
             PreparedStatement preparedStatement = conn.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectID);
@@ -232,7 +233,8 @@ public class TaskRepository implements ITaskRepository {
     public List<TaskUserDTO> getUserTasks(int userID) {
         try {
             Connection conn = DB_Connector.getConnection();
-            String sql = "SELECT * FROM task JOIN task_user USING (task_id) WHERE user_id = ?";
+            String sql = "SELECT * FROM task JOIN task_user USING (task_id) WHERE user_id = ?\n" +
+                    "ORDER BY task_completed, task_priority";
             PreparedStatement preparedstatement = conn.prepareStatement(sql);
             preparedstatement.setInt(1, userID);
             ResultSet resultSet = preparedstatement.executeQuery();

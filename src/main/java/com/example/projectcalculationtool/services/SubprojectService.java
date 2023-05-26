@@ -23,7 +23,7 @@ public class SubprojectService {
 
     public List<Subproject> getSubprojects(int projectID){
         List<Subproject> subprojects = subprojectRepository.getSubprojects(projectID);
-        subprojects.sort(new SubprojectCompletedComparator().thenComparing(new SubprojectPriorityComparator()));
+        //subprojects.sort(new SubprojectCompletedComparator().thenComparing(new SubprojectPriorityComparator()));
         return subprojects;
     }
 

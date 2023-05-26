@@ -22,7 +22,7 @@ public class ProjectService {
 
     public List<Project> getProjects(int managerID){
         List<Project> projects = projectRepository.getProjects(managerID);
-        projects.sort(new ProjectCompletedComparator());
+        //projects.sort(new ProjectCompletedComparator());
         return projects;
     }
 

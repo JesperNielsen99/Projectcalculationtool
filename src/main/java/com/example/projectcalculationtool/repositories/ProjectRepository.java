@@ -48,7 +48,8 @@ public class ProjectRepository implements IProjectRepository {
         try {
             Connection connection = DB_Connector.getConnection();
 
-            String SQL = "SELECT * FROM project WHERE project_manager_id = ?;";
+            String SQL = "SELECT * FROM project WHERE project_manager_id = ?\n" +
+                    "ORDER BY project_completed";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setInt(1,managerID);
