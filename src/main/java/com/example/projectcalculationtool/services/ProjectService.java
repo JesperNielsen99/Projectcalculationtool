@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.services;
 
 import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
+import com.example.projectcalculationtool.services.comparators.ProjectCompletedComparator;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class ProjectService {
 
     public List<Project> getProjects(int managerID){
         List<Project> projects = projectRepository.getProjects(managerID);
-        Collections.sort(projects);
+        projects.sort(new ProjectCompletedComparator());
         return projects;
     }
 

@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.controllers;
 
+import com.example.projectcalculationtool.models.dto.TaskUserDTO;
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
@@ -39,20 +40,40 @@ public class TaskController {
         if (isLoggedIn(session)) {
             session.removeAttribute("task");
             User user = (User) session.getAttribute("user");
-            List<Task> tasks = new ArrayList<>();
+            List<TaskUserDTO> taskUserDTOs = null;
             if (isAdmin(session)) {
                 Subproject subproject = (Subproject) session.getAttribute("subproject");
-                tasks = taskService.getTasks(subproject.getSubprojectID());
+                taskUserDTOs = taskService.getTaskUsersDTO(subproject.getSubprojectID());
             } else {
-                tasks = taskService.getUserTasks(user.getUserID());
+                taskUserDTOs = taskService.getUserTasks(user.getUserID());
             }
+            model.addAttribute("taskUserDTOs", taskUserDTOs);
             model.addAttribute("isAdmin", isAdmin(session));
-            model.addAttribute("roleID", user.getRoleID()) ;
-            model.addAttribute("tasks", tasks);
             return "show-tasks";
         }
         return "redirect:/sign-in";
     }
+
+    @PostMapping("task/assign")
+    public String assignUser(@RequestParam("usersToAssign") List<Integer> usersToAssign, @RequestParam  int taskID, HttpSession session){
+        if(isAdmin(session)) {
+            taskService.addAssignedUsersToTask(usersToAssign,taskID);
+            return "redirect:/project/subproject/tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
+    @PostMapping("task/unassign")
+    public String unassignUser(@RequestParam("usersToUnassign") List<Integer> usersToUnassign, @RequestParam  int taskID, HttpSession session){
+        if(isAdmin(session)) {
+            taskService.removeAssignedUsersFromTask(usersToUnassign,taskID);
+            return "redirect:/project/subproject/tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
+
+
 
     /* ------------------------------------ Create project ----------------------------------------- */
 

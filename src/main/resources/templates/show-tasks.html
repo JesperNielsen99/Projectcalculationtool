@@ -24,52 +24,133 @@
   </div>
   <table class="table table-striped table-hover">
     <thead>
-    <tr>
-      <th scope="col">Done</th>
-      <th scope="col">Priority</th>
-      <th scope="col">Name</th>
-      <th scope="col">Deadline</th>
-      <th scope="col">Duration</th>
-      <th scope="col">Manager</th>
-      <th scope="col">Actions</th>
-    </tr>
+      <tr>
+        <th scope="col">Done</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Name</th>
+        <th scope="col">Deadline</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Manager</th>
+        <th scope="col">Team</th>
+        <th scope="col">Actions</th>
+      </tr>
     </thead>
     <tbody>
-      <tr th:each="task, taskIndex : ${tasks}">
-
-        <td th:if="${task.isCompleted() == true}">
+      <tr th:each="taskUserDTO, taskUserDTOIndex : ${taskUserDTOs}">
+        <td th:if="${taskUserDTO.task.completed == true}">
           <form action="/project/subproject/task/update/completed" method="post">
             <label>
-              <input onchange="this.form.submit()" type="checkbox" th:checked="${task.isCompleted()}">
-              <input type="hidden" name="taskID" th:value="${task.taskID}">
+              <input onchange="this.form.submit()" type="checkbox" th:checked="${taskUserDTO.task.completed}">
+              <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
               <input type="hidden" name="completed" value="false">
             </label>
           </form>
         </td>
 
-        <td th:unless="${task.isCompleted() == true}">
+        <td th:unless="${taskUserDTO.task.completed == true}">
           <form action="/project/subproject/task/update/completed" method="post">
             <label>
-              <input onchange="this.form.submit()" type="checkbox" th:checked="${task.isCompleted()}">
-              <input type="hidden" name="taskID" th:value="${task.taskID}">
+              <input onchange="this.form.submit()" type="checkbox" th:checked="${taskUserDTO.task.completed}">
+              <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
               <input type="hidden" name="completed" value="true">
             </label>
           </form>
         </td>
 
-        <td th:text="${task.getPriority()}"></td>
-        <td th:text="${task.getName()}"></td>
-        <td th:text="${task.getDeadline()}"></td>
-        <td th:text="${task.getDuration()}"></td>
-        <td th:text="${task.getManagerName()}"></td>
+        <td th:text="${taskUserDTO.task.priority}"></td>
+        <td th:text="${taskUserDTO.task.name}"></td>
+        <td th:text="${taskUserDTO.task.deadline}"></td>
+        <td th:text="${taskUserDTO.task.duration}"></td>
+        <td th:text="${taskUserDTO.task.managerName}"></td>
 
+
+        <!-- Assigned, Assign, Unassign buttons -->
         <td>
-          <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${task.getTaskID()})}">Update</a>
-          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${taskIndex.index}">Delete</button>
-          <button type="button" class="btn btn-primary btn-sm custom-popover" data-bs-custom-class="custom-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" th:data-bs-title="'Description of ' + ${task.getName()}" th:data-bs-content="${task.getDescription()}">Description</button>
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignedModal-'+ ${taskUserDTOIndex.index}">Assigned</button>
+          <button th:if="${isAdmin} == true" type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" th:data-bs-target="'#assignModal-' + ${taskUserDTOIndex.index}">Assign</button>
+          <button th:if="${isAdmin} == true" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#unassignModal-' + ${taskUserDTOIndex.index}">Unassign</button>
         </td>
 
-        <td class="modal fade" th:id="'deleteModal-' + ${taskIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+
+        <!-- Assigned modal -->
+        <td class="modal fade" th:id="'assignedModal-'+ ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-4" id="AssignLabel">People assigned to task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div th:each="user : ${taskUserDTO.assignedUsers}">
+                  <p th:text="${user.firstName} + ' ' + ${user.lastName}"></p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </td>
+
+        <!-- Assign modal -->
+        <td class="modal fade" th:id="'assignModal-' + ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-4" id="AssignedLabel">Assign people</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form th:action="@{/project/subproject/task/assign}" th:method="post">
+                  <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
+                  <div th:each="user : ${taskUserDTO.unassignedUsers}">
+                    <input type="checkbox" name="usersToAssign" th:value="${user.userID}" th:text="${user.firstName} + ' ' + ${user.lastName}" style="margin:6px"/>
+                  </div>
+                  <br>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Assign</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </td>
+
+        <!-- Unassign modal -->
+        <td class="modal fade" th:id="'unassignModal-' + ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-4" id="UnassignLabel">Unassign employee(s)</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form th:action="@{/project/subproject/task/unassign}" th:method="post">
+                  <input type="hidden" name="taskID" th:value="${taskUserDTO.task.taskID}">
+                  <div th:each="user : ${taskUserDTO.assignedUsers}">
+                    <input type="checkbox" name="usersToUnassign" th:value="${user.userID}" th:text="${user.firstName} + ' ' + ${user.lastName}" style="margin:6px"/>
+                  </div>
+                  <br>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Unassign</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </td>
+
+        <!-- AAU end -->
+
+        <td>
+          <a class="btn btn-primary btn-sm" th:href="@{/project/subproject/task/update (taskID=${taskUserDTO.task.taskID})}">Update</a>
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${taskUserDTOIndex.index}">Delete</button>
+          <button type="button" class="btn btn-primary btn-sm custom-popover" data-bs-custom-class="custom-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" th:data-bs-title="'Description of ' + ${taskUserDTO.task.name}" th:data-bs-content="${taskUserDTO.task.description}">Description</button>
+        </td>
+
+        <td class="modal fade" th:id="'deleteModal-' + ${taskUserDTOIndex.index}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -81,7 +162,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a type="button" class="btn btn-danger" th:href="@{/project/subproject/task/delete (taskID=${task.getTaskID()})}">Delete</a>
+                <a type="button" class="btn btn-danger" th:href="@{/project/subproject/task/delete (taskID=${taskUserDTO.task.taskID})}">Delete</a>
               </div>
             </div>
           </div>
