@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.models.User;
+import com.example.projectcalculationtool.models.dto.TaskUserDTO;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +30,7 @@ class TaskRepositoryTest {
     @BeforeEach
     void setUp() {
         testDB.taskTestDB();
+        testDB.taskUserTestDB(); // new
 
         task1 = new Task(1, 1, "T-Task1", "T-Description1", 1, 1, LocalDate.now(), false, "T-manager1");
         task2 = new Task(2, 1, "T-Task2", "T-Description2", 1, 1, LocalDate.now(), false, "T-manager2");
@@ -276,37 +278,101 @@ class TaskRepositoryTest {
     // New tests
 
     @Test
-    void getUsersAssignedTo() {
+    void getUsersAssignedToTask1Size() {
+        taskRepository.createTask(task1);
 
+        int expectedSize = 2;
+        List<User> assignedUsers = taskRepository.getUsersAssignedTo(task1.getTaskID());
+
+        Assertions.assertEquals(expectedSize, assignedUsers.size());
     }
 
     @Test
-    void getUsersUnassignedTo() {
+    void checkFirstUserAssignedToTask1() {
+        taskRepository.createTask(task1);
 
+        String expectedUserLastName = "Løvkilde";
+        List<User> assignedUsers = taskRepository.getUsersAssignedTo(task1.getTaskID());
+
+        Assertions.assertEquals(expectedUserLastName, assignedUsers.get(0).getLastName());
     }
 
     @Test
-    void getUserTasks() {
+    void checkSecondUserNameAssignedToTask1() {
+        taskRepository.createTask(task1);
 
+        String expectedUserLastName = "Nielsen";
+        List<User> assignedUsers = taskRepository.getUsersAssignedTo(task1.getTaskID());
+
+        Assertions.assertEquals(expectedUserLastName, assignedUsers.get(1).getLastName());
+    }
+
+    @Test
+    void checkFirstUserNameUnassignedToTask1() {
+        taskRepository.createTask(task1);
+
+        String expectedLastName = "Zamora";
+        List<User> assignedUsers = taskRepository.getUsersUnassignedTo(task1.getTaskID());
+
+        Assertions.assertEquals(expectedLastName,assignedUsers.get(0).getLastName());
+    }
+
+    @Test
+    void checkSecondUserNameUnassignedToTask1() {
+        taskRepository.createTask(task1);
+
+        String expectedLastName = "Hjordt";
+        List<User> assignedUsers = taskRepository.getUsersUnassignedTo(task1.getTaskID());
+
+        Assertions.assertEquals(expectedLastName,assignedUsers.get(1).getLastName());
+    }
+
+    @Test
+    void getUserTasksAssignedToUser() {
+        taskRepository.createTask(task1);
+        taskRepository.createTask(task2);
+
+        int userIdOfThomas = 1;
+        int expectedUserAssignedToTaskSize = 2;
+        List<TaskUserDTO> userAssignedToTasks = taskRepository.getUserTasks(userIdOfThomas);
+
+        Assertions.assertEquals(expectedUserAssignedToTaskSize, userAssignedToTasks.size());
     }
 
     @Test
     void getTaskUsersDTO() {
+        taskRepository.createTask(task1);
+        taskRepository.createTask(task2);
 
+        int expectedSizeofTaskAssignedToSubproject = 2;
+        List<TaskUserDTO> subprojectTasks = taskRepository.getTaskUsersDTO(task1.getSubprojectID());
+
+        Assertions.assertEquals(expectedSizeofTaskAssignedToSubproject,subprojectTasks.size());
     }
 
     @Test
     void addAssignedUsersToTask() {
-        //creating task
         taskRepository.createTask(task1);
-        //adding people to task
-        List<User> addedUsersList = new ArrayList<>(List.of());
-        //taskRepository.addAssignedUsersToTask();
+        List<Integer> addUsersToTask1 = new ArrayList<>(List.of(3,4));
+        taskRepository.addAssignedUsersToTask(addUsersToTask1,task1.getTaskID());
+
+        int expectedSize = 4;
+        List<User> assignedUsers = taskRepository.getUsersAssignedTo(task1.getTaskID());
+
+        Assertions.assertEquals(expectedSize, assignedUsers.size());
     }
 
 
     @Test
     void removeAssignedUsersFromTask() {
+        taskRepository.createTask(task2);
+        List<Integer> usersToRemove = new ArrayList<>(List.of(1,4));
+        taskRepository.removeAssignedUsersFromTask(usersToRemove, task2.getTaskID());
+
+        int expectedSizeAfterRemove = 1;
+        List<User> assignedUsersLeft = taskRepository.getUsersAssignedTo(task2.getTaskID());
+
+        Assertions.assertEquals(expectedSizeAfterRemove, assignedUsersLeft.size());
 
     }
 }
