@@ -23,7 +23,6 @@ class TaskRepositoryTest {
     private TaskRepository taskRepository;
     @Autowired
     private TaskTestDB testDB;
-
     private Task task1;
     private Task task2;
 
@@ -277,7 +276,27 @@ class TaskRepositoryTest {
     // New tests
 
     @Test
-    void addAssignedUsersToTask(){
+    void getUsersAssignedTo() {
+
+    }
+
+    @Test
+    void getUsersUnassignedTo() {
+
+    }
+
+    @Test
+    void getUserTasks() {
+
+    }
+
+    @Test
+    void getTaskUsersDTO() {
+
+    }
+
+    @Test
+    void addAssignedUsersToTask() {
         //creating task
         taskRepository.createTask(task1);
         //adding people to task
@@ -285,18 +304,9 @@ class TaskRepositoryTest {
         //taskRepository.addAssignedUsersToTask();
     }
 
-    @Test
-    void getUserTasks(){
-
-    }
 
     @Test
-    void getTaskUsersDTO(){
-
-    }
-
-    @Test
-    void removeAssignedUsersFromTask(){
+    void removeAssignedUsersFromTask() {
 
     }
 }
