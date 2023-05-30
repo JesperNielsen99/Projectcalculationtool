@@ -135,7 +135,7 @@ The YML file, docker file, and link to render can be found in the repository on 
   - testDatabase folder - here we have the test data for MySQL.
     - 1create-test-database.sql - this file contains the creating of all the tables.
     - 2insert-test-data-sql - this file contains the data that gets put into the tables.
-- Our writing conventions for MySQL and sql files*
+- Our writing conventions for MySQL and sql files
   - When naming tables, we write the entire name in lower camel case, separating each full word with an underscore _
   - When naming columns in a table, we follow the same convention, as we do with naming tables.
 - Calling conventions when retrieving data from the database.
@@ -148,8 +148,8 @@ The YML file, docker file, and link to render can be found in the repository on 
 
 ## Java
 - The name of the function will always reflect what the function does.
-- When making a new function, always only make it in its respective repository and so on...
-  - For example, when creating a function that retrieves all "projects", the function should be implemented in the "ProjectRepository".
+- When making a new function, always make it under its respective package.
+  - For example, when creating a function that retrieves all "projects", the function should be implemented in the "ProjectRepository" because it has something to do with projects.
 - When making a function, always put it under its correct category. If a fitting headline does not exist, inform team so the team can find a new suitable name for the new category.
 - All our SQL Strings will always be called **SQL**
 - Always leave room when you reach a new "part" of a function.
