@@ -1,19 +1,14 @@
-DROP
-DATABASE IF EXISTS projectcalculationtool_test_db;
-CREATE
-DATABASE IF NOT EXISTS projectcalculationtool_test_db DEFAULT CHARACTER SET UTF8MB4;
-USE
-projectcalculationtool_test_db;
+DROP DATABASE IF EXISTS projectcalculationtool_test_db;
+CREATE DATABASE IF NOT EXISTS projectcalculationtool_test_db DEFAULT CHARACTER SET UTF8MB4;
+USE projectcalculationtool_test_db;
 
-CREATE TABLE role
-(
+CREATE TABLE role (
     role_id   INTEGER      NOT NULL AUTO_INCREMENT,
     role_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (role_id)
 );
 
-CREATE TABLE user
-(
+CREATE TABLE user (
     user_id         INTEGER      NOT NULL AUTO_INCREMENT,
     user_first_name VARCHAR(255) NOT NULL,
     user_last_name  VARCHAR(255) NOT NULL,
@@ -25,8 +20,7 @@ CREATE TABLE user
     UNIQUE INDEX (user_email)
 );
 
-CREATE TABLE project
-(
+CREATE TABLE project (
     project_id         INTEGER      NOT NULL AUTO_INCREMENT,
     project_manager_id INT          NOT NULL,
     project_name       VARCHAR(255) NOT NULL,
@@ -37,8 +31,7 @@ CREATE TABLE project
     FOREIGN KEY (project_manager_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE subproject
-(
+CREATE TABLE subproject (
     subproject_id        INTEGER      NOT NULL AUTO_INCREMENT,
     project_id           INT          NOT NULL,
     subproject_name      VARCHAR(255) NOT NULL,
@@ -50,8 +43,7 @@ CREATE TABLE subproject
     FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE task
-(
+CREATE TABLE task (
     task_id           INTEGER      NOT NULL AUTO_INCREMENT,
     subproject_id     INT          NOT NULL,
     task_name         VARCHAR(255) NOT NULL,
@@ -65,8 +57,7 @@ CREATE TABLE task
     FOREIGN KEY (subproject_id) REFERENCES subproject (subproject_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE task_user
-(
+CREATE TABLE task_user (
     task_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (task_id) REFERENCES task (task_id) ON DELETE CASCADE ON UPDATE CASCADE,
