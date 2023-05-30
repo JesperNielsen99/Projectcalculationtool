@@ -1,14 +1,19 @@
-DROP DATABASE IF EXISTS projectcalculationtool_test_db;
-CREATE DATABASE IF NOT EXISTS projectcalculationtool_test_db DEFAULT CHARACTER SET UTF8MB4;
-USE projectcalculationtool_test_db;
+DROP
+DATABASE IF EXISTS projectcalculationtool_test_db;
+CREATE
+DATABASE IF NOT EXISTS projectcalculationtool_test_db DEFAULT CHARACTER SET UTF8MB4;
+USE
+projectcalculationtool_test_db;
 
-CREATE TABLE role (
+CREATE TABLE role
+(
     role_id   INTEGER      NOT NULL AUTO_INCREMENT,
     role_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (role_id)
 );
 
-CREATE TABLE user (
+CREATE TABLE user
+(
     user_id         INTEGER      NOT NULL AUTO_INCREMENT,
     user_first_name VARCHAR(255) NOT NULL,
     user_last_name  VARCHAR(255) NOT NULL,
@@ -17,11 +22,11 @@ CREATE TABLE user (
     user_role_id    INT          NOT NULL,
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_role_id) REFERENCES role (role_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    UNIQUE INDEX (user_email),
-    CONSTRAINT check_user_email CHECK (user_email LIKE "%alpha.com")
+    UNIQUE INDEX (user_email)
 );
 
-CREATE TABLE project (
+CREATE TABLE project
+(
     project_id         INTEGER      NOT NULL AUTO_INCREMENT,
     project_manager_id INT          NOT NULL,
     project_name       VARCHAR(255) NOT NULL,
@@ -45,20 +50,23 @@ CREATE TABLE subproject
     FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE task (
-    task_id          INTEGER      NOT NULL AUTO_INCREMENT,
-    subproject_id    INT          NOT NULL,
-    task_name        VARCHAR(255) NOT NULL,
-    task_description VARCHAR(255) NOT NULL,
-    task_priority    INT          NOT NULL,
-    task_duration    INT          NOT NULL,
-    task_deadline    DATE         NOT NULL,
-    task_completed   TINYINT      NOT NULL,
+CREATE TABLE task
+(
+    task_id           INTEGER      NOT NULL AUTO_INCREMENT,
+    subproject_id     INT          NOT NULL,
+    task_name         VARCHAR(255) NOT NULL,
+    task_description  VARCHAR(255) NOT NULL,
+    task_priority     INT          NOT NULL,
+    task_duration     INT          NOT NULL,
+    task_deadline     DATE         NOT NULL,
+    task_completed    TINYINT      NOT NULL,
+    task_manager_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (task_id),
     FOREIGN KEY (subproject_id) REFERENCES subproject (subproject_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE task_user (
+CREATE TABLE task_user
+(
     task_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (task_id) REFERENCES task (task_id) ON DELETE CASCADE ON UPDATE CASCADE,

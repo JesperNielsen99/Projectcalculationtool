@@ -13,7 +13,8 @@ public class Task {
     private boolean completed;
     private String managerName;
 
-    public Task(){}
+    public Task() {
+    }
 
     public Task(int taskID, int subprojectID, String name, String description, int priority,
                 int duration, LocalDate deadline, Boolean completed, String managerName) {

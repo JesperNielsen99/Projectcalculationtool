@@ -17,8 +17,7 @@ CREATE TABLE user (
     user_role_id INT NOT NULL,
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_role_id) REFERENCES role (role_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    UNIQUE INDEX (user_email),
-    CONSTRAINT check_user_email CHECK (user_email LIKE "%alpha.com")
+    UNIQUE INDEX (user_email)
 );
 
 CREATE TABLE project (

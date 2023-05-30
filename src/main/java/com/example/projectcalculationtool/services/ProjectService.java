@@ -4,7 +4,6 @@ import com.example.projectcalculationtool.models.Project;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -15,11 +14,11 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public void createProject(Project project){
+    public void createProject(Project project) {
         projectRepository.createProject(project);
     }
 
-    public List<Project> getProjects(int managerID){
+    public List<Project> getProjects(int managerID) {
         List<Project> projects = projectRepository.getProjects(managerID);
         return projects;
     }
@@ -36,7 +35,7 @@ public class ProjectService {
         projectRepository.deleteProject(projectID);
     }
 
-    public void updateProjectDuration(int projectID){
+    public void updateProjectDuration(int projectID) {
         projectRepository.updateProjectDuration(projectID);
     }
 }

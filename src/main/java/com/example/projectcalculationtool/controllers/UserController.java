@@ -22,6 +22,8 @@ public class UserController {
         return session.getAttribute("user") != null;
     }
 
+    /* ------------------------------------ Sign-up user ----------------------------------------- */
+
     @GetMapping("/sign-up")
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
@@ -35,19 +37,9 @@ public class UserController {
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model, HttpSession session) {
-        if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            boolean isAdmin = user.getRoleID() == 1;
-            model.addAttribute("user", user);
-            model.addAttribute("role", userService.getRole(user.getRoleID()));
-            return "show-user-profile";
-        }
-        return "redirect:/sign-in";
-    }
+    /* ------------------------------------ Profile user ----------------------------------------- */
 
-    @GetMapping(value = {"", "/","/sign-in"})
+    @GetMapping(value = {"", "/", "/sign-in"})
     public String loginForm(HttpSession session) {
         session.invalidate();
         return "index-login";
@@ -70,11 +62,29 @@ public class UserController {
         return "index-login";
     }
 
+    /* ------------------------------------ Profile user ----------------------------------------- */
+
+    @GetMapping("/profile")
+    public String profile(Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            boolean isAdmin = user.getRoleID() == 1;
+            model.addAttribute("user", user);
+            model.addAttribute("role", userService.getRole(user.getRoleID()));
+            return "show-user-profile";
+        }
+        return "redirect:/sign-in";
+    }
+
+    /* ------------------------------------ Sign-out user ----------------------------------------- */
+
     @GetMapping("/sign-out")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/sign-in";
     }
+
+    /* ------------------------------------ Delete user ----------------------------------------- */
 
     @GetMapping("/delete")
     public String deleteUser(HttpSession session) {
@@ -85,6 +95,8 @@ public class UserController {
         }
         return "redirect:/sign-in";
     }
+
+    /* ------------------------------------ Update user ----------------------------------------- */
 
     @GetMapping("/update")
     public String updateUserForm(Model model, HttpSession session) {

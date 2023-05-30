@@ -11,7 +11,8 @@ public class TaskUserDTO {
     private List<User> unassignedUsers;
 
 
-    public TaskUserDTO(){}
+    public TaskUserDTO() {
+    }
 
     public TaskUserDTO(Task task, List<User> assignedUsers, List<User> unassignedUsers) {
         this.task = task;
@@ -25,11 +26,11 @@ public class TaskUserDTO {
     }
 
 
-    public void addAssignedUser(User user){
+    public void addAssignedUser(User user) {
         assignedUsers.add(user);
     }
 
-    public void addUnassignedUser(User user){
+    public void addUnassignedUser(User user) {
         unassignedUsers.add(user);
     }
 

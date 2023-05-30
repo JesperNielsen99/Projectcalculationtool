@@ -3,6 +3,7 @@ package com.example.projectcalculationtool.services;
 import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.repositories.interfaces.ISubprojectRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -13,28 +14,27 @@ public class SubprojectService {
         this.subprojectRepository = subprojectRepository;
     }
 
-    public void createSubproject(Subproject subproject){
+    public void createSubproject(Subproject subproject) {
         subprojectRepository.createSubproject(subproject);
     }
 
-    public List<Subproject> getSubprojects(int projectID){
-        List<Subproject> subprojects = subprojectRepository.getSubprojects(projectID);
-        return subprojects;
+    public List<Subproject> getSubprojects(int projectID) {
+        return subprojectRepository.getSubprojects(projectID);
     }
 
-    public Subproject getSubproject(int subprojectID){
+    public Subproject getSubproject(int subprojectID) {
         return subprojectRepository.getSubproject(subprojectID);
     }
 
-    public void updateSubproject(Subproject subproject){
+    public void updateSubproject(Subproject subproject) {
         subprojectRepository.updateSubproject(subproject);
     }
 
-    public void deleteSubproject(int subprojectID){
+    public void deleteSubproject(int subprojectID) {
         subprojectRepository.deleteSubproject(subprojectID);
     }
 
-    public void updateSubprojectDuration(int subprojectID){
+    public void updateSubprojectDuration(int subprojectID) {
         subprojectRepository.updateSubprojectDuration(subprojectID);
     }
 }

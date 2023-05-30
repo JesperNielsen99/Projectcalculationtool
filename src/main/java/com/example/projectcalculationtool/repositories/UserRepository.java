@@ -17,14 +17,17 @@ public class UserRepository implements IUserRepository {
     public void createUser(User user) {
         try {
             Connection connection = DB_Connector.getConnection();
+            String sql = "INSERT INTO user (user_first_name, user_last_name, user_email," +
+                    " user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
 
-            String SQL = "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setInt(5, user.getRoleID());
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,13 +38,19 @@ public class UserRepository implements IUserRepository {
     public List<Role> getRoles() {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "SELECT * FROM role";
+            String sql = "SELECT * FROM role";
+
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL);
+
+            ResultSet resultSet = statement.executeQuery(sql);
             List<Role> roles = new ArrayList<>();
             while (resultSet.next()) {
-                roles.add(new Role(resultSet.getInt("role_id"), resultSet.getString("role_name")));
+                roles.add(new Role(
+                        resultSet.getInt("role_id"),
+                        resultSet.getString("role_name"))
+                );
             }
+
             return roles;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,14 +61,18 @@ public class UserRepository implements IUserRepository {
     public String getRole(int roleID) {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "SELECT role_name FROM role WHERE role_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            String sql = "SELECT role_name FROM role WHERE role_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, roleID);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             String role = "";
             if (resultSet.next()) {
                 role = resultSet.getString("role_name");
             }
+
             return role;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -71,14 +84,17 @@ public class UserRepository implements IUserRepository {
     public void updateUser(User user) {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "UPDATE user SET user_first_name = ?, user_last_name = ?, user_password = ?, " +
-                    "user_role_id = ? WHERE user_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            String sql = "UPDATE user SET user_first_name = ?, user_last_name = ?, " +
+                    "user_password = ?, user_role_id = ? WHERE user_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setInt(4, user.getRoleID());
             preparedStatement.setInt(5, user.getUserID());
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -90,9 +106,12 @@ public class UserRepository implements IUserRepository {
     public void deleteUser(int userID) {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "DELETE FROM user WHERE user_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            String sql = "DELETE FROM user WHERE user_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
             preparedStatement.setInt(1, userID);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -102,10 +121,13 @@ public class UserRepository implements IUserRepository {
     public User getUser(String email, String password) {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
-            PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
+            String sql = "SELECT * FROM user WHERE user_email = ? AND user_password = ?";
+
+            PreparedStatement preparedStatementUserID = connection.prepareStatement(sql);
+
             preparedStatementUserID.setString(1, email);
             preparedStatementUserID.setString(2, password);
+
             ResultSet resultSet = preparedStatementUserID.executeQuery();
             User user = null;
             if (resultSet.next()) {
@@ -116,8 +138,9 @@ public class UserRepository implements IUserRepository {
                         resultSet.getString("user_email"),
                         resultSet.getString("user_password"),
                         resultSet.getInt("user_role_id")
-                        );
+                );
             }
+
             return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);

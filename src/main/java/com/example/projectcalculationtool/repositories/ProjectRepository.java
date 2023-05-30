@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.repositories;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.models.Task;
 import com.example.projectcalculationtool.repositories.interfaces.IProjectRepository;
 import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -18,24 +17,21 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public void createProject(Project project) {
-        try{
+        try {
             Connection connection = DB_Connector.getConnection();
-
-            String SQL = "INSERT INTO project (project_manager_id, project_name, project_duration, " +
+            String sql = "INSERT INTO project (project_manager_id, project_name, project_duration, " +
                     "project_deadline, project_completed) VALUES (?,?,?,?,?)";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setInt(1, project.getManagerID());
-            preparedStatement.setString(2,project.getName());
+            preparedStatement.setString(2, project.getName());
             preparedStatement.setInt(3, project.getDuration());
             preparedStatement.setDate(4, Date.valueOf(project.getDeadline()));
             preparedStatement.setBoolean(5, project.isCompleted());
 
             preparedStatement.executeUpdate();
-
-
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -47,15 +43,14 @@ public class ProjectRepository implements IProjectRepository {
 
         try {
             Connection connection = DB_Connector.getConnection();
-
-            String SQL = "SELECT * FROM project WHERE project_manager_id = ?\n" +
+            String sql = "SELECT * FROM project WHERE project_manager_id = ?\n" +
                     "ORDER BY project_completed";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setInt(1,managerID);
+            preparedStatement.setInt(1, managerID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 projectList.add(new Project(
                         resultSet.getInt("project_id"),
                         resultSet.getInt("project_manager_id"),
@@ -66,11 +61,10 @@ public class ProjectRepository implements IProjectRepository {
                 ));
             }
 
+            return projectList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return projectList;
     }
 
     /* ------------------------------------ Get project (single) ----------------------------------------- */
@@ -79,10 +73,11 @@ public class ProjectRepository implements IProjectRepository {
     public Project getProject(int projectID) {
         Project project = null;
         try {
-            Connection conn = DB_Connector.getConnection();
-            String SQL = "SELECT * FROM project WHERE project_id= ?";
+            Connection connection = DB_Connector.getConnection();
+            String sql = "SELECT * FROM project WHERE project_id= ?";
 
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, projectID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -97,8 +92,8 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getBoolean("project_completed")
                 );
             }
-            return project;
 
+            return project;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -109,24 +104,21 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public void updateProject(Project project) {
         try {
-            Connection conn = DB_Connector.getConnection();
-            String SQL = "UPDATE project SET project_id=?, project_manager_id=?, project_name=?, project_duration=?, project_deadline=?, project_completed=? WHERE project_id=?;";
+            Connection connection = DB_Connector.getConnection();
+            String sql = "UPDATE project SET project_id=?, project_manager_id=?, project_name=?, " +
+                    "project_duration=?, project_deadline=?, project_completed=? WHERE project_id=?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
-
-            preparedStatement.setInt(1,project.getProjectID());
+            preparedStatement.setInt(1, project.getProjectID());
             preparedStatement.setInt(2, project.getManagerID());
-            preparedStatement.setString(3,project.getName());
+            preparedStatement.setString(3, project.getName());
             preparedStatement.setInt(4, project.getDuration());
             preparedStatement.setDate(5, Date.valueOf(project.getDeadline()));
             preparedStatement.setBoolean(6, project.isCompleted());
-            preparedStatement.setInt(7,project.getProjectID());
-
-
+            preparedStatement.setInt(7, project.getProjectID());
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -137,13 +129,14 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public void deleteProject(int projectID) {
         try {
-            Connection conn = DB_Connector.getConnection();
-            String SQL = "DElETE FROM project WHERE project_id=?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            Connection connection = DB_Connector.getConnection();
+            String sql = "DElETE FROM project WHERE project_id=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, projectID);
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -151,22 +144,29 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public void updateProjectDuration(int projectID) {
-        try{
+        try {
             Connection connection = DB_Connector.getConnection();
             String sql = "SELECT subproject_duration FROM subproject WHERE project_id = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, projectID);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             int duration = 0;
             while (resultSet.next()) {
                 duration += resultSet.getInt("subproject_duration");
             }
+
             String prepSql = "UPDATE project SET project_duration = ? WHERE project_id = ?";
+
             preparedStatement = connection.prepareStatement(prepSql);
+
             preparedStatement.setInt(1, duration);
             preparedStatement.setInt(2, projectID);
+
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -29,6 +29,7 @@ public interface ITaskRepository {
     /* ------------------------------------ New Assign & Unassigned ----------------------------------------- */
 
     List<TaskUserDTO> getTaskUsersDTO(int subprojectID);
+
     void addAssignedUsersToTask(List<Integer> userIDs, int taskID);
 
     void removeAssignedUsersFromTask(List<Integer> userIDs, int taskID);

@@ -9,11 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(path= "/project")
+@RequestMapping(path = "/project")
 public class SubprojectController {
     private SubprojectService subprojectService;
 
@@ -24,6 +23,8 @@ public class SubprojectController {
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
     }
+
+    /* ------------------------------------ Show subproject ----------------------------------------- */
 
     @GetMapping("/subprojects")
     public String showSubprojects(Model model, HttpSession session) {
@@ -38,7 +39,7 @@ public class SubprojectController {
     }
 
     @GetMapping("/subproject/addToSession")
-    public String addToSession(@RequestParam int subprojectID, HttpSession session){
+    public String addToSession(@RequestParam int subprojectID, HttpSession session) {
         if (isLoggedIn(session)) {
             session.setAttribute("subproject", subprojectService.getSubproject(subprojectID));
             return "redirect:/project/subproject/tasks";
@@ -46,10 +47,10 @@ public class SubprojectController {
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Create project ----------------------------------------- */
+    /* ------------------------------------ Create subproject ----------------------------------------- */
 
     @GetMapping("/subproject/create")
-    public String createSubproject(Model model, HttpSession session){
+    public String createSubproject(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Subproject subproject = new Subproject();
             model.addAttribute("subproject", subproject);
@@ -59,7 +60,7 @@ public class SubprojectController {
     }
 
     @PostMapping("/subproject/create")
-    public String createSubproject(@ModelAttribute Subproject subproject, HttpSession session){
+    public String createSubproject(@ModelAttribute Subproject subproject, HttpSession session) {
         if (isLoggedIn(session)) {
             Project project = (Project) session.getAttribute("project");
             subproject.setProjectID(project.getProjectID());
@@ -72,7 +73,7 @@ public class SubprojectController {
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Update project ----------------------------------------- */
+    /* ------------------------------------ Update subproject ----------------------------------------- */
 
     @GetMapping("/subproject/update")
     public String updateSubprojectForm(@RequestParam int subprojectID, Model model, HttpSession session) {
@@ -114,38 +115,37 @@ public class SubprojectController {
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Delete subproject ----------------------------------------- */
-
-    @GetMapping("/subproject/delete")
-    public String deleteSubproject(@RequestParam int subprojectID, HttpSession session){
-        if (isLoggedIn(session)) {
-            subprojectService.deleteSubproject(subprojectID);
-            return "redirect:/project/updateDurationFromSubproject";
-        }
-        return "redirect:/sign-in";
-    }
-
-
-    @GetMapping("/subproject/updateDuration")
-    public String updateSubprojectDuration(HttpSession session){
+    @GetMapping("/subproject/update/duration")
+    public String updateSubprojectDuration(HttpSession session) {
         if (isLoggedIn(session)) {
             Subproject subproject = (Subproject) session.getAttribute("subproject");
             subprojectService.updateSubprojectDuration(subproject.getSubprojectID());
             subproject = subprojectService.getSubproject(subproject.getSubprojectID());
             session.setAttribute("subproject", subproject);
-            return "redirect:/project/updateDuration";
+            return "redirect:/project/update/duration";
         }
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/subproject/updateDurationByUser")
-    public String updateSubprojectDurationByUser(@RequestParam int subprojectID, HttpSession session){
+    @GetMapping("/subproject/update/duration/user")
+    public String updateSubprojectDurationByUser(@RequestParam int subprojectID, HttpSession session) {
         if (isLoggedIn(session)) {
             Subproject subproject = subprojectService.getSubproject(subprojectID);
             subprojectService.updateSubprojectDuration(subproject.getSubprojectID());
             subproject = subprojectService.getSubproject(subproject.getSubprojectID());
             session.setAttribute("subproject", subproject);
-            return "redirect:/project/updateDurationByUser?projectID=" + subproject.getProjectID();
+            return "redirect:/project/update/duration/user?projectID=" + subproject.getProjectID();
+        }
+        return "redirect:/sign-in";
+    }
+
+    /* ------------------------------------ Delete subproject ----------------------------------------- */
+
+    @GetMapping("/subproject/delete")
+    public String deleteSubproject(@RequestParam int subprojectID, HttpSession session) {
+        if (isLoggedIn(session)) {
+            subprojectService.deleteSubproject(subprojectID);
+            return "redirect:/project/updateDurationFromSubproject";
         }
         return "redirect:/sign-in";
     }

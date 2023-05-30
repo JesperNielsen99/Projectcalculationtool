@@ -11,11 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/project/subproject")
+@RequestMapping(path = "/project/subproject")
 public class TaskController {
     private TaskService taskService;
 
@@ -34,6 +33,8 @@ public class TaskController {
         }
         return false;
     }
+
+    /* ------------------------------------ Show task ----------------------------------------- */
 
     @GetMapping("tasks")
     public String showTasks(Model model, HttpSession session) {
@@ -54,28 +55,7 @@ public class TaskController {
         return "redirect:/sign-in";
     }
 
-    @PostMapping("task/assign")
-    public String assignUser(@RequestParam("usersToAssign") List<Integer> usersToAssign, @RequestParam  int taskID, HttpSession session){
-        if(isAdmin(session)) {
-            taskService.addAssignedUsersToTask(usersToAssign,taskID);
-            return "redirect:/project/subproject/tasks";
-        }
-        return "redirect:/sign-in";
-    }
-
-    @PostMapping("task/unassign")
-    public String unassignUser(@RequestParam("usersToUnassign") List<Integer> usersToUnassign, @RequestParam  int taskID, HttpSession session){
-        if(isAdmin(session)) {
-            taskService.removeAssignedUsersFromTask(usersToUnassign,taskID);
-            return "redirect:/project/subproject/tasks";
-        }
-        return "redirect:/sign-in";
-    }
-
-
-
-
-    /* ------------------------------------ Create project ----------------------------------------- */
+    /* ------------------------------------ Create task ----------------------------------------- */
 
     @GetMapping("task/create")
     public String createTask(Model model, HttpSession session) {
@@ -100,15 +80,15 @@ public class TaskController {
             String managerName = user.getFirstName() + " " + user.getLastName();
             task.setManagerName(managerName);
             taskService.createTask(task);
-        return "redirect:/project/subproject/updateDuration";
+            return "redirect:/project/subproject/updateDuration";
         }
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Update project ----------------------------------------- */
+    /* ------------------------------------ Update task ----------------------------------------- */
 
     @GetMapping("task/update")
-    public String updateTask(@RequestParam int taskID, Model model, HttpSession session){
+    public String updateTask(@RequestParam int taskID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             Task task = taskService.getTask(taskID);
             session.setAttribute("taskDeadline", task.getDeadline());
@@ -119,7 +99,7 @@ public class TaskController {
     }
 
     @PostMapping("task/update")
-    public String updateTask(@ModelAttribute Task task, HttpSession session){
+    public String updateTask(@ModelAttribute Task task, HttpSession session) {
         if (isLoggedIn(session)) {
             if (task.getDeadline() == null) {
                 LocalDate deadline = (LocalDate) session.getAttribute("taskDeadline");
@@ -148,13 +128,33 @@ public class TaskController {
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Delete subproject ----------------------------------------- */
+    /* ------------------------------------ Delete task ----------------------------------------- */
 
     @GetMapping("task/delete")
-    public String deleteTask(@RequestParam int taskID, HttpSession session){
+    public String deleteTask(@RequestParam int taskID, HttpSession session) {
         if (isLoggedIn(session)) {
             taskService.deleteTask(taskID);
             return "redirect:/project/subproject/updateDuration";
+        }
+        return "redirect:/sign-in";
+    }
+
+    /* ------------------------------------ Assign task ----------------------------------------- */
+
+    @PostMapping("task/assign")
+    public String assignUser(@RequestParam("usersToAssign") List<Integer> usersToAssign, @RequestParam int taskID, HttpSession session) {
+        if (isAdmin(session)) {
+            taskService.addAssignedUsersToTask(usersToAssign, taskID);
+            return "redirect:/project/subproject/tasks";
+        }
+        return "redirect:/sign-in";
+    }
+
+    @PostMapping("task/unassign")
+    public String unassignUser(@RequestParam("usersToUnassign") List<Integer> usersToUnassign, @RequestParam int taskID, HttpSession session) {
+        if (isAdmin(session)) {
+            taskService.removeAssignedUsersFromTask(usersToUnassign, taskID);
+            return "redirect:/project/subproject/tasks";
         }
         return "redirect:/sign-in";
     }

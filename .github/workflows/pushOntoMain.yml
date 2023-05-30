@@ -1,4 +1,4 @@
-name: Test Workflow
+name: Push Feature branch to Main
 
 on:
   push:
@@ -39,12 +39,12 @@ jobs:
           distribution: semeru
           java-version: 17
 
-      - name: Run SQL script
+      - name: Create SQL Database in docker
         run: |
           mysql --host 127.0.0.1 --port 3306 --user root --password=root < SQL/testDatabase/1-create-test-database.sql
           mysql --host 127.0.0.1 --port 3306 --user root --password=root projectcalculationtool_test_db < SQL/testDatabase/2-insert-test-data.sql
 
-      - name: Build with Maven
+      - name: Build with Maven and run tests
         run: |
           chmod +x mvnw
           ./mvnw -Dspring.profiles.active=test clean package

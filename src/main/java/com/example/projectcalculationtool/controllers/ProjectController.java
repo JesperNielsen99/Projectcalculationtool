@@ -2,7 +2,6 @@ package com.example.projectcalculationtool.controllers;
 
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.models.Subproject;
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.services.ProjectService;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +23,8 @@ public class ProjectController {
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("user") != null;
     }
+
+    /* ------------------------------------ Show project ----------------------------------------- */
 
 
     @GetMapping("/projects")
@@ -113,18 +114,7 @@ public class ProjectController {
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Delete project ----------------------------------------- */
-
-    @GetMapping("project/delete")
-    public String deleteProject(@RequestParam int projectID, HttpSession session){
-        if (isLoggedIn(session)) {
-            projectService.deleteProject(projectID);
-            return "redirect:/projects";
-        }
-        return "redirect:/sign-in";
-    }
-
-    @GetMapping("/project/updateDuration")
+    @GetMapping("/project/update/duration")
     public String updateProjectDurationFromTask(HttpSession session){
         if (isLoggedIn(session)) {
             updateProjectDuration(session);
@@ -133,7 +123,7 @@ public class ProjectController {
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/project/updateDurationFromSubproject")
+    @GetMapping("/project/update/duration/subproject")
     public String updateProjectDurationFromSubproject(HttpSession session){
         if (isLoggedIn(session)) {
             updateProjectDuration(session);
@@ -142,7 +132,7 @@ public class ProjectController {
         return "redirect:/sign-in";
     }
 
-    @GetMapping("/project/updateDurationByUser")
+    @GetMapping("/project/update/duration/user")
     private String updateProjectDurationByUser(@RequestParam int projectID, HttpSession session) {
         if (isLoggedIn(session)) {
             Project project = projectService.getProject(projectID);
@@ -154,6 +144,18 @@ public class ProjectController {
         return "redirect:/sign-in";
     }
 
+    /* ------------------------------------ Delete project ----------------------------------------- */
+
+    @GetMapping("project/delete")
+    public String deleteProject(@RequestParam int projectID, HttpSession session){
+        if (isLoggedIn(session)) {
+            projectService.deleteProject(projectID);
+            return "redirect:/projects";
+        }
+        return "redirect:/sign-in";
+    }
+
+    /* ------------------------------------ Delete project ----------------------------------------- */
     private void updateProjectDuration(HttpSession session) {
         Project project = (Project) session.getAttribute("project");
         projectService.updateProjectDuration(project.getProjectID());

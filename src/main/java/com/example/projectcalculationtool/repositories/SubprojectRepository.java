@@ -10,14 +10,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository()
+@Repository
 public class SubprojectRepository implements ISubprojectRepository {
 
     @Override
-    public void createSubproject(Subproject subproject){
-        try{
+    public void createSubproject(Subproject subproject) {
+        try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "INSERT INTO subproject\n" +
+            String sql = "INSERT INTO subproject\n" +
                     "(project_id, \n" +
                     "subproject_name, \n" +
                     "subproject_priority, \n" +
@@ -25,15 +25,18 @@ public class SubprojectRepository implements ISubprojectRepository {
                     "subproject_deadline, \n" +
                     "subproject_completed)\n" +
                     "VALUES(?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, subproject.getProjectID());
             preparedStatement.setString(2, subproject.getName());
             preparedStatement.setInt(3, subproject.getPriority());
             preparedStatement.setInt(4, subproject.getDuration());
             preparedStatement.setDate(5, Date.valueOf(subproject.getDeadline()));
             preparedStatement.setBoolean(6, subproject.isCompleted());
+
             preparedStatement.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -41,18 +44,17 @@ public class SubprojectRepository implements ISubprojectRepository {
     @Override
     public List<Subproject> getSubprojects(int projectID) {
         List<Subproject> subprojectList = new ArrayList<>();
-
         try {
             Connection connection = DB_Connector.getConnection();
-
-            String SQL = "SELECT * FROM subproject WHERE project_id = ?\n" +
+            String sql = "SELECT * FROM subproject WHERE project_id = ?\n" +
                     "ORDER BY subproject_completed, subproject_priority";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setInt(1,projectID); // change to session
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, projectID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 subprojectList.add(new Subproject(
                         resultSet.getInt("subproject_id"),
                         projectID,
@@ -63,8 +65,8 @@ public class SubprojectRepository implements ISubprojectRepository {
                         resultSet.getBoolean("subproject_completed")
                 ));
             }
-            return subprojectList;
 
+            return subprojectList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,13 +77,13 @@ public class SubprojectRepository implements ISubprojectRepository {
         Subproject subproject = null;
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "SELECT * FROM subproject WHERE subproject_id= ?";
+            String sql = "SELECT * FROM subproject WHERE subproject_id= ?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, subprojectID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if (resultSet.next()) {
                 subproject = new Subproject(
                         resultSet.getInt("subproject_id"),
@@ -93,18 +95,18 @@ public class SubprojectRepository implements ISubprojectRepository {
                         resultSet.getBoolean("subproject_completed")
                 );
             }
-            return subproject;
 
+            return subproject;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public  void updateSubproject(Subproject subproject){
+    public void updateSubproject(Subproject subproject) {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "UPDATE subproject \n" +
+            String sql = "UPDATE subproject \n" +
                     "SET subproject_name = ?,\n" +
                     "subproject_priority = ?, \n" +
                     "subproject_duration = ?, \n" +
@@ -112,7 +114,7 @@ public class SubprojectRepository implements ISubprojectRepository {
                     "subproject_completed = ? \n" +
                     "WHERE subproject_id = ?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, subproject.getName());
             preparedStatement.setInt(2, subproject.getPriority());
@@ -120,44 +122,54 @@ public class SubprojectRepository implements ISubprojectRepository {
             preparedStatement.setDate(4, Date.valueOf(subproject.getDeadline()));
             preparedStatement.setBoolean(5, subproject.isCompleted());
             preparedStatement.setInt(6, subproject.getSubprojectID());
-            preparedStatement.executeUpdate();
 
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void deleteSubproject(int subprojectID){
-        try{
+    public void deleteSubproject(int subprojectID) {
+        try {
             Connection connection = DB_Connector.getConnection();
             String sql = "DELETE FROM subproject WHERE subproject_id = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, subprojectID);
+
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void updateSubprojectDuration(int subprojectID) {
-        try{
+        try {
             Connection connection = DB_Connector.getConnection();
             String sql = "SELECT task_duration FROM task WHERE subproject_id = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, subprojectID);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             int duration = 0;
             while (resultSet.next()) {
                 duration += resultSet.getInt("task_duration");
             }
-            String prepSql = "UPDATE subproject SET subproject_duration = ? WHERE subproject_id = ?";
-            preparedStatement = connection.prepareStatement(prepSql);
+
+            String sql1 = "UPDATE subproject SET subproject_duration = ? WHERE subproject_id = ?";
+
+            preparedStatement = connection.prepareStatement(sql1);
+
             preparedStatement.setInt(1, duration);
             preparedStatement.setInt(2, subprojectID);
+
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.repositories.interfaces;
 
 import com.example.projectcalculationtool.models.Project;
-import com.example.projectcalculationtool.models.User;
 
 import java.util.List;
 

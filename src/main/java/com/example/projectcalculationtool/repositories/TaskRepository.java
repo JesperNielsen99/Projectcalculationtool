@@ -18,11 +18,12 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public void createTask(Task task) {
         try {
-            Connection conn = DB_Connector.getConnection();
-            String SQL = "INSERT INTO task (subproject_id, task_name, task_description, task_priority, " +
+            Connection connection = DB_Connector.getConnection();
+            String sql = "INSERT INTO task (subproject_id, task_name, task_description, task_priority, " +
                     "task_duration, task_deadline, task_completed, task_manager_name) VALUES (?,?,?,?,?,?,?,?);";
 
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, task.getSubprojectID());
             preparedStatement.setString(2, task.getName());
             preparedStatement.setString(3, task.getDescription());
@@ -33,20 +34,21 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setString(8, task.getManagerName());
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public List<Task> getTasks(int subprojectID) {
         List<Task> tasks = new ArrayList<>();
         try {
-            Connection conn = DB_Connector.getConnection();
-            String SQL = "SELECT * FROM task WHERE subproject_id = ?\n" +
+            Connection connection = DB_Connector.getConnection();
+            String sql = "SELECT * FROM task WHERE subproject_id = ? " +
                     "ORDER BY task_completed, task_priority";
 
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, subprojectID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -65,11 +67,10 @@ public class TaskRepository implements ITaskRepository {
                 ));
             }
 
+            return tasks;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return tasks;
     }
 
     @Override
@@ -98,10 +99,10 @@ public class TaskRepository implements ITaskRepository {
                 );
             }
 
+            return task;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return task;
     }
 
     @Override
@@ -124,7 +125,6 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setInt(8, task.getTaskID());
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -133,31 +133,33 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public void deleteTask(int taskID) {
         try {
-            Connection conn = DB_Connector.getConnection();
-            String SQL = "DElETE FROM task WHERE task_id = ?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+            Connection connection = DB_Connector.getConnection();
+            String sql = "DElETE FROM task WHERE task_id = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, taskID);
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<User> getUsersAssignedTo(int taskID){
-
+    public List<User> getUsersAssignedTo(int taskID) {
         List<User> assignedUsers = new ArrayList<>();
 
-        try{
-            Connection conn = DB_Connector.getConnection();
+        try {
+            Connection connection = DB_Connector.getConnection();
             String sql = "SELECT * FROM user WHERE user_id IN \n" +
                     "(SELECT user_id FROM task_user WHERE task_id = ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, taskID);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, taskID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User(
                         resultSet.getInt("user_id"),
@@ -169,28 +171,28 @@ public class TaskRepository implements ITaskRepository {
                 );
                 assignedUsers.add(user);
             }
-            return assignedUsers;
 
-        }catch (SQLException e){
+            return assignedUsers;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
-    public List<User> getUsersUnassignedTo(int taskID){
-
+    public List<User> getUsersUnassignedTo(int taskID) {
         List<User> unassignedUsers = new ArrayList<>();
 
-        try{
-            Connection conn = DB_Connector.getConnection();
-            String sql = "SELECT * FROM user WHERE user_id NOT IN \n" +
+        try {
+            Connection connection = DB_Connector.getConnection();
+            String sql = "SELECT * FROM user WHERE user_id NOT IN " +
                     "(SELECT user_id FROM task_user WHERE task_id = ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setInt(1, taskID);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-
                 User user = new User(
                         resultSet.getInt("user_id"),
                         resultSet.getString("user_first_name"),
@@ -199,25 +201,24 @@ public class TaskRepository implements ITaskRepository {
                         resultSet.getString("user_password"),
                         resultSet.getInt("user_role_id")
                 );
-                if(user.getRoleID() == 2){
+                if (user.getRoleID() == 2) {
                     unassignedUsers.add(user);
                 }
-
             }
-            return unassignedUsers;
 
-        }catch (SQLException e){
+            return unassignedUsers;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void addUsersToTask(List<User> users, int taskID) {
         try {
-            Connection conn = DB_Connector.getConnection();
+            Connection connection = DB_Connector.getConnection();
             String sql = "INSERT INTO task_user (task_id, user_id) VALUES (?, ?)";
-            PreparedStatement preparedstatement = conn.prepareStatement(sql);
+
+            PreparedStatement preparedstatement = connection.prepareStatement(sql);
 
             for (User user : users) {
                 preparedstatement.setInt(1, taskID);
@@ -232,11 +233,14 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public List<TaskUserDTO> getUserTasks(int userID) {
         try {
-            Connection conn = DB_Connector.getConnection();
+            Connection connection = DB_Connector.getConnection();
             String sql = "SELECT * FROM task JOIN task_user USING (task_id) WHERE user_id = ?\n" +
                     "ORDER BY task_completed, task_priority";
-            PreparedStatement preparedstatement = conn.prepareStatement(sql);
+
+            PreparedStatement preparedstatement = connection.prepareStatement(sql);
+
             preparedstatement.setInt(1, userID);
+
             ResultSet resultSet = preparedstatement.executeQuery();
             List<TaskUserDTO> taskUserDTOs = new ArrayList<>();
             while (resultSet.next()) {
@@ -252,6 +256,7 @@ public class TaskRepository implements ITaskRepository {
                 );
                 taskUserDTOs.add(new TaskUserDTO(task, getUsersAssignedTo(task.getTaskID())));
             }
+
             return taskUserDTOs;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -261,9 +266,10 @@ public class TaskRepository implements ITaskRepository {
     /* ------------------------------------ New Assign & Unassigned ----------------------------------------- */
 
     @Override
-    public List<TaskUserDTO> getTaskUsersDTO(int subprojectID){
+    public List<TaskUserDTO> getTaskUsersDTO(int subprojectID) {
         List<TaskUserDTO> taskUserList = new ArrayList<>();
         List<Task> taskList = getTasks(subprojectID);
+
         for (Task task : taskList) {
             TaskUserDTO taskUserDTO = new TaskUserDTO(
                     task,
@@ -272,42 +278,42 @@ public class TaskRepository implements ITaskRepository {
             );
             taskUserList.add(taskUserDTO);
         }
+
         return taskUserList;
     }
 
     @Override
-    public void addAssignedUsersToTask(List<Integer> userIDs, int taskID){
+    public void addAssignedUsersToTask(List<Integer> userIDs, int taskID) {
         try {
             Connection connection = DB_Connector.getConnection();
             String SQL = "INSERT INTO task_user (task_id, user_id) VALUES (?,?);";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            for(int userID : userIDs) {
-                preparedStatement.setInt(1,taskID);
-                preparedStatement.setInt(2,userID);
+
+            for (int userID : userIDs) {
+                preparedStatement.setInt(1, taskID);
+                preparedStatement.setInt(2, userID);
                 preparedStatement.executeUpdate();
             }
-
         } catch (SQLException e) {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void removeAssignedUsersFromTask(List<Integer> userIDs, int taskID){
+    public void removeAssignedUsersFromTask(List<Integer> userIDs, int taskID) {
         try {
             Connection connection = DB_Connector.getConnection();
-            String SQL = "DELETE FROM task_user WHERE task_id=? AND user_id=?";
+            String sql = "DELETE FROM task_user WHERE task_id=? AND user_id=?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            for(int userID : userIDs) {
-                preparedStatement.setInt(1,taskID);
-                preparedStatement.setInt(2,userID);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            for (int userID : userIDs) {
+                preparedStatement.setInt(1, taskID);
+                preparedStatement.setInt(2, userID);
                 preparedStatement.executeUpdate();
             }
-
         } catch (SQLException e) {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 }
