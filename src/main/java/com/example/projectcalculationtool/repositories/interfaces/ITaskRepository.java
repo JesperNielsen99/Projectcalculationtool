@@ -22,8 +22,6 @@ public interface ITaskRepository {
 
     List<User> getUsersAssignedTo(int taskID);
 
-    void addUsersToTask(List<User> users, int taskID);
-
     List<TaskUserDTO> getUserTasks(int userID);
 
     /* ------------------------------------ New Assign & Unassigned ----------------------------------------- */

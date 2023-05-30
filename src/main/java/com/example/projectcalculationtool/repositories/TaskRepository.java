@@ -213,24 +213,6 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public void addUsersToTask(List<User> users, int taskID) {
-        try {
-            Connection connection = DB_Connector.getConnection();
-            String sql = "INSERT INTO task_user (task_id, user_id) VALUES (?, ?)";
-
-            PreparedStatement preparedstatement = connection.prepareStatement(sql);
-
-            for (User user : users) {
-                preparedstatement.setInt(1, taskID);
-                preparedstatement.setInt(2, user.getUserID());
-                preparedstatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public List<TaskUserDTO> getUserTasks(int userID) {
         try {
             Connection connection = DB_Connector.getConnection();
