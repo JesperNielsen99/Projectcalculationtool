@@ -3,18 +3,14 @@ package com.example.projectcalculationtool.repositories;
 import com.example.projectcalculationtool.models.Role;
 import com.example.projectcalculationtool.models.User;
 import com.example.projectcalculationtool.repositories.interfaces.IUserRepository;
-import com.example.projectcalculationtool.repositories.util.DB_Connector;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Statement;
+
 import java.util.List;
 
 @SpringBootTest
@@ -22,45 +18,14 @@ import java.util.List;
 class UserRepositoryTest {
     private IUserRepository repository;
 
+    @Autowired
+    private UserTestDB userTestDB;
+
     @BeforeEach
-    //@Sql(scripts = {"/SQL/testDatabase/reset-user-test-data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void setUp() {
         repository = new UserRepository();
-        try{
-            Connection conn = DB_Connector.getConnection();
-            Statement statement = conn.createStatement();
 
-            conn.setAutoCommit(false);
-
-            statement.addBatch("SET foreign_key_checks = 0;");
-            statement.addBatch("DROP TABLE IF EXISTS user");
-            statement.addBatch("CREATE TABLE user (\n" +
-                    "\tuser_id         INTEGER      NOT NULL AUTO_INCREMENT,\n" +
-                    "\tuser_first_name VARCHAR(255) NOT NULL,\n" +
-                    "\tuser_last_name  VARCHAR(255) NOT NULL,\n" +
-                    "\tuser_email      VARCHAR(255) NOT NULL,\n" +
-                    "\tuser_password   VARCHAR(255) NOT NULL,\n" +
-                    "\tuser_role_id    INT          NOT NULL,\n" +
-                    "\tPRIMARY KEY (user_id),\n" +
-                    "\tFOREIGN KEY (user_role_id) REFERENCES role (role_id) ON DELETE CASCADE ON UPDATE CASCADE,\n" +
-                    "\tUNIQUE INDEX (user_email),\n" +
-                    "\tCONSTRAINT check_user_email CHECK (user_email LIKE \"%alpha.com\")\n" +
-                    ");");
-
-            statement.addBatch(
-                    "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES" +
-                            " ('Thomas', 'Løvkilde', 'thomløv@alpha.com', '123', '1')," +
-                            " ('Jesper', 'Nielsen', 'sycko@alpha.com', '123', '1')," +
-                            " ('Jesper', 'Zamora', 'jesper@alpha.com', '123', '2')," +
-                            " ('Andreas', 'Hjordt', 'sycko1@alpha.com', '123', '2')," +
-                            " ('Test', 'test', 'test@alpha.com', '1', '2');"
-                    );
-
-            statement.executeBatch();
-            conn.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        userTestDB.userTestDB();
     }
 
     @Test
@@ -333,8 +298,8 @@ class UserRepositoryTest {
         User user = repository.getUser("thomløv@alpha.com", "123");
 
         Assertions.assertThrows(RuntimeException.class, () -> {
-                    user.setPassword(expectedUserPassword);
-                    repository.updateUser(user);
+            user.setPassword(expectedUserPassword);
+            repository.updateUser(user);
         });
     }
 
