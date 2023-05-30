@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Project{
     private int projectID;
-    private int ManagerID;
+    private int managerID;
     private String name;
     private int duration;
     private LocalDate deadline;
@@ -15,7 +15,7 @@ public class Project{
 
     public Project(int projectID, int managerID, String name, int duration, LocalDate deadline, boolean completed) {
         this.projectID = projectID;
-        this.ManagerID = managerID;
+        this.managerID = managerID;
         this.name = name;
         this.duration = duration;
         this.deadline = deadline;
@@ -27,7 +27,7 @@ public class Project{
     }
 
     public int getManagerID() {
-        return ManagerID;
+        return managerID;
     }
 
     public String getName() {
@@ -51,7 +51,7 @@ public class Project{
     }
 
     public void setManagerID(int managerID) {
-        ManagerID = managerID;
+        this.managerID = managerID;
     }
 
     public void setName(String name) {
