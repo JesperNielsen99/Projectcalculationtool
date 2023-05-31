@@ -123,6 +123,8 @@ The YML file, docker file, and link to render can be found in the repository on 
 
 [Render](https://calculationtool.onrender.com/sign-in).
 
+Since we are using the free version of Render, keep in mind that it is very slow and the initial startup will take a
+couple of minutes and afterwards it will still be quite slow.
 
 
 # Code style guide for java classes, html files, and SQL

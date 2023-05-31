@@ -20,6 +20,9 @@ Some of the highlights of our program is:
 If you are accessing the site for the first you, you need to create a profile.
 You can either go to "sign-up" when going to the link, or you can go directly to sign-up through this link: [Sign-up link](https://calculationtool.onrender.com/sign-up)
 
+Since we are using the free version of Render, keep in mind that it is very slow and the initial startup will take a 
+couple of minutes and afterwards it will still be quite slow.
+
 ## Program features
 
 Our program represents a CRUD system, which stands for create, read, update, and delete. The program consists of 4 major parts.
