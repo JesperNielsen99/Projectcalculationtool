@@ -80,7 +80,7 @@ public class TaskController {
             String managerName = user.getFirstName() + " " + user.getLastName();
             task.setManagerName(managerName);
             taskService.createTask(task);
-            return "redirect:/project/subproject/updateDuration";
+            return "redirect:/project/subproject/update/duration";
         }
         return "redirect:/sign-in";
     }
@@ -109,9 +109,9 @@ public class TaskController {
             taskService.updateTask(task);
             session.setAttribute("task", task);
             if (isAdmin(session)) {
-                return "redirect:/project/subproject/updateDuration";
+                return "redirect:/project/subproject/update/duration";
             }
-            return "redirect:/project/subproject/updateDurationByUser?subprojectID=" + task.getSubprojectID();
+            return "redirect:/project/subproject/update/duration/user?subprojectID=" + task.getSubprojectID();
         }
         return "redirect:/sign-in";
     }

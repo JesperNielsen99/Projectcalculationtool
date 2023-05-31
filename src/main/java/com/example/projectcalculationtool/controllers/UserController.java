@@ -37,7 +37,7 @@ public class UserController {
         return "redirect:/sign-in";
     }
 
-    /* ------------------------------------ Profile user ----------------------------------------- */
+    /* ------------------------------------ Sign-in user ----------------------------------------- */
 
     @GetMapping(value = {"", "/", "/sign-in"})
     public String loginForm(HttpSession session) {
@@ -68,7 +68,6 @@ public class UserController {
     public String profile(Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
-            boolean isAdmin = user.getRoleID() == 1;
             model.addAttribute("user", user);
             model.addAttribute("role", userService.getRole(user.getRoleID()));
             return "show-user-profile";
