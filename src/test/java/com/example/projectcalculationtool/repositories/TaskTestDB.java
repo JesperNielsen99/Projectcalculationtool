@@ -14,15 +14,13 @@ public class TaskTestDB {
 
     public void taskTestDB(){
         try{
-            Connection conn = DB_Connector.getConnection();
+            Connection connection = DB_Connector.getConnection();
+            Statement statement = connection.createStatement();
 
-            Statement statement = conn.createStatement();
-
-            conn.setAutoCommit(false);
+            connection.setAutoCommit(false);
 
             statement.addBatch("SET foreign_key_checks = 0;");
             statement.addBatch("DROP TABLE IF EXISTS task");
-
             statement.addBatch("CREATE TABLE task (\n" +
                     "\ttask_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
                     "    subproject_id INT NOT NULL,\n" +
@@ -38,8 +36,7 @@ public class TaskTestDB {
                     ");");
 
             statement.executeBatch();
-            conn.commit();
-
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -47,10 +44,10 @@ public class TaskTestDB {
 
     public void taskUserTestDB() {
         try{
-            Connection conn = DB_Connector.getConnection();
-            Statement statement = conn.createStatement();
+            Connection connection = DB_Connector.getConnection();
+            Statement statement = connection.createStatement();
 
-            conn.setAutoCommit(false);
+            connection.setAutoCommit(false);
 
             statement.addBatch("SET foreign_key_checks = 0;");
             statement.addBatch("DROP TABLE IF EXISTS user");
@@ -67,7 +64,6 @@ public class TaskTestDB {
                     "\tCONSTRAINT check_user_email CHECK (user_email LIKE \"%alpha.com\")\n" +
                     ");"
             );
-
             statement.addBatch(
                     "INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_role_id) VALUES" +
                             " ('Thomas', 'Løvkilde', 'thomløv@alpha.com', '123', '1')," +
@@ -75,7 +71,6 @@ public class TaskTestDB {
                             " ('Jesper', 'Zamora', 'jesper@alpha.com', '123', '2')," +
                             " ('Andreas', 'Hjordt', 'sycko1@alpha.com', '123', '2');"
             );
-
             statement.addBatch("DROP TABLE IF EXISTS task_user");
             statement.addBatch("CREATE TABLE task_user (\n" +
                     "\ttask_id INT NOT NULL,\n" +
@@ -85,7 +80,6 @@ public class TaskTestDB {
                     "    PRIMARY KEY (task_id, user_id)\n" +
                     ");"
             );
-
             statement.addBatch("INSERT INTO task_user (task_id, user_id) VALUES\n" +
                     "\t(1,1),\n" +
                     "    (1,2),\n" +
@@ -95,10 +89,9 @@ public class TaskTestDB {
             );
 
             statement.executeBatch();
-            conn.commit();
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
